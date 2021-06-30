@@ -1,0 +1,142 @@
+{
+  "ingredientList":
+  [
+    {
+      "ingredientId": 1,
+      "name": "Apples",
+      "onHand": 10,
+      "purchased": 5,
+      "cost": 1.99
+    },
+    {
+      "ingredientId": 2,
+      "name":"Ground Beef",
+      "onHand": 80,
+      "purchased": 0,
+      "cost": 0.23
+    },
+    {
+      "ingredientId": 3,
+      "name":"Hamburger Buns",
+      "onHand": 10,
+      "purchased": 10,
+      "cost": 0.29
+    },
+    {
+      "ingredientId": 4,
+      "name":"Cheddar Cheese",
+      "onHand": 80,
+      "purchased": 0,
+      "cost": 0.20
+    },
+    {
+      "ingredientId": 5,
+      "name":"Onions",
+      "onHand": 80,
+      "purchased":5,
+      "cost":0.18}
+  ,
+    {
+      "ingredientId": 6,
+      "name":"Tomato",
+      "onHand": 15,
+      "purchased":5,
+      "cost": 0.13
+    },
+    {
+      "ingredientId": 7,
+      "name":"Lettuce",
+      "onHand": 20,
+      "purchased": 10,
+      "cost":0.03
+    },
+    {
+      "ingredientId": 8,
+      "name":"Flour Tortilla",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.02
+    },
+
+    {
+      "ingredientId": 9,
+      "name":"Pizza Dough",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.04
+    },
+    {
+      "ingredientId": 10,
+      "name":"Mozzarella Cheese",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.20
+    },
+    {
+      "ingredientId": 11,
+      "name":"Pizza Sauce",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.08
+    },
+    {
+      "ingredientId": 12,
+      "name":"Sausage",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.15
+    },
+    {
+      "ingredientId": 13,
+      "name":"Pepperoni",
+      "onHand":20,
+      "purchased": 0,
+      "cost":0.15
+    }
+
+  ],
+  "users":[
+    {
+      "userId": 1,
+      "userFirstName": "Neal",
+      "userLastName": "Howard",
+      "userEmail": "Nhoward@my.wctc.edu",
+      "recipes": [1,3]
+    },
+    {
+      "userId": 2,
+      "userFirstName": "Jimmy",
+      "userLastName": "Conway",
+      "userEmail": "JimmyTheGent@Goodfellas.com",
+      "recipes": [1,2]
+    },
+    {
+      "userId": 3,
+      "userFirstName": "Keyser",
+      "userLastName": "Sose",
+      "userEmail": "VerbalKint@theUssualSuspects.com",
+      "recipes": [2,3]
+    }
+],
+  "recipes": [
+    {
+      "recipeId": 1,
+      "recipeName": "Pizza",
+      "recipeDirections": "Roll out dough. Spread on sauce. Top with cheese, sausage, pepperoni and onions. Bake at 950 for 90 secconds",
+      "recipeIngredients": [5,9,10,11,12,13]
+    },
+    {
+      "recipeId": 2,
+      "recipeName": "Cheeseburger",
+      "recipeDirections": "Shape ground beef into patties.  Put on grill and make hot.  Assemble ingredients to resemble a cheeseburger",
+      "recipeIngredients": [2,3,4,5,6,7]
+    },
+    {
+      "recipeId": 3,
+      "recipeName": "Taco",
+      "recipeDirections": "Brown Beef in pan. Add desired seasonings. Put seasoned beef into taco shell. Add other toppings as desired",
+      "recipeIngredients": [2,4,5,6,7,8]
+    }
+  ]
+
+}
