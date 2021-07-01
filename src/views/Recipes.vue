@@ -1,7 +1,7 @@
 <template>
     <div>
     <h1 class="bg-primary">Recipes</h1>
-
+        <router-link :to="{name:'AddNewRecipe'}"><button>Add New Recipe</button></router-link>
         <div v-for="item in recipes" :key="item.recipes">
 <!--        I put the following code into the component -recipeCard-->
 <!--            <p>name: {{item.recipeName}}</p>-->

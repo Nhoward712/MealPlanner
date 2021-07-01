@@ -1,0 +1,148 @@
+<template>
+    <div>
+        <label for="recipeName"  class="sr-only">Recipe Name: </label><br>
+        <input type="text" class="form-control" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
+        <label for="recipeDirections"  class="sr-only">Directions: </label><br>
+        <input type="text" class="form-control" v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
+        <div v-for="item in ingredients" :key="item.name">
+            <p>{{item.name}}</p>
+        </div>
+
+            <label for="name" class="sr-only">Ingredient Name</label>
+            <input type="text" class="form-control" v-model="ingredient.name" id="name" placeholder="New ingredient Name">
+            <input type="submit" class="mt-3" value="Add" v-on:click="addToList"/>
+        <div>
+            <input type="submit" class="mt-3" value="submit" v-on:click="AddToJSON"/>
+            <input type="submit" class="mt-3" value="cancel" v-on:click="cancelSubmit"/>
+        </div>
+    </div>
+</template>
+
+<script>
+    import { db } from "../main";
+    export default {
+        name: "AddNewRecipe",
+        data(){
+            return{
+                newRecipe: {},
+                ingredients: [],
+                ingredient: {},
+                databaseIngredients: [],
+                recipes: [],
+            };
+        },
+        created() {
+
+            // db.collection("recipes").onSnapshot((snapshotChange) => {
+            //     this.recipes = [];
+            //     snapshotChange.forEach((doc) => {
+            //         this.recipes.push({
+            //                 recipeId: doc.data().recipeId,
+            //                 recipeName: doc.data().recipeName,
+            //                 recipeDirections: doc.data().recipeDirections,
+            //                 recipeIngredients: doc.data().recipeIngredients,
+            //
+            //             }
+            //         );
+            //     });
+            // });
+            db.collection("ingredientList").onSnapshot((snapshotChange) => {
+                this.databaseIngredients = [];
+                snapshotChange.forEach((doc) => {
+                    this.databaseIngredients.push({
+                            ingredientId: doc.data().ingredientId,
+                            name: doc.data().name,
+                            onHand: doc.data().onHand,
+                            purchased: doc.data().purchased,
+                            cost: doc.data().cost,
+                        }
+                    );
+                })
+            })
+
+        },
+        methods:{
+            AddToJSON(){
+
+                db.collection("recipes").onSnapshot((snapshotChange) => {
+                    this.recipes = [];
+                    snapshotChange.forEach((doc) => {
+                        this.recipes.push({
+                                recipeId: doc.data().recipeId,
+                                recipeName: doc.data().recipeName,
+                                recipeDirections: doc.data().recipeDirections,
+                                recipeIngredients: doc.data().recipeIngredients,
+
+                            }
+                        );
+                    });
+                });
+                let highestId = 0;
+                db
+                    .collection("recipes")
+                    .get()
+                    //gets new ID Number
+                    .then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+                            const thisRecipe = doc.data();
+                            console.log("before",highestId,thisRecipe.recipeId);
+                            if (thisRecipe.recipeId >= highestId){
+                                highestId = thisRecipe.recipeId + 1;
+                            }
+                            console.log("after",highestId,thisRecipe.recipeId);
+                        });
+                    })
+                    .then(()=>{
+                        //adding items to object not included in model
+                        this.newRecipe.recipeId = highestId;
+                        let tempList =[];
+                        for(let i=0; i<this.ingredients.length; i++){
+                            tempList.push(this.ingredients[i].ingredientId)
+                        }
+                        this.newRecipe.recipeIngredients = tempList;
+
+                        db.collection("recipes")
+                            .add(this.newRecipe)
+                            .then(() => {
+                                this.$router.push("/recipes");
+                            })
+                            .catch((error) => {
+                                console.log("got this error",error);
+                            });
+                    })
+                    .catch();
+            },
+            addToList(){
+                //input from dropdown of all ingredients
+                //take name and match it to a ingredient Id
+                let isTrue = false;
+                for(let i=0; i<this.databaseIngredients.length; i++){
+                    if(this.ingredient.name === this.databaseIngredients[i].name){
+                        //create ingredient object
+                        isTrue = true;
+                        this.ingredient.ingredientId = this.databaseIngredients[i].ingredientId;
+                        this.ingredient.name = this.databaseIngredients[i].name;
+                    }
+                    if(isTrue){
+                        break;
+                    }
+                }
+                if(!isTrue){
+                    alert("Ingredient does not exist. Please add it to the database")
+                }else{
+                    //push entire object to ingredients
+                    this.ingredients.push(this.ingredient);
+                }
+                //empty ingredient object
+                this.ingredient = {};
+            },
+            cancelSubmit(){
+                this.$router.push("/recipes");
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

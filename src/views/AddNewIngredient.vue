@@ -39,6 +39,7 @@
                 db
                     .collection("ingredientList")
                     .get()
+                    //gets new ID Number
                     .then(querySnapshot => {
                         querySnapshot.forEach(doc => {
                             const thisIngredient = doc.data();
