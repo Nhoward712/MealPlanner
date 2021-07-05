@@ -1,16 +1,20 @@
 <template>
     <div>
         <label for="recipeName"  class="sr-only">Recipe Name: </label><br>
-        <input type="text" class="form-control" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
+        <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
         <label for="recipeDirections"  class="sr-only">Directions: </label><br>
-        <input type="text" class="form-control" v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
-        <div v-for="item in ingredients" :key="item.name">
-            <p>{{item.name}}</p>
+        <input type="text" class="form-control col col-sm-6 h-75" v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
+        <div class="card col-sm-6">
+            <div class="row" v-for="item in ingredients" :key="item.name">
+                <input type="submit" value="Remove" class="ml-5" v-on:click="removeFromList">
+                <p class="ml-5">{{item.name}}</p>
+            </div>
         </div>
-
-            <label for="name" class="sr-only">Ingredient Name</label>
-            <input type="text" class="form-control" v-model="ingredient.name" id="name" placeholder="New ingredient Name">
-            <input type="submit" class="mt-3" value="Add" v-on:click="addToList"/>
+        <div class="row">
+                <label for="name" class="sr-only">Ingredient Name</label>
+                <input type="text" class="form-control col-sm-5" v-model="ingredient.name" id="name" placeholder="New ingredient Name">
+                <input type="submit" class="mt-0 col-sm-1" value="Add" v-on:click="addToList"/>
+        </div>
         <div>
             <input type="submit" class="mt-3" value="submit" v-on:click="AddToJSON"/>
             <input type="submit" class="mt-3" value="cancel" v-on:click="cancelSubmit"/>
@@ -138,6 +142,9 @@
             },
             cancelSubmit(){
                 this.$router.push("/recipes");
+            },
+            removeFromList(){
+
             }
         }
     }

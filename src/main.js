@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap-grid.min.css'
+import 'bootstrap/dist/css/bootstrap-reboot.min.css'
+import 'bootstrap/dist/js/bootstrap.min'
 import firebase from "firebase/app";
 import 'firebase/firestore'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'

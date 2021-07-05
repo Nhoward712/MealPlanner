@@ -1,15 +1,11 @@
 <template>
     <div>
-    <h1 class="bg-primary">Recipes</h1>
+    <h1 class="bg-dark text-center text-warning">Recipes</h1>
         <router-link :to="{name:'AddNewRecipe'}"><button>Add New Recipe</button></router-link>
-        <div v-for="item in recipes" :key="item.recipes">
-<!--        I put the following code into the component -recipeCard-->
-<!--            <p>name: {{item.recipeName}}</p>-->
-<!--            <p>Instructions: {{item.recipeDirections}}</p>-->
-<!--            <div v-for="ingredient in recipes[item.recipeId-1].recipeIngredients" :key="ingredient.ingredients">-->
-<!--                <ingredient v-if="isIngredientInRecipe(item.recipeId,ingredient)" :ingredient="getIngredientObjectById(ingredient)"/>-->
-<!--            </div><br>-->
-            <recipeCard :ingredient="ingredients" :recipe="item">d</recipeCard>
+        <div class="row">
+            <div v-for="item in recipes" :key="item.recipes">
+                    <recipeCard  :ingredient="ingredients" :recipe="item">d</recipeCard>
+            </div>
         </div>
     </div>
 </template>
@@ -52,6 +48,7 @@
                     );
                 });
             });
+
             db.collection("ingredientList").onSnapshot((snapshotChange) => {
                 this.ingredients = [];
                 snapshotChange.forEach((doc) => {
@@ -97,7 +94,5 @@
 </script>
 
 <style scoped>
-h1{
-    color: #229922;
-}
+
 </style>

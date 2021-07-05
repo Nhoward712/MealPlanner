@@ -5,6 +5,7 @@ import InventoryList from "./views/InventoryList";
 import Recipes from "./views/Recipes";
 import AddNewIngredient from "@/views/AddNewIngredient";
 import AddNewRecipe from "@/views/AddNewRecipe";
+import EditRecipe from "@/views/EditRecipe";
 
 Vue.use(VueRouter);
 
@@ -13,7 +14,9 @@ const routes = [
     { path: "/inventory", component: InventoryList, name: "InventoryList"},
     { path: "/recipes", component: Recipes, name: "Recipes"},
     { path: "/additem", component: AddNewIngredient, name: "AddNewIngredient"},
-    { path: "/addRecipe", component: AddNewRecipe, name: "AddNewRecipe"}
+    { path: "/addRecipe", component: AddNewRecipe, name: "AddNewRecipe"},
+    { path: "/editRecipe", component: EditRecipe, name: "EditRecipe", props: true},
+
     ];
 
 const router = new VueRouter({
