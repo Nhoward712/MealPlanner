@@ -6,6 +6,17 @@
             <div v-for="item in recipes" :key="item.recipes">
                     <recipeCard  :ingredient="ingredients" :recipe="item">d</recipeCard>
             </div>
+            <div>
+                <div class="card border-primary " style="width: 18rem;">
+                    <!--            <img src="..." class="card-img-top" alt="...">-->
+                    <div class="card-body">
+                        <i class="fas fa-book fa-9x"></i>
+                        <h3 class="card-title bg-info">Add New Recipe</h3>
+<!--                        <h5>Directions:</h5>-->
+<!--                        <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>

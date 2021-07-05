@@ -5,8 +5,10 @@
         <label for="recipeName"  class="">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
 
-        <ul class="list-group list-group-flush" v-for="(item,i) in thisRecipesIngredients" :key="item.thisRecipesIngredients">
+        <ul class="list-group list-group-flush" v-for="(item,i) in newRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
             <div class="row">
+                <input class="col-sm-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
+                <input class="col-sm-1" v-model="item.type" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
                 <input class="col-sm-5" v-model="item.name" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
                 <input class="mt-0 col-sm-1" type="submit"  value="Remove" v-on:click="removeFromList(i)"/>
             </div>
@@ -81,7 +83,7 @@
         },
         methods:{
             saveRecipe(){
-                this.newRecipe.recipeIngredients = this.convertToIngredientId(this.thisRecipesIngredients);
+                // this.newRecipe.recipeIngredients = this.convertToIngredientId(this.thisRecipesIngredients);
                 //bring in all recipes, find its doc.id, match it with current recipe
                 db.collection("recipes")
                     .onSnapshot(snapshot => {
@@ -159,7 +161,7 @@
                 for(let i=0; i<this.newRecipe.recipeIngredients.length; i++){
                     //Need to get object by Id
                     for(let j=0; j<this.databaseIngredients.length; j++){
-                        if(this.databaseIngredients[j].ingredientId === this.newRecipe.recipeIngredients[i]){
+                        if(this.databaseIngredients[j].ingredientId === this.newRecipe.recipeIngredients[i].ingredientId){
                             this.thisRecipesIngredients.push(this.databaseIngredients[j])
                         }
                     }
