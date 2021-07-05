@@ -38,12 +38,12 @@
             db.collection("recipes").onSnapshot((snapshotChange) => {
                 this.recipes = [];
                 snapshotChange.forEach((doc) => {
-                    this.recipes.push({
+                    this.recipes.push(
+                        {
                             recipeId: doc.data().recipeId,
                             recipeName: doc.data().recipeName,
                             recipeDirections: doc.data().recipeDirections,
                             recipeIngredients: doc.data().recipeIngredients,
-
                         }
                     );
                 });

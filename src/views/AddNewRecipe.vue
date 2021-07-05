@@ -5,8 +5,8 @@
         <label for="recipeDirections"  class="sr-only">Directions: </label><br>
         <input type="text" class="form-control col col-sm-6 h-75" v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
         <div class="card col-sm-6">
-            <div class="row" v-for="item in ingredients" :key="item.name">
-                <input type="submit" value="Remove" class="ml-5" v-on:click="removeFromList">
+            <div class="row" v-for="(item, i) in ingredients" :key="item.name">
+                <input type="submit" value="Remove" class="ml-5" v-on:click="removeFromList(i)">
                 <p class="ml-5">{{item.name}}</p>
             </div>
         </div>
@@ -143,9 +143,9 @@
             cancelSubmit(){
                 this.$router.push("/recipes");
             },
-            removeFromList(){
-
-            }
+            removeFromList(i){
+                this.ingredients.splice(i,1);
+            },
         }
     }
 </script>
