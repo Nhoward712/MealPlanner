@@ -1,21 +1,23 @@
 <template>
     <div>
     <h1 class="bg-dark text-center text-warning">Recipes</h1>
-        <router-link :to="{name:'AddNewRecipe'}"><button>Add New Recipe</button></router-link>
+<!--        <router-link :to="{name:'AddNewRecipe'}"><button>Add New Recipe</button></router-link>-->
         <div class="row">
             <div v-for="item in recipes" :key="item.recipes">
                     <recipeCard  :ingredient="ingredients" :recipe="item">d</recipeCard>
             </div>
             <div>
-                <div class="card border-primary " style="width: 18rem;">
-                    <!--            <img src="..." class="card-img-top" alt="...">-->
-                    <div class="card-body">
-                        <i class="fas fa-book fa-9x"></i>
-                        <h3 class="card-title bg-info">Add New Recipe</h3>
-<!--                        <h5>Directions:</h5>-->
-<!--                        <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
+                <router-link :to="{name:'AddNewRecipe'}"><button>
+                    <div class="card border-primary " style="width: 18rem;">
+                        <!--            <img src="..." class="card-img-top" alt="...">-->
+                        <div class="card-body">
+                            <i class="fas fa-book fa-9x"></i>
+                            <h3 class="card-title bg-info">Add New Recipe</h3>
+    <!--                        <h5>Directions:</h5>-->
+    <!--                        <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
+                        </div>
                     </div>
-                </div>
+                </button></router-link>
             </div>
         </div>
     </div>

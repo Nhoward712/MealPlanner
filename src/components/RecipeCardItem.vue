@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card border-primary " style="width: 18rem;">
+        <div class="card border-primary m-1" style="width: 18rem;">
 <!--            <img src="..." class="card-img-top" alt="...">-->
             <div class="card-body">
                 <h3 class="card-title bg-info">{{recipe.recipeName}}</h3>
@@ -69,7 +69,7 @@
                     .then((querySnapshot)=>{
                         querySnapshot.forEach(doc =>{
                             const id = doc.data();
-                            if(tempId == id.recipeId){
+                            if(tempId === id.recipeId){
                                 fullId = doc.id;
 
                             }
