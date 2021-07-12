@@ -1,11 +1,19 @@
 <template>
     <div>
-        <p>{{DayOfWeek}}</p>
-        <p>{{breakfast}}</p>
+        <h3 class="bg-secondary">{{DayOfWeek}}</h3>
+        <div v-for="per in period" :key="per.period">
+            <h5 class="mt-3 ml-2">{{per}}:</h5>
+            <div v-for="recipe in Recipes" :key="recipe.Recipes">
+                <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="ml-4"> <button class="bg-warning">Remove</button> {{recipe.recipeName}}</p>
+            </div>
+            <button class="bg-success">Add Item</button>
+        </div>
+
     </div>
 </template>
 
 <script>
+    // import { db } from "../main";
     export default {
         name: "MealPlanDayCard",
         props: {
@@ -13,24 +21,18 @@
                 type: String,
                 default: null
             },
-            MealPlan:{
-                type: Object,
-                default: NaN
+
+            Recipes:{
+                type: Array,
+                default: null
+
             }
         },
         data(){
             return{
-                LocalMealPlan: this.MealPlan,
-                breakfast: this.MealPlan[0][this.DayOfWeek + 'Breakfast']
+                period: ["Breakfast","Lunch","Dinner"],
             }
         },
-        created() {
-            if (this.MealPlan) {
-                this.LocalMealPlan = this.MealPlan;
-                // let day = this.DayOfWeek + 'Breakfast';
-                this.breakfast =  this.MealPlan[0][this.DayOfWeek + 'Breakfast']
-            }
-        }
     }
 </script>
 
