@@ -6,7 +6,9 @@
             <div v-for="recipe in Recipes" :key="recipe.Recipes">
                 <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="ml-4"> <button class="bg-warning">Remove</button> {{recipe.recipeName}}</p>
             </div>
-            <button class="bg-success">Add Item</button>
+            <router-link class="mt-0 col-sm-5" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" ><button>Add Recipe</button></router-link>
+
+
         </div>
 
     </div>
@@ -33,6 +35,11 @@
                 period: ["Breakfast","Lunch","Dinner"],
             }
         },
+        methods:{
+            addToPlan(Day,Period){
+                this.$router.push({name: '/AddToPlan', params: { day: Day, period: Period }})
+            }
+        }
     }
 </script>
 
