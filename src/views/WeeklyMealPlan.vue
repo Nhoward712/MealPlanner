@@ -1,7 +1,9 @@
 <template>
     <div>
-        <div v-for="day in dayOfWeek" :key="day.dayOfWeek">
-            <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
+        <div class="row">
+            <div class="row m-3" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
+            </div>
         </div>
     </div>
 
@@ -29,7 +31,7 @@
 
             };
         },
-        created(){
+        mounted(){
             db.collection("MealPlans")
                 .get()
                 .then((querySnapshot)=>{

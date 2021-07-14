@@ -53,20 +53,9 @@
         },
         created() {
 
-            // db.collection("recipes").onSnapshot((snapshotChange) => {
-            //     this.recipes = [];
-            //     snapshotChange.forEach((doc) => {
-            //         this.recipes.push({
-            //                 recipeId: doc.data().recipeId,
-            //                 recipeName: doc.data().recipeName,
-            //                 recipeDirections: doc.data().recipeDirections,
-            //                 recipeIngredients: doc.data().recipeIngredients,
-            //
-            //             }
-            //         );
-            //     });
-            // });
-            db.collection("ingredientList").onSnapshot((snapshotChange) => {
+
+            db.collection("ingredientList")
+                .onSnapshot((snapshotChange) => {
                 this.databaseIngredients = [];
                 snapshotChange.forEach((doc) => {
                     this.databaseIngredients.push({
@@ -83,7 +72,8 @@
         },
         methods:{
             AddToDB(){
-                db.collection("recipes").onSnapshot((snapshotChange) => {
+                db.collection("recipes")
+                    .onSnapshot((snapshotChange) => {
                     this.recipes = [];
                     snapshotChange.forEach((doc) => {
                         this.recipes.push({

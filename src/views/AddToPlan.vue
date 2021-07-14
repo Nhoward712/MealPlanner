@@ -4,7 +4,6 @@
         <h3>{{day}} - {{period}}</h3><br>
 
             <div v-for="recipe in recipes" :key="recipe.recipes" class="row ml-5">
-
                 <input
                         type="submit"
                         id=recipe.recipeId
@@ -12,7 +11,6 @@
                         :value=recipe.recipeName
                         class="mt-1"
                         v-on:click="saveItems(1,recipe)">
-
             </div>
     </div>
 </template>
@@ -42,7 +40,6 @@
         },
         methods:{
             saveItems(planId, recipe){
-                // e.preventDefault();
                 console.log("here", planId, recipe);
                 db.collection("MealPlans")
                     .get()
@@ -51,14 +48,10 @@
                             //this is for the default plan.  future will have to have dynamic planID num.
                             if(doc.data().PlanId === planId ){
                                 let docId = doc.id;
-                                console.log("docId", docId);
                                 this.newRecipes = doc.data()[this.day + this.period];
                                 this.newRecipes.push(recipe.recipeId);
                                 this.update(docId);
                                 console.log(this.newRecipes);
-
-                                //need to finish this.  get doc id then save the items in the checkboxes
-
                             }
                         })
                     })

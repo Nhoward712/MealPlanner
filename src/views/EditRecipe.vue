@@ -136,15 +136,15 @@
             removeFromList(i){
                 this.thisRecipesIngredients.splice(i,1);
             },
-            convertToIngredientId(ingredients){
-                console.log("convert Id: ",ingredients[0].ingredientId);
-                let temp = [];
-                for(let i=0; i<ingredients.length; i++){
-                    temp.push(ingredients[i].ingredientId);
-                }
-                console.log("temp array", temp);
-                return temp
-            },
+            // convertToIngredientId(ingredients){
+            //     console.log("convert Id: ",ingredients[0].ingredientId);
+            //     let temp = [];
+            //     for(let i=0; i<ingredients.length; i++){
+            //         temp.push(ingredients[i].ingredientId);
+            //     }
+            //     console.log("temp array", temp);
+            //     return temp
+            // },
             isIngredientInRecipe(recipeId,ingredientID){
                 let recipeIngredients = this.newRecipe.recipeIngredients;
 

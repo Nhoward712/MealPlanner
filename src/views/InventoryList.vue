@@ -28,7 +28,8 @@
         },
         created() {
 
-            db.collection("ingredientList").onSnapshot((snapshotChange) => {
+            db.collection("ingredientList")
+                .onSnapshot((snapshotChange) => {
                 this.ingredients = [];
                 snapshotChange.forEach((doc) => {
                     this.ingredients.push({
