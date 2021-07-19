@@ -49,6 +49,7 @@
                 ingredient: {},
                 databaseIngredients: [],
                 recipes: [],
+                ingredientList: {},
             };
         },
         created() {
@@ -123,7 +124,7 @@
                 //take name and match it to a ingredient Id
                 let isTrue = false;
                 for(let i=0; i<this.databaseIngredients.length; i++){
-                    if(this.ingredient.name === this.databaseIngredients[i].name){
+                    if(this.ingredient.name.toUpperCase() === this.databaseIngredients[i].name.toUpperCase()){
                         //create ingredient object
                         isTrue = true;
                         this.ingredient.ingredientId = this.databaseIngredients[i].ingredientId;
@@ -134,7 +135,40 @@
                     }
                 }
                 if(!isTrue){
-                    alert("Ingredient does not exist. Please add it to the database")
+                    // alert("Ingredient does not exist. Please add it to the database");
+                    this.ingredientList.name = this.ingredient.name.toUpperCase();
+                    console.log("adding ingredient", this.ingredientList);
+                    let highestId = 0;
+                    db
+                        .collection("ingredientList")
+                        .get()
+                        //gets new ID Number
+                        .then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+                                const thisIngredient = doc.data();
+                                console.log("before",highestId,thisIngredient.ingredientId);
+                                if (thisIngredient.ingredientId >= highestId){
+                                    highestId = thisIngredient.ingredientId + 1;
+                                }
+                                console.log("after",highestId,thisIngredient.ingredientId);
+                            });
+                        })
+                        .then(()=>{
+                            //adding items to object not included in model
+                            this.ingredientList.ingredientId = highestId;
+                            this.ingredientList.onHand = 5;
+                            this.ingredientList.purchased = 5;
+                            this.ingredientList.cost = 0;
+
+                            db.collection("ingredientList")
+                                .add(this.ingredientList)
+                                .then(() => {
+                                    this.addToList();
+                                })
+                                .catch((error) => {
+                                    console.log("got this error",error);
+                                });
+                        })
                 }else{
                     //push entire object to ingredients
                     this.ingredients.push(this.ingredient);

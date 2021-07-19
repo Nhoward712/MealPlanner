@@ -52,6 +52,7 @@
                     })
                     .then(()=>{
                         //adding items to object not included in model
+                        this.ingredientList.name = this.ingredientList.name.toUpperCase();
                         this.ingredientList.ingredientId = highestId;
                         this.ingredientList.onHand = 5;
                         this.ingredientList.purchased = 5;

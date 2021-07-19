@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="row m-3" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+            <div class="row m-0" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
