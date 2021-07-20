@@ -5,16 +5,17 @@
             <div v-for="per in period" :key="per.period">
                 <div class="row">
                     <h5 class="mt-3 ml-3">{{per}}:</h5>
-                    <router-link class="mt-3 col-sm-5" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
-                        <button>
-                            <font-awesome-icon icon="fa-solid fa-plus" />Add Recipe
+                    <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
+                        <button class="btn fa-border">
+                            <font-awesome-icon icon="plus-circle" />
+
                         </button>
                     </router-link>
                 </div>
                 <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
                     <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="ml-4">
-                        <button class="bg-warning font-weight-light " style="font-size: .5em" v-on:click="remove(recipe,per,1)" >
-                            <font-awesome-icon icon="fa-solid fa-trash" />
+                        <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,1)" >
+                            <font-awesome-icon icon="minus-circle" />
                         </button> {{recipe.recipeName}}</p>
                 </div>
             </div>

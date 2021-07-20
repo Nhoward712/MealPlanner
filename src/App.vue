@@ -1,5 +1,8 @@
 <template>
   <div id="app" >
+<!--    <font-awesome-icon icon="user-secret" />-->
+<!--    <font-awesome-icon icon="trash" />-->
+
     <NavBar></NavBar>
     <router-view/>
 
@@ -8,6 +11,7 @@
 
 <script>
 import NavBar from "@/components/NavBar";
+
 
 export default {
   name: 'App',

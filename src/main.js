@@ -5,11 +5,18 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 import 'bootstrap/dist/css/bootstrap-reboot.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
+import '@fortawesome/fontawesome-free'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrash, faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import firebase from "firebase/app";
 import 'firebase/firestore'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
 // import './ingredients.json'
 
+library.add(faTrash, faPlusCircle, faMinusCircle);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
