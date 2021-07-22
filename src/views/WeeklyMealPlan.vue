@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row">
+        <div class="row ml-3">
             <div class="row m-0" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
             </div>

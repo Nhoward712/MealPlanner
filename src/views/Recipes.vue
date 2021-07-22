@@ -2,17 +2,13 @@
     <div>
 
     <h1 class="bg-dark text-center text-warning">Recipes</h1>
-<!--        <router-link :to="{name:'AddNewRecipe'}"><button>Add New Recipe</button></router-link>-->
         <div class="row">
-            <div>
+            <div class="mt-1">
                 <router-link :to="{name:'AddNewRecipe'}"><button>
-                    <div class="card border-primary " style="width: 18rem;">
+                    <div class="card border-primary bg-secondary" style="width: 18rem; height: 7rem;">
                         <!--            <img src="..." class="card-img-top" alt="...">-->
                         <div class="card-body">
-
-                            <h3 class="card-title bg-info">Add New Recipe</h3>
-                            <!--                        <h5>Directions:</h5>-->
-                            <!--                        <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
+                            <h3 class="card-title bg-info">Add New Recipe</h3><font-awesome-icon icon="plus-circle" />
                         </div>
                     </div>
                 </button></router-link>

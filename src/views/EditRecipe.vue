@@ -1,7 +1,10 @@
 <template>
     <div class="mt-5 ml-3">
         <p class="font-weight-bold col-6">{{newRecipe.recipeName}}</p>
-        <input type="submit" value="Save Changes" @click="saveRecipe"><br>
+        <div class="row">
+            <input type="submit" value="Save Changes" @click="saveRecipe"><br>
+            <input type="submit" value="Cancel Changes" @click="cancel"><br>
+        </div>
         <label for="recipeName"  class="">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
 
@@ -82,6 +85,9 @@
 
         },
         methods:{
+            cancel(){
+                this.$router.push("/recipes");
+            },
             saveRecipe(){
                 // this.newRecipe.recipeIngredients = this.convertToIngredientId(this.thisRecipesIngredients);
                 //bring in all recipes, find its doc.id, match it with current recipe

@@ -1,12 +1,12 @@
 <template>
     <div>
         <h1>Inventory Pages</h1>
-        <router-link :to="{name:'AddNewIngredient'}"><button>Add New Item</button></router-link>
+        <router-link :to="{name:'AddNewIngredient'}" class="m-4"><button><font-awesome-icon icon="plus-circle" /> Add New Item </button></router-link>
         <ul >
-            <div v-for="item in ingredients" :key="item.ingredients">
-                <ingredient :ingredient="item"></ingredient>
+            <table v-for="item in ingredients" :key="item.ingredients" class="table table-bordered table-hover table-striped">
+                <ingredient :ingredient="item" class="border border-bottom-0"></ingredient>
 <!--                <p>{{item.name}}</p>-->
-            </div>
+            </table>
 
 <!--            <InventoryListItem v-for="item in posts" :item="post" :key="item.id"></InventoryListItem>-->
         </ul>
@@ -53,5 +53,6 @@
 </script>
 
 <style scoped>
-
+    ingredient {background-color: #0b2e13;}
+    ingredient:nth-child(odd) { background: red; }
 </style>

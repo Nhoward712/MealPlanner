@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <div class="card border-primary m-1 "  style="width: 12rem;">
             <h3 class="bg-secondary card-body">{{DayOfWeek}}</h3>
             <div v-for="per in period" :key="per.period">
