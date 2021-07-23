@@ -2,15 +2,17 @@
     <div>
 
         <h3>{{day}} - {{period}}</h3><br>
-
+<!--            <input type="button"-->
             <div v-for="recipe in recipes" :key="recipe.recipes" class="row ml-5">
                 <input
                         type="submit"
                         id=recipe.recipeId
                         :name=recipe.recipeId
                         :value=recipe.recipeName
-                        class="mt-1"
-                        v-on:click="saveItems(1,recipe)">
+                        class="mt-1 text-wrap"
+                        v-on:click="saveItems(1,recipe)"
+                        style="width: 200px">
+
             </div>
     </div>
 </template>
@@ -89,5 +91,10 @@
 </script>
 
 <style scoped>
-
+input {
+    border-radius: 15px;
+}
+    input:hover{
+        background-color: #7abaff;
+    }
 </style>

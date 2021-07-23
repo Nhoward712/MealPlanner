@@ -5,7 +5,7 @@
             <div class="card border-primary m-1" style="width: 18rem;">
     <!--            <img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
-                    <h3 class="card-title bg-info pl-1 text-center">{{recipe.recipeName}}</h3>
+                    <h3 class="card-title pl-1 text-center">{{recipe.recipeName}}</h3>
 <!--                    <h5>Directions:</h5>-->
 <!--                    <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
 <!--                    <ul  class="list-group list-group-flush" v-for="ingredient in recipe.recipeIngredients" :key="ingredient.ingredients">-->
@@ -92,5 +92,9 @@
 </script>
 
 <style scoped>
-
+    h3 {
+        background-color: #9fcdff;
+        color: #1b1e21;
+        font-family: Papyrus;
+    }
 </style>

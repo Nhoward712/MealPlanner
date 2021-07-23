@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div class="ml-1">
 
-    <h1 class="bg-dark text-center text-warning">Recipes</h1>
+    <h1 class="bg-dark text-center text-primary">Recipes</h1>
         <div class="row">
-            <div class="mt-1">
-                <router-link :to="{name:'AddNewRecipe'}"><button>
+            <div class="mt-4 ml-1">
+                <router-link :to="{name:'AddNewRecipe'}"><button class="border border-white">
                     <div class="card border-primary bg-secondary" style="width: 18rem; height: 7rem;">
                         <!--            <img src="..." class="card-img-top" alt="...">-->
                         <div class="card-body">
-                            <h3 class="card-title bg-info">Add New Recipe</h3><font-awesome-icon icon="plus-circle" />
+                            <h3 class="card-title bg-light">Add New Recipe</h3><font-awesome-icon icon="plus-circle" />
                         </div>
                     </div>
                 </button></router-link>

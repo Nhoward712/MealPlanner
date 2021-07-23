@@ -5,7 +5,7 @@
             <div class="">
                 <h1 class="text-danger font-weight-bolder mt-3">{{currentRecipe.recipeName}}</h1>
                 <div class="border border-primary">
-                    <h3 class="text-danger ml-2">Ingredients: </h3>
+                    <h3 class="text-danger ml-2 bg-light">Ingredients: </h3>
                     <ul class="border border-white mb-2" v-for="(item) in currentRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
                         <div class="row">
                             <p class="col-sm-1 m-0">{{item.amount}}</p>

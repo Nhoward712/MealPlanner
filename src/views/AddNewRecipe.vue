@@ -146,11 +146,9 @@
                         .then(querySnapshot => {
                             querySnapshot.forEach(doc => {
                                 const thisIngredient = doc.data();
-                                console.log("before",highestId,thisIngredient.ingredientId);
                                 if (thisIngredient.ingredientId >= highestId){
                                     highestId = thisIngredient.ingredientId + 1;
                                 }
-                                console.log("after",highestId,thisIngredient.ingredientId);
                             });
                         })
                         .then(()=>{
@@ -163,7 +161,18 @@
                             db.collection("ingredientList")
                                 .add(this.ingredientList)
                                 .then(() => {
-                                    this.addToList();
+                                    let isTrue = false;
+                                    for(let i=0; i<this.databaseIngredients.length; i++){
+                                        if(this.ingredient.name.toUpperCase() === this.databaseIngredients[i].name.toUpperCase()){
+                                            //create ingredient object
+                                            isTrue = true;
+                                            this.ingredient.ingredientId = this.databaseIngredients[i].ingredientId;
+                                            this.ingredient.name = this.databaseIngredients[i].name;
+                                        }
+                                        if(isTrue){
+                                            break;
+                                        }
+                                    }
                                 })
                                 .catch((error) => {
                                     console.log("got this error",error);
