@@ -2,10 +2,12 @@
     <div>
         <h1>Shopping List </h1>
             <br>
-            <div class="text-primary" v-for="item in activeIngredients" :key="item.activeIngredients">
-                {{item}}
+        <div class="border border-primary">
+            <div class="ml-auto" v-for="item in activeIngredients" :key="item.activeIngredients">
+                <input class="h1 m-3 form-check-input " type="checkbox" :value="item" id="flexCheckDefault">
+                <label class="h2 ml-5 form-check-label" for="flexCheckDefault"> {{item}}</label>
             </div>
-
+        </div>
 
     </div>
 
@@ -152,5 +154,7 @@
 </script>
 
 <style scoped>
-
+    input[type="checkbox"] {
+        transform:scale(2, 2);
+    }
 </style>
