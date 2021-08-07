@@ -68,6 +68,7 @@
                 })
 
                 .then(() => {
+                    console.log("Meal Plan", this.activeMealPlan);
 
                 db.collection("recipes")
                     .onSnapshot((querySnapshot) => {
@@ -97,8 +98,6 @@
                         });
                     });
                 });
-
-
         }
     }
 </script>

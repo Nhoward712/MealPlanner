@@ -33,13 +33,39 @@ var firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const db = firebaseApp.firestore();
 
+// let allIngredients = [];
+run();
+
+export var il = [];
+export var rec = [];
+
+function run(){
+    db.collection("ingredientList")
+        .get()
+        .then((snapshotChange) => {
+          il = [];
+          snapshotChange.forEach((doc) => {
+            il.push({
+                ingredientId: doc.data().ingredientId,
+                name: doc.data().name,
+                onHand: doc.data().onHand,
+                purchased: doc.data().purchased,
+                cost: doc.data().cost,
+              }
+          );
+        });
+    })
+
+        .then(()=> {
+          new Vue({
+            router,
+            render: h => h(App),
+          }).$mount('#app')
+        });
+}
 
 Vue.config.productionTip = false;
 
 //local JSON db access
 // export const db = require('./ingredients.json');
 
-new Vue({
-  router,
-  render: h => h(App),
-}).$mount('#app')

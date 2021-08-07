@@ -94,7 +94,7 @@
 input {
     border-radius: 15px;
 }
-    input:hover{
-        background-color: #7abaff;
-    }
+input:hover{
+    background-color: #7abaff;
+}
 </style>

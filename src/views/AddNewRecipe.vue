@@ -177,7 +177,8 @@
                                 .catch((error) => {
                                     console.log("got this error",error);
                                 });
-                        })
+                        });
+                    this.ingredients.push(this.ingredient);
                 }else{
                     //push entire object to ingredients
                     this.ingredients.push(this.ingredient);

@@ -1,10 +1,153 @@
 <template>
-    <h1>Home</h1>
+    <div>
+        <h1>Shopping List </h1>
+            <br>
+            <div class="text-primary" v-for="item in activeIngredients" :key="item.activeIngredients">
+                {{item}}
+            </div>
+
+
+    </div>
+
 </template>
 
 <script>
+    import { db } from "../main";
+    import { il } from "../main";
+
+    //get meal plan recipes
+    //ret ingredients from recipes
+    //remove duplicates
+
     export default {
-        name: "Home"
+        name: "Home",
+        components:{
+
+        },
+        props:{
+
+        },
+        data(){
+            return {
+                dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                mealPeriod: ["Breakfast", "Lunch", "Dinner"],
+                activeRecipes: [],
+                activeIngredients: [],
+                activeMealPlan: {},
+                allIngredients: [],
+                allRecipes: [],
+                il: []
+
+            }
+        },
+        created(){
+            this.il = il;
+            db.collection("ingredientList")
+                .onSnapshot((snapshotChange) => {
+                    this.allIngredients = [];
+                    snapshotChange.forEach((doc) => {
+                        this.allIngredients.push({
+                                ingredientId: doc.data().ingredientId,
+                                name: doc.data().name,
+                                onHand: doc.data().onHand,
+                                purchased: doc.data().purchased,
+                                cost: doc.data().cost,
+                            }
+                        );
+                    });
+                    // this.getIngredientObjectById();
+                });
+            db.collection("recipes")
+                .onSnapshot((snapshotChange) => {
+                    this.allRecipes = [];
+                    snapshotChange.forEach((doc) => {
+                        this.allRecipes.push({
+                                recipeId: doc.data().recipeId,
+                                recipeIngredients: doc.data().recipeIngredients,
+                            }
+                        );
+                    });
+                    // this.getIngredientObjectById();
+                });
+
+            db.collection("MealPlans")
+                .get()
+                .then((querySnapshot)=>{
+                    this.activeMealPlan = {};
+                    querySnapshot.forEach((doc) => {
+                        if(doc.data().PlanId === 1){
+                            this.activeMealPlan ={
+                                PlanId: doc.data().PlanId,
+                                FridayBreakfast: doc.data().FridayBreakfast,
+                                FridayDinner: doc.data().FridayDinner,
+                                FridayLunch: doc.data().FridayLunch,
+                                MondayBreakfast: doc.data().MondayBreakfast,
+                                MondayDinner: doc.data().MondayDinner,
+                                MondayLunch: doc.data().MondayLunch,
+                                SaturdayBreakfast: doc.data().SaturdayBreakfast,
+                                SaturdayDinner: doc.data().SaturdayDinner,
+                                SaturdayLunch: doc.data().SaturdayLunch,
+                                StartDate: doc.data().StartDate,
+                                SundayBreakfast: doc.data().SundayBreakfast,
+                                SundayDinner: doc.data().SundayDinner,
+                                SundayLunch: doc.data().SundayLunch,
+                                ThursdayBreakfast: doc.data().ThursdayBreakfast,
+                                ThursdayDinner: doc.data().ThursdayDinner,
+                                ThursdayLunch: doc.data().ThursdayLunch,
+                                TuesdayBreakfast: doc.data().TuesdayBreakfast,
+                                TuesdayDinner: doc.data().TuesdayDinner,
+                                TuesdayLunch: doc.data().TuesdayLunch,
+                                WednesdayBreakfast: doc.data().WednesdayBreakfast,
+                                WednesdayDinner: doc.data().WednesdayDinner,
+                                WednesdayLunch: doc.data().WednesdayLunch
+                            }
+                        }
+                    })
+                })
+                .then(()=>{
+                    this.getAllRecipes();
+                    this.getAllIngredients();
+                });
+
+
+
+
+        },
+
+        methods:{
+            getAllRecipes(){
+                for (let i=0; i<this.dayOfWeek.length; i++){
+                    //this loops though meal periods
+                    for(let k=0; k<this.mealPeriod.length; k++){
+                        for(let j=0; j<this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
+                            // if (doc.data().recipeId === this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]) {
+                            // console.log("console.log",this.activeMealPlan.FridayBreakfast);
+                                this.activeRecipes.push(this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]);
+                            // }
+                        }
+                    }
+                    //this loops though the active meal plans
+
+                }
+                // console.log("Active Recipes", this.activeRecipes)
+
+            },
+            getAllIngredients(){
+                // var tempRecipes = [];//array of recipe ingredient objects
+                var tempIng = [];
+                for(let i=0; i< this.activeRecipes.length; i++){
+                    for(let j=0; j<this.allRecipes.length; j++){
+                        if(this.activeRecipes[i] === this.allRecipes[j].recipeId){
+                            for (let k=0; k<this.allRecipes[j].recipeIngredients.length; k++){
+                                tempIng.push(this.allRecipes[j].recipeIngredients[k].name)
+                            }
+                        }
+                    }
+                }
+                this.activeIngredients = [... new Set(tempIng)]
+            }
+
+        }
     }
 </script>
 
