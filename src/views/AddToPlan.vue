@@ -42,7 +42,6 @@
         },
         methods:{
             saveItems(planId, recipe){
-                console.log("here", planId, recipe);
                 db.collection("MealPlans")
                     .get()
                     .then((querySnapshot) =>{
@@ -53,7 +52,6 @@
                                 this.newRecipes = doc.data()[this.day + this.period];
                                 this.newRecipes.push(recipe.recipeId);
                                 this.update(docId);
-                                console.log(this.newRecipes);
                             }
                         })
                     })

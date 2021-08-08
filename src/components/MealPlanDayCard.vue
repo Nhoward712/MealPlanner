@@ -59,20 +59,20 @@
                                 this.update(docId, per, recipe);
                             }
                         })
-                    })
+                    });
+
             },
             update(tempId, per, recipe){
-                console.log("here", this.newRecipes);
-
                 for(let i=0; i<this.newRecipes.length; i++){
-                    console.log("compare", recipe.recipeId,this.newRecipes[i]);
                         if(recipe.recipeId === this.newRecipes[i]){
-
                             this.newRecipes.splice(i,1);
-                            console.log("after", this.newRecipes)
-
                         }
                     }
+                for(let i=0; i<this.Recipes.length; i++){
+                    if(recipe.recipeId === this.Recipes[i].recipeId){
+                        this.Recipes.splice(i,1);
+                    }
+                }
                 db.collection("MealPlans")
                     .doc(tempId)
                     .update(
