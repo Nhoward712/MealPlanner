@@ -34,6 +34,7 @@
                 snapshotChange.forEach((doc) => {
                     this.ingredients.push({
                         ingredientId: doc.data().ingredientId,
+                        category: doc.data().category,
                         name: doc.data().name,
                         onHand: doc.data().onHand,
                         purchased: doc.data().purchased,

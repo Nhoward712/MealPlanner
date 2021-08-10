@@ -27,7 +27,7 @@
         </div>
 
         <label for="recipeDirections"  class="">Directions: </label><br>
-        <textarea type="text" class="form-control col col-sm-6 h-75" v-model="newRecipe.recipeDirections" id="recipeDirections" rows="10" placeholder="Directions"></textarea><br>
+        <textarea type="text" class="form-control col col-sm-6 h-75 text-wrap" v-model="newRecipe.recipeDirections" id="recipeDirections" rows="10" placeholder="Directions"></textarea><br>
 
     </div>
 </template>

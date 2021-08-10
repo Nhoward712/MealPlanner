@@ -3,10 +3,27 @@
         <h1>Add New Item</h1>
         <div>
             <label for="ingredientName"  class="sr-only">Ingredient Name: </label><br>
-            <input type="email" class="form-control" v-model="ingredientList.name" id="ingredientName" placeholder="Ingredient Name"><br>
+            <input type="text" class="form-control" v-model="ingredientList.name" id="ingredientName" placeholder="Ingredient Name"><br>
 
-            <label for="ingredientCost"  class="sr-only">Cost: </label><br>
-            <input type="email" class="form-control" v-model="ingredientList.cost" id="ingredientCost" placeholder="$1.99">
+            <div class="col-sm-6">
+                <label for="categories">Choose a Category:</label>
+
+                <select name="categories" id="categories" v-model="selected">
+                    <option value="Meats/Seafood">Meats/Seafood</option>
+                    <option value="Produce">Produce</option>
+                    <option value="Dairy">Dairy</option>
+                    <option value="Oils/Condiments">Oils/Condiments</option>
+                    <option value="Spices">Spices</option>
+                    <option value="Baking">Baking</option>
+                    <option value="Bakery">Bakery</option>
+                    <option value="BreakfastNCereal">Breakfast & Cereal</option>
+                    <option value="Deli">Deli</option>
+                    <option value="Cheese">Cheese</option>
+                    <option value="Frozen">Frozen</option>
+                    <option value="PastaNGrains">Pasta & Grains</option>
+
+                </select>
+            </div>
             <div>
                 <input type="submit" class="mt-3" value="submit" v-on:click="AddToJSON"/>
                 <input type="submit" class="mt-3" value="cancel" v-on:click="cancelSubmit">
@@ -27,6 +44,7 @@
         data(){
             return{
                 ingredientList: {},
+                selected: ''
 
             };
         },
@@ -53,6 +71,7 @@
                     .then(()=>{
                         //adding items to object not included in model
                         this.ingredientList.name = this.ingredientList.name.toUpperCase();
+                        this.ingredientList.category = this.selected;
                         this.ingredientList.ingredientId = highestId;
                         this.ingredientList.onHand = 5;
                         this.ingredientList.purchased = 5;

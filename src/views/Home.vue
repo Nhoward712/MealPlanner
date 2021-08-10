@@ -3,8 +3,8 @@
         <h1>Shopping List </h1>
             <br>
         <div class="border border-primary">
-            <div class="ml-auto" v-for="item in activeIngredients" :key="item.activeIngredients">
-                <input class="h1 m-3 form-check-input " type="checkbox" :value="item" id="flexCheckDefault">
+            <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
+                <input class="h1 m-3 form-check-input " type="checkbox" value="" id="flexCheckDefault">
                 <label class="h2 ml-5 form-check-label" for="flexCheckDefault"> {{item}}</label>
             </div>
         </div>
@@ -20,6 +20,7 @@
     //get meal plan recipes
     //ret ingredients from recipes
     //remove duplicates
+    //***** Change checkbox to a button and onClick move it to a new array of inCart items ********
 
     export default {
         name: "Home",
@@ -147,6 +148,7 @@
                     }
                 }
                 this.activeIngredients = [... new Set(tempIng)]
+                this.activeIngredients.sort();
             }
 
         }
