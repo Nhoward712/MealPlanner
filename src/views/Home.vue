@@ -5,7 +5,7 @@
         <div class="border border-primary">
             <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
                 <input class="h1 m-3 form-check-input " type="checkbox" value="" id="flexCheckDefault">
-                <label class="h2 ml-5 form-check-label" for="flexCheckDefault"> {{item}}</label>
+                <label class="h2 ml-5 form-check-label" for="flexCheckDefault"> {{item.name}}</label>
             </div>
         </div>
 
@@ -142,15 +142,34 @@
                     for(let j=0; j<this.allRecipes.length; j++){
                         if(this.activeRecipes[i] === this.allRecipes[j].recipeId){
                             for (let k=0; k<this.allRecipes[j].recipeIngredients.length; k++){
-                                tempIng.push(this.allRecipes[j].recipeIngredients[k].name)
+                                tempIng.push({name: this.allRecipes[j].recipeIngredients[k].name,
+                                category: this.allRecipes[j].recipeIngredients[k].category})
+
                             }
                         }
                     }
                 }
-                this.activeIngredients = [... new Set(tempIng)]
-                this.activeIngredients.sort();
-            }
+                this.activeIngredients = this.getArray(tempIng, 'name');
+                this.activeIngredients.sort(function(a, b) {
+                    var nameA = a.category.toUpperCase(); // ignore upper and lowercase
+                    var nameB = b.category.toUpperCase(); // ignore upper and lowercase
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
 
+                    // names must be equal
+                    return 0;
+                });
+                // this.activeIngredients = [... new Set(tempIng)];
+                // this.activeIngredients.sort();
+            },
+            getArray(array, key) {
+                var check = new Set();
+                return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
+            },
         }
     }
 </script>
