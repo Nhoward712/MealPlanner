@@ -1,11 +1,32 @@
 <template>
     <div id="nav">
-        <nav class="navbar navbar-expand-lg navbar-light  ">
-            <router-link class="nav-item nav-link text-warning" to="/">Home</router-link> ||
-            <router-link class="nav-item nav-link text-warning" :to="{name:'WeeklyMealPlan'}">Weekly Planner</router-link> ||
-            <router-link class="nav-item nav-link text-warning" :to="{name:'InventoryList'}">Inventory</router-link> ||
-            <router-link class="nav-item nav-link text-warning" :to="{name:'Recipes'}">Recipes</router-link>
+        <nav class="navbar sticky-top navbar-expand-sm navbar-light ">
+            <a class="navbar-brand" href="#">LOGO</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse " id="navbarSupportedContent" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <router-link class="nav-item nav-link " to="/"><h4>Home</h4></router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-item nav-link " :to="{name:'ShoppingList'}"><h4>Shopping List</h4></router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-item nav-link " :to="{name:'WeeklyMealPlan'}"><h4>Weekly Planner</h4></router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-item nav-link " :to="{name:'InventoryList'}"><h4>Inventory</h4></router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-item nav-link " :to="{name:'Recipes'}"><h4>Recipes</h4></router-link>
+                    </li>
+                </ul>
+            </div>
         </nav>
+
     </div>
 </template>
 
@@ -17,6 +38,7 @@
 
 <style scoped>
 nav{
-    background-color: #17a2b8;
+    background-color: #9fcdff;
 }
+
 </style>

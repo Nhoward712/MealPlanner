@@ -1,21 +1,16 @@
 <template>
-    <div>
-        <router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:id}}" >
+    <div class="ml-4 ">
+        <router-link class="mt-0" :to="{name:'ViewRecipe', params: {recipe:id}}" >
 
-            <div class="card border-primary m-1" style="width: 18rem;">
+            <div class="card border-primary m-1 " style="width: 18rem;">
     <!--            <img src="..." class="card-img-top" alt="...">-->
                 <div class="card-body">
                     <h3 class="card-title pl-1 text-center">{{recipe.recipeName}}</h3>
-<!--                    <h5>Directions:</h5>-->
-<!--                    <p class="card-text bg-light">{{recipe.recipeDirections}}</p>-->
-<!--                    <ul  class="list-group list-group-flush" v-for="ingredient in recipe.recipeIngredients" :key="ingredient.ingredients">-->
-<!--                        <ingredient v-if="isIngredientInRecipe(recipe.recipeId,ingredient.ingredientId)" :show="false" :ingredient="ingredient"/>-->
-<!--                    </ul><br>-->
-                    <router-link class="mt-0 col-sm-5" :to="{name:'EditRecipe', params: {recipe:id}}" ><button>Edit Recipe</button></router-link>
-                    <input class="mt-0 col-sm-5 bg-warning" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
-
+                    <router-link class="mt-0 col-sm-5 text-center ml-0" :to="{name:'EditRecipe', params: {recipe:id}}" ><button class="col-sm-11 ">Edit Recipe</button></router-link>
+                    <input class="mt-0 col-sm-12 bg-warning text-center" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
                 </div>
             </div>
+
         </router-link>
     </div>
 
