@@ -57,11 +57,8 @@
                     });
             });
 
-            console.log("here",this.ingredients)
         },
         mounted(){
-            // this.ingredients = db.ingredientList;
-            console.log(db.ingredientList)
 
         }
     }

@@ -1,11 +1,11 @@
 <template>
     <div >
-        <div class="card border-primary m-1 "  style="width: 12rem;">
-            <h3 class="bg-secondary card-body">{{DayOfWeek}}</h3>
-            <div v-for="per in period" :key="per.period">
+        <div class="card border-primary m-0 "  style="width: 11rem;">
+            <h4 class="day card-body">{{DayOfWeek}}</h4>
+            <div v-for="per in period" :key="per.period" class="cardTitle">
 
                 <div class="row">
-                    <h5 class="mt-3 ml-3">{{per}}:</h5>
+                    <h5 class="mt-3 ml-3 menuBase">{{per}}:</h5>
                     <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
                         <button class="btn fa-border">
                             <font-awesome-icon icon="plus-circle" />
@@ -14,7 +14,7 @@
                 </div>
 
                 <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
-                    <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="ml-4">
+                    <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
                         <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,1)" >
                             <font-awesome-icon icon="minus-circle" />
                         </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
@@ -87,5 +87,17 @@
 </script>
 
 <style scoped>
+.menu{
+    background-color: #d1ecf1;
+}
 
+.menuBase{
+    background-color: #8fd19e;
+}
+.day{
+    background-color: #fc4a1a;
+}
+.cardTitle{
+    background-color: #8fd19e;
+}
 </style>

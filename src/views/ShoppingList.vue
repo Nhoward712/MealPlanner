@@ -151,8 +151,8 @@
                 }
                 this.activeIngredients = this.getArray(tempIng, 'name');
                 this.activeIngredients.sort(function(a, b) {
-                    var nameA = a.category.toUpperCase(); // ignore upper and lowercase
-                    var nameB = b.category.toUpperCase(); // ignore upper and lowercase
+                    var nameA = a.category; // ignore upper and lowercase
+                    var nameB = b.category; // ignore upper and lowercase
                     if (nameA < nameB) {
                         return -1;
                     }

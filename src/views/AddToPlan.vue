@@ -14,6 +14,7 @@
                         style="width: 200px">
 
             </div>
+        <button class="btn btn-info m-5">Create New Recipe</button>
     </div>
 </template>
 
