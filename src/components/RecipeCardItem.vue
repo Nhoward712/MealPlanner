@@ -1,19 +1,19 @@
 <template>
     <div class="ml-4 ">
-        <router-link class="mt-0" :to="{name:'ViewRecipe', params: {recipe:id}}" >
 
-            <div class="card border-primary m-1 " style="width: 18rem;">
-    <!--            <img src="..." class="card-img-top" alt="...">-->
-                <div class="card-body">
-                    <h3 class="card-title pl-1 text-center">{{recipe.recipeName}}</h3>
-                    <router-link class="mt-0 col-sm-5 text-center ml-0" :to="{name:'EditRecipe', params: {recipe:id}}" ><button class="col-sm-11 ">Edit Recipe</button></router-link>
-                    <input class="mt-0 col-sm-12 bg-warning text-center" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
+<!--        <router-link class="mt-0" :to="{name:'ViewRecipe', params: {recipe:id}}" >-->
+            <!--            <img src="..." class="card-img-top" alt="...">-->
+            <div class="">
+                <div v-on:click="onClickButton(recipe)"  class="row">
+                    <h3 class="pl-3 col-sm-12 text-left">{{recipe.recipeName}}</h3>
+<!--                    <router-link class="text-center col-sm-3" :to="{name:'EditRecipe', params: {recipe:id}}" >-->
+<!--                        <button class="m-0">Edit Recipe</button>-->
+<!--                    </router-link>-->
+<!--                    <input class="col-sm-2 bg-warning text-center" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>-->
                 </div>
             </div>
-
-        </router-link>
+<!--        </router-link>-->
     </div>
-
 </template>
 
 <script>
@@ -43,6 +43,10 @@
         },
 
         methods:{
+            onClickButton (event) {
+                this.$emit('btnClicked', event);
+                console.log("emitted");
+            },
             isIngredientInRecipe(recipeId,ingredientID){
                 let recipeIngredients = this.recipe.recipeIngredients;
                 let isTrue = false;
@@ -90,6 +94,9 @@
     h3 {
         background-color: #9fcdff;
         color: #1b1e21;
-        font-family: Papyrus;
+        font-size: 1.5rem;
+    }
+    h3:hover {
+        background-color: #fcf8e3;
     }
 </style>

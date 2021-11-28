@@ -1,9 +1,12 @@
 <template>
     <div >
-        <div class="card border-primary m-0 "  style="width: 11rem;">
-            <h4 class="day card-body">{{DayOfWeek}}</h4>
-            <div v-for="per in period" :key="per.period" class="cardTitle">
+        <div class=" border-primary m-2 col-lg-6 ">
+            <div class="">
+                <h4 class="day col-12">{{DayOfWeek}}</h4>
 
+            </div>
+
+            <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
                 <div class="row">
                     <h5 class="mt-3 ml-3 menuBase">{{per}}:</h5>
                     <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >

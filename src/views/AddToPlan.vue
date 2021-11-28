@@ -11,10 +11,10 @@
                         :value=recipe.recipeName
                         class="mt-1 text-wrap"
                         v-on:click="saveItems(1,recipe)"
-                        style="width: 200px">
+                        style="width: 200px"><!--First parameter of saveItems is planID.  needs to be dynamic later-->
 
             </div>
-        <button class="btn btn-info m-5">Create New Recipe</button>
+        <router-link :to="{name:'AddNewRecipe'}"><button class="btn btn-info m-5">Create New Recipe</button></router-link>
     </div>
 </template>
 
