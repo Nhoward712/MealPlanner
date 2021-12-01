@@ -50,7 +50,9 @@
                             //this is for the default plan.  future will have to have dynamic planID num.
                             if(doc.data().PlanId === planId ){
                                 let docId = doc.id;
+                                console.log("added",doc.data()["MondayLunch"]);
                                 this.newRecipes = doc.data()[this.day + this.period];
+                                console.log(this.newRecipes);
                                 this.newRecipes.push(recipe.recipeId);
                                 this.update(docId);
                             }

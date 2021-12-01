@@ -39,6 +39,14 @@
 <style scoped>
 nav{
     background-color: #9fcdff;
+    /*position:fixed; !* fixing the position takes it out of html flow - knows*/
+    /*               nothing about where to locate itself except by browser*/
+    /*               coordinates *!*/
+/*    left:0;           !* top left corner should start at leftmost spot *!*/
+/*    top:0;            !* top left corner should start at topmost spot *!!**/
+/*    width:100vw;      !* take up the full browser width *!*/
+/*z-index:500;  !* high z index so other content scrolls underneath *!*/
+/*height:50px*!*/
 }
 
 </style>

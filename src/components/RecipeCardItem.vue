@@ -98,5 +98,6 @@
     }
     h3:hover {
         background-color: #fcf8e3;
+        cursor: pointer;
     }
 </style>
