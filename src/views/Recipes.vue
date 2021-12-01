@@ -1,37 +1,46 @@
 <template>
     <div class="ml-1">
         <div class="bg-dark row mb-2">
-            <h1 class="text-primary ml-5">Recipes</h1>
-            <form class="row" onsubmit="searchRecipes(searchTerm)">
-                <input class="ml-5 mt-2" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)">
-                <input class="ml-1 mt-2 p-0 " type="submit" value="Search" style="height: 1.5em">
+            <h1 class="text-primary ml-5 col-2">Recipes</h1>
+            <form class="col-3 mt-2 row" v-on:submit="searchRecipes(searchTerm)">
+                <input class="col-10" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)">
+                <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">
             </form>
-            <form class="text-right ml-5 ">
+            <form class="text-right m-2  col-4 ">
                     <!--needs to be dynamic list of filter parameters-->
                     <input type="checkbox" id="veg" name="veg" value="Vegetable">
                     <label for="veg" class="p-1">Vegetable</label>
                     <input type="checkbox" id="main" name="main" value="Main" class="ml-2">
                     <label for="main" class="p-1">Main Dish</label>
-                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" class="ml-2">
+                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" class="ml-2" checked>
                     <label for="userOwned" class="p-1">My Recipes</label>
             </form>
-            <div class="ml-auto mr-5 bg-info card-title">
-                <router-link :to="{name:'AddNewRecipe'}"><button class="border border-dark bg-info row">
-                    <font-awesome-icon icon="plus-circle" /><h3 class="text-right bg-info">Add New Recipe</h3>
-                </button></router-link>
+            <div class="col-3 row m-auto">
+                <router-link :to="{name:'AddNewRecipe'}">
+                    <button class="bg-info btn btn-sm">
+<!--                        <font-awesome-icon icon="plus-circle" class="col-2"/>-->
+                        <h3 class="text-right m-1 bg-info col-12">Add New Recipe</h3>
+                    </button>
+                </router-link>
+<!--                <font-awesome-icon icon="plus-circle" />-->
             </div>
         </div>
 
         <div class="row">
             <div class="col-4 border border-dark">
                 <div class="row mb-2 mt-2 border-bottom">
-                    <h2 class="ml-4 col-sm-8">{{recipe.recipeName}}</h2>
-                    <div class="col-sm-3">
-                        <router-link class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
-                            <button class="m-0 col-sm-12">Edit</button>
-                        </router-link>
-                        <input class="col-sm-12 bg-warning p-0 mb-2" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
+                    <div class="col-sm-8">
+                        <h2 class="ml-4">{{recipe.recipeName}}</h2>
+                        <p>Recipe By: Billy</p>
                     </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-outline-secondary col-sm-12">Add</button>
+                        <router-link class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
+                            <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
+                        </router-link>
+                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
+                    </div>
+
                 </div>
                 <form class="text-center border-bottom pb-2">
                     <select name="day" id="day" v-model="day">
@@ -63,7 +72,7 @@
                     <p >{{recipe.recipeDirections}}</p>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-7">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>
