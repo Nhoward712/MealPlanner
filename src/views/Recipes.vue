@@ -31,7 +31,9 @@
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
-                        <p>Recipe By: Billy</p>
+                        <p class="m-auto">Recipe By: Billy</p>
+                        <input type="checkbox" id="public" name="public" value="public" class="ml-2" checked>
+                        <label for="public" class="p-1 text-primary">Is Public</label>
                     </div>
                     <div class="col-sm-3">
                         <button class="btn btn-outline-secondary col-sm-12">Add</button>

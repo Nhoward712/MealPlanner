@@ -1,9 +1,12 @@
 <template>
-    <div>
-        <div class=" ml-2">
-            <div class="m-1" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+    <div class="container row align-items-start">
+        <div class="col-sm-3">
+            <div class="" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
             </div>
+        </div>
+        <div class="col-sm-6 border border-primary">
+            <p class="">New column</p>
         </div>
 
     </div>

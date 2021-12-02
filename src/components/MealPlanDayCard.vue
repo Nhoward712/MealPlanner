@@ -1,9 +1,9 @@
 <template>
     <div >
-        <div class=" border-primary m-2 col-lg-6 ">
-            <div class="">
+        <div class=" border-primary mt-2">
+            <div class="row">
                 <p>
-                    <button class="btn btn-primary col-sm-4" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + DayOfWeek" aria-expanded="false" :aria-controls="DayOfWeek">
+                    <button class="btn btn-primary col-sm-10" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + DayOfWeek" aria-expanded="false" :aria-controls="DayOfWeek">
                         {{DayOfWeek}}
 <!--                        Look at scrollSpy for moving to the correct spot on the page whe button is pressed-->
                     </button>
@@ -12,8 +12,8 @@
                     <div class="card card-body">
                         <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
                             <div class="">
-                                <h5 class="m-3 menuBase">{{per}}:</h5><hr>
-                                <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
+                                <h5 class="menuBase">{{per}}:</h5><hr>
+                                <router-link class="" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
                                     <button class="btn fa-border">
                                         <font-awesome-icon icon="plus-circle" />
                                     </button>
