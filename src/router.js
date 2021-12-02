@@ -10,6 +10,7 @@ import WeeklyMealPlan from "@/views/WeeklyMealPlan";
 import AddToPlan from "@/views/AddToPlan";
 import ViewRecipe from "@/views/ViewRecipe";
 import ShoppingList from "@/views/ShoppingList";
+import Register from "@/views/Register";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,7 @@ const routes = [
     { path: "/AddToPlan", component: AddToPlan, name: "AddToPlan", props: true},
     { path: "/ViewRecipe", component: ViewRecipe, name: "ViewRecipe", props: true},
     { path: "/ShoppingList", component: ShoppingList, name: "ShoppingList", props: true},
+    { path: "/Register", component: Register, name: "Register", props: true},
 
 
     ];
