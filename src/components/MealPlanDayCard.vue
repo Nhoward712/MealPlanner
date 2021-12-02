@@ -2,27 +2,38 @@
     <div >
         <div class=" border-primary m-2 col-lg-6 ">
             <div class="">
-                <h4 class="day col-12">{{DayOfWeek}}</h4>
+                <p>
+                    <button class="btn btn-primary col-sm-4" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + DayOfWeek" aria-expanded="false" :aria-controls="DayOfWeek">
+                        {{DayOfWeek}}
+<!--                        Look at scrollSpy for moving to the correct spot on the page whe button is pressed-->
+                    </button>
+                </p>
+                <div class="collapse" :id="DayOfWeek">
+                    <div class="card card-body">
+                        <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
+                            <div class="">
+                                <h5 class="m-3 menuBase">{{per}}:</h5><hr>
+                                <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
+                                    <button class="btn fa-border">
+                                        <font-awesome-icon icon="plus-circle" />
+                                    </button>
+                                </router-link>
+                            </div>
+
+                            <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
+                                <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
+                                    <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,1)" >
+                                        <font-awesome-icon icon="minus-circle" />
+                                    </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                <h4 class="day col-12" >{{DayOfWeek}}</h4>-->
 
             </div>
 
-            <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
-                <div class="row">
-                    <h5 class="mt-3 ml-3 menuBase">{{per}}:</h5>
-                    <router-link class="mt-2 col-sm-5 " style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
-                        <button class="btn fa-border">
-                            <font-awesome-icon icon="plus-circle" />
-                        </button>
-                    </router-link>
-                </div>
 
-                <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
-                    <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
-                        <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,1)" >
-                            <font-awesome-icon icon="minus-circle" />
-                        </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -95,12 +106,13 @@
 }
 
 .menuBase{
-    background-color: #8fd19e;
+    background-color: #fff3cd;
+    /*text-align: center;*/
 }
 .day{
     background-color: #fc4a1a;
 }
 .cardTitle{
-    background-color: #8fd19e;
+    background-color: #fff3cd;
 }
 </style>

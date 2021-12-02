@@ -72,7 +72,7 @@
                     <p >{{recipe.recipeDirections}}</p>
                 </div>
             </div>
-            <div class="col-7">
+            <div class="col-8">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>

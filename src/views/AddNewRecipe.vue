@@ -1,22 +1,26 @@
 <template>
-    <div>
+    <div class="m-2">
         <label for="recipeName"  class="sr-only">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
         <label for="recipeDirections"  class="sr-only">Directions: </label>
-        <input type="text" class="form-control col col-sm-6 h-75" v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
+        <input type="text" class="form-control col col-sm-6 " v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"><br>
+
         <div class="card col-sm-6">
             <div class="row" v-for="(item, i) in ingredients" :key="item.name">
-                <input type="submit" value="Remove" class="ml-1 mb-1" v-on:click="removeFromList(i)">
-                <p class="ml-5 mb-1">{{item.amount}}</p>
-                <p class="ml-1 mb-1">{{item.type}}</p>
-                <p class="ml-1 mb-1">{{item.name}}</p>
+                <p class="ml-5 mb-1 col-sm-1">{{item.amount}}</p>
+                <p class="ml-1 mb-1 col-sm-1">{{item.type}}</p>
+                <p class="ml-1 mb-1 col-sm-8">{{item.name}}</p>
+                <input type="submit" value="Remove" class="ml-1 mb-1 col-sm-2" v-on:click="removeFromList(i)">
             </div>
         </div>
-        <br>
-        <div class="row">
+
+        <br><hr class="col-sm-6">
+
+        <div class="row m-1">
+            <h4>Add Ingredient</h4>
             <label for="amount" class="sr-only">Amount</label>
-            <input type="text" class="form-control col-sm-1 ml-3" v-model="ingredient.amount" id="amount" placeholder="qty" required>
-            <select class="form-select" aria-label="Default select example" v-model="ingredient.type" required>
+            <input type="text" class="form-control col-sm-1 pl-1" v-model="ingredient.amount" id="amount" placeholder="qty" required>
+            <select class="form-select col-sm-1" aria-label="Default select example" v-model="ingredient.type" required>
                 <option value="each">each</option>
                 <option value="TSP">TSP</option>
                 <option value="TBL">TBL</option>
@@ -28,7 +32,7 @@
                 <option value="Lb">Lb</option>
             </select>
             <label for="name" class="sr-only">Ingredient Name</label>
-            <input type="text" class="form-control col-sm-5" v-model="ingredient.name" id="name" placeholder="New ingredient Name" required>
+            <input type="text" class="form-control col-sm-4" v-model="ingredient.name" id="name" placeholder="New ingredient Name" required>
             <input type="submit" class="mt-0 col-sm-1" value="Add" v-on:click="addToList"/>
         </div>
         <div>

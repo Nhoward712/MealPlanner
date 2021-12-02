@@ -2,7 +2,7 @@
     <div>
         <h1>Shopping List </h1>
             <br>
-        <div class="border border-primary">
+        <div class="border border-primary scrollable">
             <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
                 <input class="h1 m-3 form-check-input " type="checkbox" value="" id="flexCheckDefault">
                 <label class="h2 ml-5 form-check-label" for="flexCheckDefault"> {{item.name}}</label>
@@ -177,5 +177,8 @@
 <style scoped>
     input[type="checkbox"] {
         transform:scale(2, 2);
+    }
+    .scrollable{
+        overflow-y: scroll;
     }
 </style>
