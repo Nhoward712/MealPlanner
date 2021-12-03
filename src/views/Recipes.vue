@@ -12,7 +12,7 @@
                     <label for="veg" class="p-1">Vegetable</label>
                     <input type="checkbox" id="main" name="main" value="Main" class="ml-2">
                     <label for="main" class="p-1">Main Dish</label>
-                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" class="ml-2" checked>
+                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned"  class="ml-2" checked>
                     <label for="userOwned" class="p-1">My Recipes</label>
             </form>
             <div class="col-3 row m-auto">
@@ -45,8 +45,8 @@
 
                 </div>
                 <form class="text-center border-bottom pb-2">
-                    <select name="day" id="day" v-model="day">
-                        <option value="Monday">Monday</option>
+                    <select name="day" id="day" v-model="day" placeholder="Monday" >
+                        <option selected value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
                         <option value="Thursday">Thursday</option>
@@ -109,12 +109,8 @@
                 recipes: [],
                 ingredients: [],
                 recipe: {},
-                day: {
-                    type: "Monday"
-                },
-                period: {
-                    type: "Breakfast"
-                },
+                day: "Monday",
+                period: "Breakfast",
                 newRecipes: [],
                 filteredRecipes: [],
                 searchTerm: "",
