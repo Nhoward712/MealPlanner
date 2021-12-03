@@ -57,6 +57,7 @@
                         .createUserWithEmailAndPassword(this.email, this.password)
                         .then((params) => {
                             console.log("SUCCESS", params);
+                            this.createUserDocument();
                         })
                         .catch((error) => {
                             console.log("SIGN UP ERROR:", error.message);
@@ -67,6 +68,24 @@
                     console.log("Inavalid user input - Make sure you add validation code!");
                 }
             },
+            createUserDocument() {
+                const user = firebase.auth().currentUser;
+                if (user) {
+                    // Note, you may want to store more info in the users collection
+                    // (I am just adding email and role, but your app may call for more fields)
+                    const db = firebase.app().firestore();
+                    this.userRole = "user"; // when a new user is created they default to the 'user' role
+                    // this.userName = this.userName;
+                    db.collection("users")
+                        .doc(user.uid)
+                        .set({ email: user.email, role: this.userRole, userName: this.userName }, { merge: true })
+                        .then(() => console.log("USER DOCUMENT CREATED"))
+                        .catch((e) => console.log(e));
+                } else {
+                    console.log("cannot create user doc!");
+                }
+            },
+
         },
     };
 </script>

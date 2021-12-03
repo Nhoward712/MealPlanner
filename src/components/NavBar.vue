@@ -17,19 +17,33 @@
                     <li class="nav-item">
                         <router-link class="nav-item nav-link " :to="{name:'WeeklyMealPlan'}"><h4>Weekly Planner</h4></router-link>
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-item nav-link " :to="{name:'InventoryList'}"><h4>Inventory</h4></router-link>
+                    <li class="nav-item" v-if="userRole ==='admin' ">
+                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole}}"><h4>Inventory</h4></router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-item nav-link " :to="{name:'Recipes'}"><h4>Recipes</h4></router-link>
                     </li>
+                    <li class="nav-item text-right" v-if="currentUser" >
+                        <a href="#" class="nav-link" @click.prevent="logout">Log out</a>
+                    </li>
+                    <li class="nav-item text-right" v-else>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Sign In
+                        </button>
+                    </li>
+                    <li>
+                        <span v-if="currentUser">
+                        <b class="m-5 p-5">You are logged in as: {{ userName }}</b>
+
+                        </span>
+                    </li>
                 </ul>
                 <!-- Button trigger modal -->
-                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Sign In
-                    </button>
-                </div>
+<!--                <div class="d-grid gap-2 d-md-flex justify-content-md-center">-->
+<!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--                        Sign In-->
+<!--                    </button>-->
+<!--                </div>-->
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -62,64 +76,18 @@
 <!--                                </div>-->
                                 <div class="row text-center col-sm-8 m-auto">
                                     <h5 class="col-sm-8">Not a member yet?</h5>
-                                    <router-link to="/register" class="btn btn-primary col-sm-4">Registration</router-link>
+                                    <router-link to="/register" data-bs-dismiss="modal" class="btn btn-primary col-sm-4">Registration</router-link>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                                <button type="button" class="btn btn-primary" @click="login" >log In</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="login" >log In</button>
 
                             </div>
                         </div>
                     </div>
                 </div>
-<!--                <p>-->
-<!--                    <button class="btn btn-primary ml-5" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">-->
-<!--                        Sign in-->
-<!--                    </button>-->
-<!--                </p>-->
-<!--                <div class="collapse" id="collapseExample">-->
-<!--                    <div class="card card-body">-->
-<!--                        <div class="container d-flex justify-content-center">-->
-<!--                            <div class="card mx-5 my-5">-->
-<!--                                <div class="card-body py-2 px-2">-->
-<!--                                    <h2 class="card-heading py-3 px-5">Log In</h2>-->
-<!--                                    <div class="row one mx-3 my-3">-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <label for="inputEmail"  class="sr-only">Email</label>-->
-<!--                                                <input type="email" class="form-control" v-model="email" id="inputEmail1" placeholder="Email or Phone">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <label for="inputPassword" class="sr-only">Password</label>-->
-<!--                                                <input type="password" class="form-control" id="inputPassword1" v-model="password" placeholder="Password">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="row two mx-3">-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <button type="submit" class="btn btn-primary mb-2" @click="login" >log In</button>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-md-6">-->
-<!--                                            <div class="form-group">-->
-<!--                                                <a href="#" class="forgot">Forgot your Password?</a>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="row text-center">-->
-<!--                                        <p class="ml-5">Not a member yet?</p>-->
-<!--                                        <router-link to="/register" class="btn btn-primary m-2">Registration</router-link>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
         </nav>
 
@@ -127,9 +95,129 @@
 </template>
 
 <script>
+    import firebase from "firebase";
+
     export default {
-        name: "NavBar"
+        name: "NavBar",
+        data() {
+            return {
+                email: "",
+                password: "",
+                loginErrorMessage: "",
+                currentUser: null,
+                userRole: null,
+                userName: null,
+            };
+        },
+        mounted(){
+            firebase.auth()
+                .onAuthStateChanged((user) => {
+                    if (user) {
+                        this.currentUser = user;
+                        // a user has just logged in, so we need to get his/her document
+                        // from our users collection
+                        this.getUserDocument(user.uid);
+                        this.$router.push("/").catch(() => {});
+                    } else {
+                        this.currentUser = null;
+                        this.userRole = null;
+                    }
+                });
+        },
+
+        methods: {
+            login() {
+                this.loginErrorMessage = "";
+                if (this.email && this.password) {
+                    firebase
+                        .auth()
+                        .signInWithEmailAndPassword(this.email, this.password)
+                        .then((userCredential) => {
+                            console.log(
+                                "SIGNED IN WITH EMAIL AND PASSWORD",
+                                userCredential.user
+                            );
+                            // if you don't use a param then it won't compile!!!!
+                        })
+                        .catch((error) => {
+                            this.loginErrorMessage = error.message;
+                        });
+                } else {
+                    if (!this.email && !this.password) {
+                        this.loginErrorMessage = "You must enter an email and password";
+                    } else if (!this.email) {
+                        this.loginErrorMessage = "You must enter an email";
+                    } else if (!this.password) {
+                        this.loginErrorMessage = "You must enter a password";
+                    }
+                }
+            },
+            getUserDocument(userId) {
+                const db = firebase.app().firestore();
+                db.collection("users")
+                    .doc(userId)
+                    .get()
+                    .then((doc) => {
+                        if (doc.exists == false) {
+                            console.log("THE USER DOCUMENT DOES NOT EXIST...");
+                            this.createUserDocument();
+                        } else {
+                            this.userRole = doc.data().role;
+                            this.userName = doc.data().userName;
+                            this.$emit("test",this.userRole);
+                        }
+                    })
+                    .catch((error) => console.log(error));
+            },
+            createUserDocument() {
+                const user = firebase.auth().currentUser;
+                if (user) {
+                    // Note, you may want to store more info in the users collection
+                    // (I am just adding email and role, but your app may call for more fields)
+                    const db = firebase.app().firestore();
+                    this.userRole = "user"; // when a new user is created they default to the 'user' role
+                    this.userName = "Guest1";
+                    db.collection("users")
+                        .doc(user.uid)
+                        .set({ email: user.email, role: this.userRole, userName: this.userName }, { merge: true })
+                        .then(() => console.log("USER DOCUMENT CREATED"))
+                        .catch((e) => console.log(e));
+                } else {
+                    console.log("cannot create user doc!");
+                }
+            },
+            logout() {
+                firebase
+                    .auth()
+                    .signOut()
+                    .then(
+                        () => {
+                            this.userRole = null;
+                            this.$router.push("login").catch(() => {});
+                            // when a user logs out, redirect to the login view
+                            // note that if you don't put the catch(), then
+                            // you may get a warning saying you should avoid redundant navigation
+                            console.log("Logged Out");
+                        },
+                        (error) => {
+                            console.log("error logging out", error);
+                        }
+                    );
+            },
+            googleLogin() {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                firebase
+                    .auth()
+                    .signInWithPopup(provider)
+                    .then((userCredential) => {
+                        console.log("LOGGED IN W GMAIL:", userCredential.user);
+                    })
+                    .catch((error) => console.log(error));
+            },
+        },
+
     }
+
 </script>
 
 <style scoped>
