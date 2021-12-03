@@ -1,5 +1,6 @@
 <template>
     <div class="m-2">
+        <h3>Author: {{userName}}</h3>
         <label for="recipeName"  class="sr-only">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
         <label for="recipeDirections"  class="sr-only">Directions: </label>
@@ -46,6 +47,10 @@
     import { db } from "../main";
     export default {
         name: "AddNewRecipe",
+        props:{
+            userName: {},
+            UserRole: {},
+        },
         data(){
             return{
                 newRecipe: {},
@@ -77,6 +82,7 @@
         },
         methods:{
             AddToDB(){
+                //this section gets the highest recipe id in the database
                 db.collection("recipes")
                     .onSnapshot((snapshotChange) => {
                     this.recipes = [];
@@ -111,6 +117,7 @@
                             tempList.push(this.ingredients[i])
                         }
                         this.newRecipe.recipeIngredients = tempList;
+                        this.newRecipe.recipeOwner = this.userName;
 
                         db.collection("recipes")
                             .add(this.newRecipe)
@@ -196,6 +203,10 @@
             removeFromList(i){
                 this.ingredients.splice(i,1);
             },
+        },
+        mounted(){
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
         }
     }
 </script>

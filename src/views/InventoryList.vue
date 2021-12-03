@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Inventory Pages</h1>
+        <h1>Inventory Pages {{userRole}} {{userName}}</h1>
         <router-link :to="{name:'AddNewIngredient'}" class="m-4"><button><font-awesome-icon icon="plus-circle" /> Add New Item </button></router-link>
         <ul >
             <table v-for="item in ingredients" :key="item.ingredients" class="table table-bordered table-hover table-striped">
@@ -21,6 +21,10 @@
     export default {
         components: {ingredient},
         name: "InventoryList",
+        props:{
+            userName: {},
+            UserRole: {},
+        },
         data(){
             return{
                 ingredients: []
@@ -59,7 +63,8 @@
 
         },
         mounted(){
-
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
         }
     }
 

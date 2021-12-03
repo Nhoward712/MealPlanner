@@ -5,7 +5,7 @@
             <!--            <img src="..." class="card-img-top" alt="...">-->
             <div class="">
                 <div v-on:click="onClickButton(recipe)"  class="row">
-                    <h3 class="pl-3 col-sm-12 text-left">{{recipe.recipeName}}</h3>
+                    <h3 class="pl-3 col-sm-12 text-left">{{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
 <!--                    <router-link class="text-center col-sm-3" :to="{name:'EditRecipe', params: {recipe:id}}" >-->
 <!--                        <button class="m-0">Edit Recipe</button>-->
 <!--                    </router-link>-->

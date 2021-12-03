@@ -16,7 +16,7 @@
                     <label for="userOwned" class="p-1">My Recipes</label>
             </form>
             <div class="col-3 row m-auto">
-                <router-link :to="{name:'AddNewRecipe'}">
+                <router-link :to="{name:'AddNewRecipe',params:{userRole, userName}}">
                     <button class="bg-info btn btn-sm">
 <!--                        <font-awesome-icon icon="plus-circle" class="col-2"/>-->
                         <h3 class="text-right m-1 bg-info col-12">Add New Recipe</h3>
@@ -31,16 +31,16 @@
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
-                        <p class="m-auto">Recipe By: Billy</p>
-                        <input type="checkbox" id="public" name="public" value="public" class="ml-2" checked>
-                        <label for="public" class="p-1 text-primary">Is Public</label>
+                        <p class="m-auto">Recipe By: {{recipe.recipeOwner}}</p>
+<!--                        <input type="checkbox" id="public" name="public" value="public" class="ml-2" checked>-->
+<!--                        <label for="public" class="p-1 text-primary">Is Public</label>-->
                     </div>
                     <div class="col-sm-3">
                         <button class="btn btn-outline-secondary col-sm-12">Add</button>
-                        <router-link class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
+                        <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
                         </router-link>
-                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
+                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" v-if="recipe.recipeOwner == userName" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
                     </div>
 
                 </div>
@@ -101,7 +101,8 @@
         },
 
         props:{
-
+            userName: {},
+            UserRole: {},
         },
         data(){
             return{
@@ -130,6 +131,7 @@
                             recipeName: doc.data().recipeName,
                             recipeDirections: doc.data().recipeDirections,
                             recipeIngredients: doc.data().recipeIngredients,
+                            recipeOwner: doc.data().recipeOwner,
                         }
                     );
                     this.filteredRecipes = this.recipes;
@@ -243,11 +245,9 @@
         },
 
         mounted() {
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
 
-
-            // this.recipe = this.recipes[2];
-            // this.recipes = db.recipes;
-            // this.ingredients = db.ingredientList;
 
         }
     }
