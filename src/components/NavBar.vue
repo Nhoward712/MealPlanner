@@ -32,10 +32,15 @@
                     <li class="nav-item text-right" v-if="currentUser" >
                         <a href="#" class="nav-link" @click.prevent="logout">Log out</a>
                     </li>
-                    <li class="nav-item text-right" v-else>
+                    <li class="nav-item text-right col-sm-2" v-else>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Sign In
                         </button>
+
+                    </li>
+                    <li class="nav-item text-center col-sm-4 row" v-if="!currentUser">
+                        <h5 class="col-sm-7">Not a member yet?</h5>
+                        <router-link to="/register" data-bs-dismiss="modal" class="btn btn-primary col-sm-5">Registration</router-link>
                     </li>
                     <li>
                         <span v-if="currentUser">
