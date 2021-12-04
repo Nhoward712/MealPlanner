@@ -23,6 +23,7 @@
 
     import MealPlanDayCard from "@/components/MealPlanDayCard";
     import { db } from "../main";
+
     export default {
         name: "WeeklyMealPlan",
         components: {MealPlanDayCard},
@@ -48,6 +49,7 @@
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
                         console.log("Doc PlanID:", doc.data().PlanId, "userName:", this.userName);
+                        console.log("fails when adding recipe because params not passed to and from AddToPlan.  Also need to get recipes page to properly ad plan")
                         if(doc.data().PlanId == this.userName){//change the '1' to dynamic meal plan id
                             console.log("Here")
                             this.activeMealPlan ={

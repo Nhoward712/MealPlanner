@@ -6,6 +6,7 @@
             <div class="text-center  pt-5" style="height: 90%">
                 <div class="m-auto border border-dark rounded" style="width: 60%; height:60%; opacity: 100%; background-color: #FFFFFF">
                     <h1 class="pt-3">Meal Planner 3000</h1>
+                    <h2>Welcome {{userName}}</h2>
                 </div>
 
 
@@ -23,8 +24,19 @@
 </template>
 
 <script>
+    import { userName} from "../main";
+
     export default {
-        name: "Home"
+        name: "Home",
+        data() {
+            return {
+                userName: "",
+            }
+        },
+        mounted(){
+            this.userName = userName;
+            console.log(this.userName, userName)
+        }
     }
 </script>
 

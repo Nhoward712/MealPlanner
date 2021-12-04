@@ -33,13 +33,16 @@ var firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const db = firebaseApp.firestore();
 
-// let allIngredients = [];
+
 run();
+
 
 export var il = [];
 export var rec = [];
+export var userName = "";
 
 function run(){
+
     db.collection("ingredientList")
         .get()
         .then((snapshotChange) => {
@@ -63,6 +66,8 @@ function run(){
           }).$mount('#app')
         });
 }
+
+
 
 Vue.config.productionTip = false;
 

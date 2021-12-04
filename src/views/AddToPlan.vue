@@ -10,7 +10,7 @@
                         :name=recipe.recipeId
                         :value=recipe.recipeName
                         class="mt-1 text-wrap"
-                        v-on:click="saveItems(1,recipe)"
+                        v-on:click="saveItems(userName,recipe)"
                         style="width: 200px"><!--First parameter of saveItems is planID.  needs to be dynamic later-->
 
             </div>
@@ -20,7 +20,7 @@
 
 <script>
     import { db } from "../main";
-
+    import { userName} from "../main";
     //Display list of recipes
     //have user checkmark items to be added
     //Add items to meal Plan
@@ -39,6 +39,7 @@
             return{
                 recipes: [],
                 newRecipes: [],
+                userName
             }
         },
         methods:{
@@ -49,7 +50,8 @@
                         querySnapshot.forEach((doc) =>{
                             //this is for the default plan.  future will have to have dynamic planID num.
                             //need option for no planId
-
+                            //dynamic plan needs to have params: userName passed in
+                            //Need to pass it back to meal plan view on complete
 
                             if(doc.data().PlanId === planId){
                                 let docId = doc.id;
