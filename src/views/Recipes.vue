@@ -45,7 +45,7 @@
 
                 </div>
                 <form class="text-center border-bottom pb-2">
-                    <select name="day" id="day" v-model="day" placeholder="Monday" >
+                    <select name="day" id="day" v-model="day">
                         <option selected value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
@@ -154,6 +154,7 @@
             setTimeout(this.randomRecipe(),5000);
         },
         methods:{
+            //potentially have the PlanId be the user credentials
             saveItems(planId, recipe){
                 console.log(this.day,this.period, recipe.recipeId);
                 db.collection("MealPlans")

@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="col-sm-6 border border-primary">
-            <p class="">New column</p>
+            <p class="">{{userName}}</p>
         </div>
 
     </div>
@@ -26,6 +26,10 @@
     export default {
         name: "WeeklyMealPlan",
         components: {MealPlanDayCard},
+        props:{
+            userName: {},
+            UserRole: {},
+        },
         data(){
             return {
                 dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -36,12 +40,16 @@
             };
         },
         mounted(){
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
             db.collection("MealPlans")
                 .get()
                 .then((querySnapshot)=>{
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
-                        if(doc.data().PlanId === 1){
+                        console.log("Doc PlanID:", doc.data().PlanId, "userName:", this.userName);
+                        if(doc.data().PlanId == this.userName){//change the '1' to dynamic meal plan id
+                            console.log("Here")
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
                                 FridayBreakfast: doc.data().FridayBreakfast,
@@ -99,6 +107,7 @@
                         });
                     });
                 });
+
         }
     }
 </script>

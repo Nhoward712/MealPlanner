@@ -28,7 +28,8 @@
 
         },
         props:{
-
+            userName: {},
+            UserRole: {}
         },
         data(){
             return {
@@ -44,6 +45,8 @@
             }
         },
         created(){
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
             this.il = il;
             db.collection("ingredientList")
                 .onSnapshot((snapshotChange) => {
@@ -77,8 +80,11 @@
                 .get()
                 .then((querySnapshot)=>{
                     this.activeMealPlan = {};
+
                     querySnapshot.forEach((doc) => {
-                        if(doc.data().PlanId === 1){
+                        console.log("docID:", doc.data().PlanId,"userName:", this.userName);
+
+                        if(doc.data().PlanId == this.userName){
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
                                 FridayBreakfast: doc.data().FridayBreakfast,
@@ -119,6 +125,7 @@
 
         methods:{
             getAllRecipes(){
+                console.log(this.activeMealPlan);
                 for (let i=0; i<this.dayOfWeek.length; i++){
                     //this loops though meal periods
                     for(let k=0; k<this.mealPeriod.length; k++){
@@ -170,6 +177,9 @@
                 var check = new Set();
                 return array.filter(obj => !check.has(obj[key]) && check.add(obj[key]));
             },
+        },
+        mounted(){
+
         }
     }
 </script>

@@ -48,29 +48,34 @@
                     .then((querySnapshot) =>{
                         querySnapshot.forEach((doc) =>{
                             //this is for the default plan.  future will have to have dynamic planID num.
-                            if(doc.data().PlanId === planId ){
+                            //need option for no planId
+
+
+                            if(doc.data().PlanId === planId){
                                 let docId = doc.id;
                                 console.log("added",doc.data()["MondayLunch"]);
                                 this.newRecipes = doc.data()[this.day + this.period];
-                                console.log(this.newRecipes);
+                                console.log("newRecipes", this.newRecipes, "recipes", this.recipes);
                                 this.newRecipes.push(recipe.recipeId);
                                 this.update(docId);
                             }
+
                         })
                     })
                     .then(() =>{
                         this.$router.push("/WeeklyMealPlan");
                     })
             },
-            update(tempId){
+            update(docId){
                 db.collection("MealPlans")
-                    .doc(tempId)
+                    .doc(docId)
                     .update(
                         {
                             [this.day + this.period]: this.newRecipes
                         }
                     )
-            }
+            },
+
         },
         created() {
             db.collection("recipes")

@@ -38,6 +38,7 @@
 
 <script>
     import firebase from "firebase";
+    import { db } from "../main";
 
     export default {
         name: "Register",
@@ -46,6 +47,7 @@
                 email: "",
                 password: "",
                 userName: "",
+                activeMealPlan: {},
             };
         },
         methods: {
@@ -59,6 +61,9 @@
                             console.log("SUCCESS", params);
                             this.createUserDocument();
                         })
+                        .then(() => {
+                            this.createMealPlan(this.userName);
+                        })
                         .catch((error) => {
                             console.log("SIGN UP ERROR:", error.message);
                             // The account could aleady exist,
@@ -71,11 +76,9 @@
             createUserDocument() {
                 const user = firebase.auth().currentUser;
                 if (user) {
-                    // Note, you may want to store more info in the users collection
-                    // (I am just adding email and role, but your app may call for more fields)
+                    // Note, may want to store more info in the users collection
                     const db = firebase.app().firestore();
                     this.userRole = "user"; // when a new user is created they default to the 'user' role
-                    // this.userName = this.userName;
                     db.collection("users")
                         .doc(user.uid)
                         .set({ email: user.email, role: this.userRole, userName: this.userName }, { merge: true })
@@ -85,6 +88,36 @@
                     console.log("cannot create user doc!");
                 }
             },
+            createMealPlan(planId){
+                this.activeMealPlan ={
+                    PlanId: planId,
+                    FridayBreakfast: .1,
+                    FridayDinner: .1,
+                    FridayLunch: .1,
+                    MondayBreakfast: .1,
+                    MondayDinner: .1,
+                    MondayLunch: .1,
+                    SaturdayBreakfast: .1,
+                    SaturdayDinner: .1,
+                    SaturdayLunch: .1,
+                    StartDate: .1,
+                    SundayBreakfast: .1,
+                    SundayDinner: .1,
+                    SundayLunch: .1,
+                    ThursdayBreakfast: .1,
+                    ThursdayDinner: .1,
+                    ThursdayLunch: .1,
+                    TuesdayBreakfast: .1,
+                    TuesdayDinner: .1,
+                    TuesdayLunch: .1,
+                    WednesdayBreakfast: .1,
+                    WednesdayDinner: .1,
+                    WednesdayLunch: .1
+                };
+                db.collection("MealPlans")
+                    .add(this.activeMealPlan)
+
+            }
 
         },
     };

@@ -12,13 +12,13 @@
                         <router-link class="nav-item nav-link " to="/"><h4>Home</h4></router-link>
                     </li>
                     <li class="nav-item" v-if="currentUser">
-                        <router-link class="nav-item nav-link " :to="{name:'ShoppingList'}"><h4>Shopping List</h4></router-link>
+                        <router-link class="nav-item nav-link " :to="{name:'ShoppingList', params:{userRole, userName}}"><h4>Shopping List</h4></router-link>
                     </li>
                     <li class="nav-item" v-else>
                         <h4 class="nav-item nav-link disabled">Shopping List</h4>
                     </li>
                     <li class="nav-item" v-if="currentUser">
-                        <router-link class="nav-item nav-link " :to="{name:'WeeklyMealPlan'}"><h4>Weekly Planner</h4></router-link>
+                        <router-link class="nav-item nav-link " :to="{name:'WeeklyMealPlan', params:{userRole, userName}}"><h4>Weekly Planner</h4></router-link>
                     </li>
                     <li class="nav-item" v-else>
                         <h4 class="nav-item nav-link disabled"> Weekly Planner</h4>
