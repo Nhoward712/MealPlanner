@@ -1,33 +1,39 @@
 <template>
 
         <div class="bg text-center">
-
-
             <div class="text-center  pt-5" style="height: 90%">
                 <div class="m-auto border border-dark rounded text-center" style="width: 60%; height:60%; opacity: 100%; background-color: #FFFFFF">
                     <h1 class="text-sm-center">Meal Planner 3000</h1>
                     <h2 class="text-sm-center">Welcome {{userName}}</h2>
                 </div>
-
-
-
             </div>
+
             <div class="mt-5">
                 <p>Meal Planner 3000 is a tool to help organize your recipes, plan your weekly meals, and create a shopping list based off of those meals</p>
                 <p>This is a developer version.  All recipes and plans are for display purposes only and may not be accurate</p>
             </div>
+
             <div class="border border-dark col-sm-8 mb-2 p-3">
+
                 <div class="mb-4">
                     <label for="message">Leave a Message or Suggestion:</label><br>
                     <input type="text" id="message" size="70" v-model="message" placeholder="Leave a Message or Suggestion">
                     <input type="submit" value="Submit" v-on:click="newMessage(userName, message)">
                 </div>
 
-                <div class="text-left" v-for="message in listOfMessages" :key="message.listOfMessages">
-                    <div class="border border-dark col-sm-6 text-left">
-                        <b class="justify-content-sm-start">{{message.user}}</b> said: "{{message.message}}"
+                <div class="col-sm-12" v-for="message in listOfMessages" :key="message.listOfMessages">
+                    <div>
+                    <div class="border border-dark col-sm-6 text-left row">
+                        <div class="col-sm-4">
+                            <b class="justify-content-sm-start">{{message.user}}</b> said:
+                        </div>
+                        <div class="border col-sm-8">
+                            <p>"{{message.message}}"</p>
+                        </div>
+                    </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -61,7 +67,6 @@
                                 user: doc.data().user,
                             }
                         )
-
                     })
                 }).then(()=>{
                     console.log("list of Messages",this.listOfMessages)
