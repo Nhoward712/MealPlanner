@@ -22,7 +22,7 @@
 
                             <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
                                 <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
-                                    <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,1)" >
+                                    <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >
                                         <font-awesome-icon icon="minus-circle" />
                                     </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
                             </div>
@@ -51,8 +51,11 @@
             Recipes:{
                 type: Array,
                 default: null
-
-            }
+            },
+            userName: {
+                type: String,
+                default: ""
+            },
         },
         data(){
             return{
@@ -60,12 +63,13 @@
                 newRecipes: [],
             }
         },
+
         methods:{
             remove(recipe, per, planId){
+                console.log("Here:",recipe,per,planId);
                 db.collection("MealPlans")
                     .onSnapshot((querySnapshot) =>{
                         querySnapshot.forEach((doc) =>{
-                            //this is for the default plan.  future will have to have dynamic planID num.
                             if(doc.data().PlanId === planId ){
                                 this.newRecipes = [];
                                 let docId = doc.id;
@@ -96,6 +100,9 @@
                     )
             }
 
+        },
+        mounted(){
+            this.userName = this.$store.state.userName;
         }
     }
 </script>

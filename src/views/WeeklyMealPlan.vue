@@ -49,7 +49,7 @@
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
                         console.log("Doc PlanID:", doc.data().PlanId, "userName:", this.userName);
-                        if(doc.data().PlanId == this.userName){//change the '1' to dynamic meal plan id
+                        if(doc.data().PlanId == this.userName){
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
                                 FridayBreakfast: doc.data().FridayBreakfast,
