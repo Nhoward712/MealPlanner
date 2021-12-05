@@ -35,7 +35,6 @@ const store = new Vuex.Store({
             state.userName = userName;
             console.log("userName set in Main to:", state.userName);
         }
-
     }
 });
 store.commit('increment');
@@ -64,7 +63,6 @@ export var il = [];
 // export var rec = [];
 
 function run(){
-
     db.collection(`ingredientList`)
         .get()
         .then((snapshotChange) => {

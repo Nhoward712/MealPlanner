@@ -59,7 +59,7 @@
                         <option value="Lunch">Lunch</option>
                         <option value="Dinner">Dinner</option>
                     </select>
-                    <input type="button" value="Add To Meal Plan" v-on:click="saveItems(1,recipe)">
+                    <input type="button" value="Add To Meal Plan" v-on:click="saveItems(userName,recipe)">
                 </form>
                 <h3 class="text-danger ml-2 bg-light">Ingredients: </h3>
                 <ul class="border border-white mb-2" v-for="(item) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
@@ -238,6 +238,13 @@
                 console.log(searchStr);
                 console.log(this.filteredRecipes);
 
+            },
+            isMobile() {
+                if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    return true
+                } else {
+                    return false
+                }
             },
         },
 
