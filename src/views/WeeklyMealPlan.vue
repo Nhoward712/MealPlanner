@@ -1,13 +1,16 @@
 <template>
     <div class="container row align-items-start">
-        <div class="col-sm-3">
+        <div class="col-sm-6 border border-primary">
+            <p class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - Monday</p>
+
+        </div>
+        <div class="col-sm-12">
             <div class="" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+<!--                <button class="btn btn-primary col-sm-10" type="button">{{day}}</button>-->
                 <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
-        <div class="col-sm-6 border border-primary">
-            <p class="">{{userName}}</p>
-        </div>
+
 
     </div>
 
@@ -113,5 +116,7 @@
 </script>
 
 <style scoped>
-
+.text-bold{
+    text-emphasis: #0b2e13;
+}
 </style>

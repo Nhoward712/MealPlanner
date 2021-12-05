@@ -2,13 +2,13 @@
     <div >
         <div class=" border-primary mt-2">
             <div class="row">
-                <p>
-                    <button class="btn btn-primary col-sm-10" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + DayOfWeek" aria-expanded="false" :aria-controls="DayOfWeek">
+                <p class="col-sm-2">
+                    <button class="btn btn-primary col-sm-12" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + DayOfWeek" aria-expanded="false" :aria-controls="DayOfWeek">
                         {{DayOfWeek}}
 <!--                        Look at scrollSpy for moving to the correct spot on the page whe button is pressed-->
                     </button>
                 </p>
-                <div class="collapse" :id="DayOfWeek">
+                <div class="collapse col-sm-8" :id="DayOfWeek">
                     <div class="card card-body">
                         <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
                             <div class="">
