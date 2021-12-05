@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from './App.vue'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -13,10 +14,32 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import firebase from "firebase/app";
 import 'firebase/firestore'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
-// import './ingredients.json'
 
+Vue.use(Vuex);
 library.add(faTrash, faPlusCircle, faMinusCircle);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+//for global variables and states
+const store = new Vuex.Store({
+    state: {
+        count: 0,
+        userName: "",
+        userRole: "",
+        currentUser: "",
+    },
+    mutations: {
+        increment (state) {
+            state.count++
+        },
+        setUserName(state, userName){
+            state.userName = userName;
+            console.log("userName set in Main to:", state.userName);
+        }
+
+    }
+});
+store.commit('increment');
+
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -38,12 +61,11 @@ run();
 
 
 export var il = [];
-export var rec = [];
-export var userName = "";
+// export var rec = [];
 
 function run(){
 
-    db.collection("ingredientList")
+    db.collection(`ingredientList`)
         .get()
         .then((snapshotChange) => {
           il = [];
@@ -61,8 +83,10 @@ function run(){
 
         .then(()=> {
           new Vue({
-            router,
+              store: store,//this injects Vuex into each component. Access with this.$store.state.variable
+              router,
             render: h => h(App),
+
           }).$mount('#app')
         });
 }

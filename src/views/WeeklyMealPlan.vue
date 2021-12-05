@@ -42,16 +42,14 @@
         },
         mounted(){
             this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
-            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
+            this.userName = this.$store.state.userName;
             db.collection("MealPlans")
                 .get()
                 .then((querySnapshot)=>{
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
                         console.log("Doc PlanID:", doc.data().PlanId, "userName:", this.userName);
-                        console.log("fails when adding recipe because params not passed to and from AddToPlan.  Also need to get recipes page to properly ad plan")
                         if(doc.data().PlanId == this.userName){//change the '1' to dynamic meal plan id
-                            console.log("Here")
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
                                 FridayBreakfast: doc.data().FridayBreakfast,

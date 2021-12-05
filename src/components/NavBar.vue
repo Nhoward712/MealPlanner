@@ -128,12 +128,14 @@
                         // a user has just logged in, so we need to get his/her document
                         // from our users collection
                         this.getUserDocument(user.uid);
-                        this.$router.push("/").catch(() => {});
+                        this.$router.push("/Home").catch(() => {});
                     } else {
                         this.currentUser = null;
                         this.userRole = null;
+                        this.$store.commit("setUserName", null);
                     }
                 });
+            this.userName = this.$store.state.userName
         },
 
         methods: {
@@ -148,6 +150,8 @@
                                 "SIGNED IN WITH EMAIL AND PASSWORD",
                                 userCredential.user
                             );
+                            this.$router.push("/Home");
+
                             // if you don't use a param then it won't compile!!!!
                         })
                         .catch((error) => {
@@ -176,6 +180,8 @@
                             this.userRole = doc.data().role;
                             this.userName = doc.data().userName;
                             this.$emit("test",this.userRole);
+                            console.log("userName:", this.userName)
+                            this.$store.commit("setUserName",this.userName);
                         }
                     })
                     .catch((error) => console.log(error));
@@ -209,6 +215,8 @@
                             // note that if you don't put the catch(), then
                             // you may get a warning saying you should avoid redundant navigation
                             console.log("Logged Out");
+                            this.$router.push("/Home");
+
                         },
                         (error) => {
                             console.log("error logging out", error);

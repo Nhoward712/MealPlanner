@@ -14,6 +14,7 @@
             </div>
             <div class="mt-5">
                 <p>Meal Planner 3000 is a tool to help organize your recipes, plan your weekly meals, and create a shopping list based off of those meals</p>
+                <p>This is a developer version.  All recipes and plans are for display purposes only and may not be accurate</p>
             </div>
 
         </div>
@@ -24,18 +25,17 @@
 </template>
 
 <script>
-    import { userName} from "../main";
 
     export default {
         name: "Home",
         data() {
             return {
                 userName: "",
+
             }
         },
         mounted(){
-            this.userName = userName;
-            console.log(this.userName, userName)
+            this.userName = this.$store.state.userName;
         }
     }
 </script>

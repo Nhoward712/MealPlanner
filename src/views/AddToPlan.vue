@@ -20,7 +20,6 @@
 
 <script>
     import { db } from "../main";
-    import { userName} from "../main";
     //Display list of recipes
     //have user checkmark items to be added
     //Add items to meal Plan
@@ -39,7 +38,7 @@
             return{
                 recipes: [],
                 newRecipes: [],
-                userName
+                userName: "",
             }
         },
         methods:{
@@ -55,9 +54,11 @@
 
                             if(doc.data().PlanId === planId){
                                 let docId = doc.id;
-                                console.log("added",doc.data()["MondayLunch"]);
+                                console.log("added",doc.data()[this.day + this.period]);
+                                //loads the current recipes for that mealperiod
                                 this.newRecipes = doc.data()[this.day + this.period];
                                 console.log("newRecipes", this.newRecipes, "recipes", this.recipes);
+                                console.log("recipe id",recipe.recipeId);
                                 this.newRecipes.push(recipe.recipeId);
                                 this.update(docId);
                             }
@@ -93,7 +94,9 @@
                             }
                         )
                     })
-                })
+                });
+            this.userName = this.$store.state.userName;
+
         }
     }
 </script>

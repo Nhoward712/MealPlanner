@@ -243,7 +243,8 @@
 
         mounted() {
             this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
-            this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
+            // this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
+            this.userName = this.$store.state.userName;
 
 
         }
