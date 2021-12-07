@@ -8,10 +8,13 @@
             </div>
         </div>
 
-        <div class="col-sm-5 border border-primary">
+        <div class="col-sm-5 border border-primary ">
             <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
             <br>
-            <MealPlanDayCard :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
+            <div class="menuBox overflow-scroll border">
+                <MealPlanDayCard :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
+
+            </div>
 <!--            <div class="card card-body">-->
 <!--                <div v-for="per in mealPeriod" :key="per.mealPeriod" class="cardTitle border border-dark">-->
 <!--                    <div class="">-->
@@ -152,8 +155,9 @@
 .text-bold{
     text-emphasis: #0b2e13;
 }
-    .textSize{
-        font-size: small;
-    }
+.menuBox{
+    height: 450px;
+}
+
 
 </style>

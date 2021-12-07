@@ -6,12 +6,17 @@
                     <div class="card card-body">
                         <div v-for="per in period" :key="per.period" class="cardTitle border border-dark">
                             <div class="">
-                                <h5 class="menuBase">{{per}}:</h5><hr>
-                                <router-link class="" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
-                                    <button class="btn fa-border">
-                                        <font-awesome-icon icon="plus-circle" />
-                                    </button>
-                                </router-link>
+                                <h5 class="menuBase">{{per}}:
+
+                                        <router-link class="m-0" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
+                                            <button class="btn fa-border">
+                                                <font-awesome-icon icon="plus-circle" /><span class="textSize m-1">Add Recipe</span>
+                                            </button>
+                                        </router-link>
+
+                                </h5>
+                                <hr>
+
                             </div>
 
                             <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
@@ -105,7 +110,9 @@
 .menu{
     background-color: #d1ecf1;
 }
-
+.textSize{
+    font-size: small;
+}
 .menuBase{
     background-color: #fff3cd;
     /*text-align: center;*/
