@@ -17,8 +17,14 @@
 
                 <div class="mb-4">
                     <label for="message">Leave a Message or Suggestion:</label><br>
-                    <input type="text" id="message" size="70" v-model="message" placeholder="Leave a Message or Suggestion">
-                    <input type="submit" value="Submit" v-on:click="newMessage(userName, message)">
+                    <div v-if="userName">
+                        <input type="text" id="message" size="70" v-model="message" placeholder="Leave a Message or Suggestion">
+                        <input type="submit" value="Submit" v-on:click="newMessage(userName, message)">
+                    </div>
+                    <div v-else>
+                        <button>Sign In to Leave comments</button>
+                    </div>
+
                 </div>
 
                 <div class="col-sm-12" v-for="message in listOfMessages" :key="message.listOfMessages">
