@@ -7,20 +7,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputEmail"  class="sr-only">Email</label>
-                            <input type="email" class="form-control" v-model="email" id="inputEmail" placeholder="Email">
+                            <input type="email" class="form-control" v-model="email" id="inputEmail" placeholder="Email" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="inputPassword" class="sr-only">Password</label>
-                            <input type="password" class="form-control" id="inputPassword" v-model="password" placeholder="Password">
+                            <input type="password" class="form-control" id="inputPassword" v-model="password" placeholder="Password" required>
                         </div>
                     </div>
                 </div>
                 <div class="mx-5 my-2 ">
                     <div class="form-group">
                         <label for="userName" class="sr-only">User Name</label>
-                        <input type="text" class="form-control" id="userName" v-model="userName" placeholder="What do we call you?">
+                        <input type="text" class="form-control" id="userName" v-model="userName" placeholder="What do we call you?" required>
                     </div>
                 </div>
                 <div class="row two mx-3 ">

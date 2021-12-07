@@ -1,18 +1,10 @@
 <template>
     <div class="ml-4 ">
-
-<!--        <router-link class="mt-0" :to="{name:'ViewRecipe', params: {recipe:id}}" >-->
-            <!--            <img src="..." class="card-img-top" alt="...">-->
             <div class="">
-                <div v-on:click="onClickButton(recipe)"  class="row">
+                <div v-on:click="onClickButton(recipe)"  class="row border border-1 border-light">
                     <h3 class="pl-3 col-sm-12 text-left">{{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
-<!--                    <router-link class="text-center col-sm-3" :to="{name:'EditRecipe', params: {recipe:id}}" >-->
-<!--                        <button class="m-0">Edit Recipe</button>-->
-<!--                    </router-link>-->
-<!--                    <input class="col-sm-2 bg-warning text-center" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>-->
                 </div>
             </div>
-<!--        </router-link>-->
     </div>
 </template>
 
@@ -92,7 +84,7 @@
 
 <style scoped>
     h3 {
-        background-color: #9fcdff;
+        background-color: #fff;
         color: #1b1e21;
         font-size: 1.5rem;
     }

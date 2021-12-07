@@ -53,6 +53,7 @@
                 message: "",
                 messageObject: {},
                 listOfMessages: [],
+                importmessages: [],
             }
         },
         created(){
@@ -60,7 +61,7 @@
                 .get()
                 .then((querySnapshot) => {
                     querySnapshot.forEach(doc => {
-                        this.listOfMessages.push(
+                        this.importmessages.push(
                             {
                                 date: doc.data().date,
                                 message: doc.data().message,
@@ -70,7 +71,9 @@
                     })
                 }).then(()=>{
                     console.log("list of Messages",this.listOfMessages)
-            })
+            });
+
+            this.listOfMessages = this.sortMessageList(this.importmessages, this.importmessages.date)
 
         },
         methods:{
@@ -88,7 +91,12 @@
                         this.listOfMessages.push(this.messageObject);
                         this.$router.push("/Home");
                     })
-            }
+            },
+            sortMessageList(array,key){
+                return array.sort(function(a, b) {
+                    var x = a[key]; var y = b[key];
+                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                });            }
         },
         mounted(){
             this.userName = this.$store.state.userName;

@@ -1,16 +1,42 @@
 <template>
-    <div class="container row align-items-start">
-        <div class="col-sm-6 border border-primary">
-            <p class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - Monday</p>
+    <div class="border bg-light m-2 row align-items-start mt-3">
 
-        </div>
-        <div class="col-sm-12">
-            <div class="" v-for="day in dayOfWeek" :key="day.dayOfWeek">
-<!--                <button class="btn btn-primary col-sm-10" type="button">{{day}}</button>-->
-                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>
+        <div class="col-sm-2">
+            <div class="mt-2" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+                <button class="btn btn-primary col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
+<!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
 
+        <div class="col-sm-5 border border-primary">
+            <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
+            <br>
+            <MealPlanDayCard :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
+<!--            <div class="card card-body">-->
+<!--                <div v-for="per in mealPeriod" :key="per.mealPeriod" class="cardTitle border border-dark">-->
+<!--                    <div class="">-->
+<!--                        <h5 class="menuBase">{{per}}:-->
+<!--                            <router-link class="m-0" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: dayOfWeek, period: per }}" >-->
+<!--                                <button class="btn fa-border">-->
+<!--                                    <font-awesome-icon icon="plus-circle" /><span class="textSize m-1">Add recipe</span>-->
+<!--                                </button>-->
+<!--                            </router-link>-->
+<!--                        </h5><hr>-->
+
+<!--                    </div>-->
+
+<!--                    <div v-for="(recipe) in recipes" :key="recipe.recipes">-->
+<!--                        <p v-if="activeDay === recipe.day && recipe.mealPeriod === per" class="menu">-->
+<!--                            <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >-->
+<!--                                <font-awesome-icon icon="minus-circle" />-->
+<!--                            </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        <div class="col-sm-4 border ms-sm-1">
+            <p>Recipe search area</p>
+        </div>
 
     </div>
 
@@ -40,6 +66,7 @@
                 mealPeriod: ["Breakfast", "Lunch", "Dinner"],
                 activeMealPlan: {},
                 recipes: [],
+                activeDay: "Monday",
 
             };
         },
@@ -51,7 +78,6 @@
                 .then((querySnapshot)=>{
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
-                        console.log("Doc PlanID:", doc.data().PlanId, "userName:", this.userName);
                         if(doc.data().PlanId == this.userName){
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
@@ -91,6 +117,7 @@
                                 for(let k=0; k<this.mealPeriod.length; k++){
                                     for(let j=0; j<this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
                                         if (doc.data().recipeId === this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]) {
+
                                             this.recipes.push(
                                                 {
                                                     day: this.dayOfWeek[i],
@@ -101,6 +128,7 @@
                                                     recipeIngredients: doc.data().recipeIngredients,
                                                 }
                                             );
+                                            console.log("recipe",this.recipes)
                                         }
                                     }
                                 }
@@ -111,6 +139,11 @@
                     });
                 });
 
+        },
+        methods: {
+            currentDay(day){
+                this.activeDay = day;
+            },
         }
     }
 </script>
@@ -119,4 +152,8 @@
 .text-bold{
     text-emphasis: #0b2e13;
 }
+    .textSize{
+        font-size: small;
+    }
+
 </style>

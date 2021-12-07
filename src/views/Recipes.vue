@@ -1,9 +1,10 @@
 <template>
     <div class="ml-1">
+<!--Header-->
         <div class="bg-dark row mb-2">
             <h1 class="text-primary ml-5 col-2">Recipes</h1>
             <form class="col-3 mt-2 row" v-on:submit="searchRecipes(searchTerm)">
-                <input class="col-10" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)">
+                <input class="col-10" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
                 <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">
             </form>
             <form class="text-right m-2  col-4 ">
@@ -26,14 +27,19 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row m-2 border border-2">
+<!--Menu List-->
+            <div class="col-8 menuBackground">
+                <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
+                    <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
+                </div>
+            </div>
+<!--Recipe Box-->
             <div class="col-4 border border-dark">
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
                         <p class="m-auto">Recipe By: {{recipe.recipeOwner}}</p>
-<!--                        <input type="checkbox" id="public" name="public" value="public" class="ml-2" checked>-->
-<!--                        <label for="public" class="p-1 text-primary">Is Public</label>-->
                     </div>
                     <div class="col-sm-3">
                         <button class="btn btn-outline-secondary col-sm-12">Add</button>
@@ -71,14 +77,10 @@
                 </ul>
                 <div class="border border-primary mt-2 col-lg-12">
                     <h3 class="text-danger ml-2 bg-light">Directions: </h3>
-                    <p >{{recipe.recipeDirections}}</p>
+                    <p class="p-2">{{recipe.recipeDirections}}</p>
                 </div>
             </div>
-            <div class="col-8">
-                <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
-                    <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
-                </div>
-            </div>
+
         </div>
     </div>
 </template>
@@ -259,6 +261,9 @@
 </script>
 
 <style scoped>
+    .menuBackground{
+        background-color: #ddd;
+    }
 label{
     color: #fcf8e3;
 }
