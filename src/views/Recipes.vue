@@ -27,9 +27,9 @@
             </div>
         </div>
 
-        <div class="row m-2 border border-2">
+        <div class="row m-2 border border-2 justify-content-center">
 <!--Menu List-->
-            <div class="col-8 menuBackground">
+            <div class="col-7 menuBackground border me-2 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>
@@ -263,6 +263,7 @@
 <style scoped>
     .menuBackground{
         background-color: #ddd;
+        height: 500px;
     }
 label{
     color: #fcf8e3;
