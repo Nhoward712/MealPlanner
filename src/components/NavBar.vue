@@ -42,10 +42,9 @@
                         <h5 class="col-sm-7">Not a member yet?</h5>
                         <router-link to="/register" data-bs-dismiss="modal" class="btn btn-primary col-sm-5">Registration</router-link>
                     </li>
-                    <li>
-                        <span v-if="currentUser">
-                        <b class="m-5 p-5">You are logged in as: {{ userName }}</b>
-
+                    <li class="float-sm-right border">
+                        <span v-if="currentUser" class="">
+                            <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>
                         </span>
                     </li>
                 </ul>

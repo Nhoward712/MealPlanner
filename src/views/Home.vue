@@ -76,10 +76,15 @@
                         )
                     })
                 }).then(()=>{
-                    console.log("list of Messages",this.listOfMessages)
+                this.listOfMessages = this.importmessages;
+                this.listOfMessages.sort(function(a,b) {
+                    return (a.date.seconds < b.date.seconds) ? 1 : ((b.date.seconds < a.date.seconds) ? -1 : 0);
+                });
             });
 
-            this.listOfMessages = this.sortMessageList(this.importmessages, this.importmessages.date)
+
+
+            console.log("list of Messages",this.listOfMessages)
 
         },
         methods:{
