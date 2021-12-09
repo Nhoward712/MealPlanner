@@ -1,18 +1,17 @@
 <template>
-
         <div class="bg text-center">
+<!--main header-->
             <div class="text-center  pt-5" style="height: 90%">
                 <div class="m-auto border border-dark rounded text-center" style="width: 60%; height:60%; opacity: 100%; background-color: #FFFFFF">
                     <h1 class="text-sm-center">Meal Planner 3000</h1>
                     <h2 class="text-sm-center">Welcome {{userName}}</h2>
                 </div>
             </div>
-
             <div class="mt-5">
                 <p>Meal Planner 3000 is a tool to help organize your recipes, plan your weekly meals, and create a shopping list based off of those meals</p>
                 <p>This is a developer version.  All recipes and plans are for display purposes only and may not be accurate</p>
             </div>
-
+<!--messages-->
             <div class="border border-dark col-sm-8 mb-2 p-3">
 
                 <div class="mb-4">

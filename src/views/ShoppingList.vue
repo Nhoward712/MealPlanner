@@ -189,6 +189,6 @@
         transform:scale(2, 2);
     }
     .scrollable{
-        height: 600px;
+        height: 500px;
     }
 </style>

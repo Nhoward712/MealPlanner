@@ -13,29 +13,7 @@
             <br>
             <div class="menuBox overflow-scroll border">
                 <MealPlanDayCard :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
-
             </div>
-<!--            <div class="card card-body">-->
-<!--                <div v-for="per in mealPeriod" :key="per.mealPeriod" class="cardTitle border border-dark">-->
-<!--                    <div class="">-->
-<!--                        <h5 class="menuBase">{{per}}:-->
-<!--                            <router-link class="m-0" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: dayOfWeek, period: per }}" >-->
-<!--                                <button class="btn fa-border">-->
-<!--                                    <font-awesome-icon icon="plus-circle" /><span class="textSize m-1">Add recipe</span>-->
-<!--                                </button>-->
-<!--                            </router-link>-->
-<!--                        </h5><hr>-->
-
-<!--                    </div>-->
-
-<!--                    <div v-for="(recipe) in recipes" :key="recipe.recipes">-->
-<!--                        <p v-if="activeDay === recipe.day && recipe.mealPeriod === per" class="menu">-->
-<!--                            <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >-->
-<!--                                <font-awesome-icon icon="minus-circle" />-->
-<!--                            </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
         <div class="col-sm-4 border ms-sm-1">
             <p>Recipe search area</p>
