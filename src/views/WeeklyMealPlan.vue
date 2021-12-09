@@ -39,6 +39,13 @@
         </div>
         <div class="col-sm-4 border ms-sm-1">
             <p>Recipe search area</p>
+            <label for="recipeSearch" id="recipeSearchbar" ></label>
+            <input class="mb-2"  type="text" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
+            <div class="col-12 menuBackground border me-2 overflow-scroll">
+                <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
+                    <recipeCard  v-on:btnClicked="onClickChild($event)" :recipe="item"></recipeCard>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -54,11 +61,16 @@
     //********** planId under Created() needs to be a passed in prop.*************
 
     import MealPlanDayCard from "@/components/MealPlanDayCard";
+    import recipeCard from "@/components/RecipeCardItem";
+
     import { db } from "../main";
 
     export default {
         name: "WeeklyMealPlan",
-        components: {MealPlanDayCard},
+        components: {
+            MealPlanDayCard,
+            recipeCard
+        },
         props:{
             userName: {},
             UserRole: {},
@@ -70,7 +82,9 @@
                 activeMealPlan: {},
                 recipes: [],
                 activeDay: "Monday",
-
+                allRecipes: [],
+                filteredRecipes: [],
+                searchTerm: ""
             };
         },
         mounted(){
@@ -112,8 +126,18 @@
                 })
                 .then(() => {
                 db.collection("recipes")
-                    .onSnapshot((querySnapshot) => {
+                    .get()
+                    .then((querySnapshot) => {
                         querySnapshot.forEach((doc) => {
+                            this.allRecipes.push(
+                                {
+                                    recipeId: doc.data().recipeId,
+                                    recipeName: doc.data().recipeName,
+                                    recipeDirections: doc.data().recipeDirections,
+                                    recipeIngredients: doc.data().recipeIngredients,
+                                    recipeOwner: doc.data().recipeOwner,
+                                }
+                            );
                             //this loops though the days of the week
                             for (let i=0; i<this.dayOfWeek.length; i++){
                                 //this loops though meal periods
@@ -131,7 +155,6 @@
                                                     recipeIngredients: doc.data().recipeIngredients,
                                                 }
                                             );
-                                            console.log("recipe",this.recipes)
                                         }
                                     }
                                 }
@@ -142,11 +165,35 @@
                     });
                 });
 
+            console.log("All recipes loaded", this.allRecipes);
+            this.filteredRecipes = this.allRecipes;
+
         },
         methods: {
             currentDay(day){
                 this.activeDay = day;
             },
+            searchRecipes(searchStr){
+                //on keyup, search array for name and ingredients after 2 chars have been entered
+                //count number of chars in search,
+                console.log("searching...")
+
+                if(searchStr.length > 1){
+                    console.log("searching...")
+                    const regexp = new RegExp(searchStr, 'i');
+                    this.filteredRecipes = this.allRecipes.filter(x => regexp.test(x.recipeName));
+                    console.log(searchStr);
+                    console.log(this.filteredRecipes);
+                }else{
+                    this.filteredRecipes = this.allRecipes;
+                }
+
+
+            },
+            onClickChild(){
+                //when user clicks the recipe item, it should filter the recipes to just that item.
+                //adds that item to a temp item that will be used when user clicks add button on the meal plan
+            }
         }
     }
 </script>
@@ -155,7 +202,11 @@
 .text-bold{
     text-emphasis: #0b2e13;
 }
-.menuBox{
+.menuBox {
+    height: 450px;
+}
+.menuBackground{
+    background-color: #ddd;
     height: 450px;
 }
 
