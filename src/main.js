@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App.vue'
+import axios from "axios";
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/css/bootstrap-grid.min.css'
@@ -18,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css'
 Vue.use(Vuex);
 library.add(faTrash, faPlusCircle, faMinusCircle);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.prototype.$http = axios;
 
 //for global variables and states
 const store = new Vuex.Store({
@@ -33,7 +35,6 @@ const store = new Vuex.Store({
         },
         setUserName(state, userName){
             state.userName = userName;
-            console.log("userName set in Main to:", state.userName);
         }
     }
 });

@@ -47,6 +47,9 @@
                             <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>
                         </span>
                     </li>
+                    <li>
+                        <router-link class="nav-item nav-link " :to="{name:'ajaxtesting', params:{userRole, userName}}"><h4>API Testing</h4></router-link>
+                    </li>
                 </ul>
                 <!-- Button trigger modal -->
 <!--                <div class="d-grid gap-2 d-md-flex justify-content-md-center">-->
@@ -179,7 +182,6 @@
                             this.userRole = doc.data().role;
                             this.userName = doc.data().userName;
                             this.$emit("test",this.userRole);
-                            console.log("userName:", this.userName)
                             this.$store.commit("setUserName",this.userName);
                         }
                     })
