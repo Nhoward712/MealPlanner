@@ -2,10 +2,10 @@
     <div>
         <h1>Shopping List </h1>
             <br>
-        <div class="border border-primary scrollable">
+        <div class="border border-primary overflow-scroll scrollable m-1">
             <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
-                <input class="h1 m-3 " type="checkbox" value="" id="flexCheckDefault">
-                <label class="h2 ml-5 " for="flexCheckDefault"> {{item.name}}</label>
+                <input class="h1 m-3 " type="checkbox" value="" :id="item.name">
+                <label class="h1 pt-3" :for="item.name"> {{item.name}}</label>
             </div>
         </div>
 
@@ -189,6 +189,6 @@
         transform:scale(2, 2);
     }
     .scrollable{
-        overflow-y: scroll;
+        height: 600px;
     }
 </style>
