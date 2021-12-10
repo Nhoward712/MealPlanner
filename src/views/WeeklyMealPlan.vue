@@ -19,7 +19,7 @@
         <div class="col-sm-4 border ms-sm-1">
             <p>Recipe search area</p>
             <label for="recipeSearch" id="recipeSearchbar" ></label>
-            <input class="mb-2"  type="text" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
+            <input class="mb-2"  type="search" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
             <div class="col-12 menuBackground border me-2 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :recipe="item"></recipeCard>
@@ -72,82 +72,86 @@
         mounted(){
             this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
             this.userName = this.$store.state.userName;
-            db.collection("MealPlans")
-                .get()
-                .then((querySnapshot)=>{
-                    this.activeMealPlan = {};
-                    querySnapshot.forEach((doc) => {
-                        if(doc.data().PlanId === this.userName){
-                            this.activeMealPlan ={
-                                PlanId: doc.data().PlanId,
-                                FridayBreakfast: doc.data().FridayBreakfast,
-                                FridayDinner: doc.data().FridayDinner,
-                                FridayLunch: doc.data().FridayLunch,
-                                MondayBreakfast: doc.data().MondayBreakfast,
-                                MondayDinner: doc.data().MondayDinner,
-                                MondayLunch: doc.data().MondayLunch,
-                                SaturdayBreakfast: doc.data().SaturdayBreakfast,
-                                SaturdayDinner: doc.data().SaturdayDinner,
-                                SaturdayLunch: doc.data().SaturdayLunch,
-                                StartDate: doc.data().StartDate,
-                                SundayBreakfast: doc.data().SundayBreakfast,
-                                SundayDinner: doc.data().SundayDinner,
-                                SundayLunch: doc.data().SundayLunch,
-                                ThursdayBreakfast: doc.data().ThursdayBreakfast,
-                                ThursdayDinner: doc.data().ThursdayDinner,
-                                ThursdayLunch: doc.data().ThursdayLunch,
-                                TuesdayBreakfast: doc.data().TuesdayBreakfast,
-                                TuesdayDinner: doc.data().TuesdayDinner,
-                                TuesdayLunch: doc.data().TuesdayLunch,
-                                WednesdayBreakfast: doc.data().WednesdayBreakfast,
-                                WednesdayDinner: doc.data().WednesdayDinner,
-                                WednesdayLunch: doc.data().WednesdayLunch
-                            }
-                        }
-                    })
-                })
-                .then(() => {
-                db.collection("recipes")
-                    .get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            this.allRecipes.push(
-                                {
-                                    recipeId: doc.data().recipeId,
-                                    recipeName: doc.data().recipeName,
-                                    recipeDirections: doc.data().recipeDirections,
-                                    recipeIngredients: doc.data().recipeIngredients,
-                                    recipeOwner: doc.data().recipeOwner,
-                                }
-                            );
-                            //this loops though the days of the week
-                            for (let i=0; i<this.dayOfWeek.length; i++){
-                                //this loops though meal periods
-                                for(let k=0; k<this.mealPeriod.length; k++){
-                                    for(let j=0; j<this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
-                                        if (doc.data().recipeId === this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]) {
-
-                                            this.recipes.push(
-                                                {
-                                                    day: this.dayOfWeek[i],
-                                                    mealPeriod: this.mealPeriod[k],
-                                                    recipeId: doc.data().recipeId,
-                                                    recipeName: doc.data().recipeName,
-                                                    recipeDirections: doc.data().recipeDirections,
-                                                    recipeIngredients: doc.data().recipeIngredients,
-                                                }
-                                            );
-                                        }
-                                    }
-                                }
-                                //this loops though the active meal plans
-                            }
-                        });
-                    });
-                });
-            this.filteredRecipes = this.allRecipes;
+            this.loadData();
         },
         methods: {
+            loadData(){
+                db.collection("MealPlans")
+                    .get()
+                    .then((querySnapshot)=>{
+                        this.activeMealPlan = {};
+                        this.recipes = [];
+                        querySnapshot.forEach((doc) => {
+                            if(doc.data().PlanId === this.userName){
+                                this.activeMealPlan ={
+                                    PlanId: doc.data().PlanId,
+                                    FridayBreakfast: doc.data().FridayBreakfast,
+                                    FridayDinner: doc.data().FridayDinner,
+                                    FridayLunch: doc.data().FridayLunch,
+                                    MondayBreakfast: doc.data().MondayBreakfast,
+                                    MondayDinner: doc.data().MondayDinner,
+                                    MondayLunch: doc.data().MondayLunch,
+                                    SaturdayBreakfast: doc.data().SaturdayBreakfast,
+                                    SaturdayDinner: doc.data().SaturdayDinner,
+                                    SaturdayLunch: doc.data().SaturdayLunch,
+                                    StartDate: doc.data().StartDate,
+                                    SundayBreakfast: doc.data().SundayBreakfast,
+                                    SundayDinner: doc.data().SundayDinner,
+                                    SundayLunch: doc.data().SundayLunch,
+                                    ThursdayBreakfast: doc.data().ThursdayBreakfast,
+                                    ThursdayDinner: doc.data().ThursdayDinner,
+                                    ThursdayLunch: doc.data().ThursdayLunch,
+                                    TuesdayBreakfast: doc.data().TuesdayBreakfast,
+                                    TuesdayDinner: doc.data().TuesdayDinner,
+                                    TuesdayLunch: doc.data().TuesdayLunch,
+                                    WednesdayBreakfast: doc.data().WednesdayBreakfast,
+                                    WednesdayDinner: doc.data().WednesdayDinner,
+                                    WednesdayLunch: doc.data().WednesdayLunch
+                                }
+                            }
+                        })
+                    })
+                    .then(() => {
+                        db.collection("recipes")
+                            .get()
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    this.allRecipes.push(
+                                        {
+                                            recipeId: doc.data().recipeId,
+                                            recipeName: doc.data().recipeName,
+                                            recipeDirections: doc.data().recipeDirections,
+                                            recipeIngredients: doc.data().recipeIngredients,
+                                            recipeOwner: doc.data().recipeOwner,
+                                        }
+                                    );
+                                    //this loops though the days of the week
+                                    for (let i=0; i<this.dayOfWeek.length; i++){
+                                        //this loops though meal periods
+                                        for(let k=0; k<this.mealPeriod.length; k++){
+                                            for(let j=0; j<this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
+                                                if (doc.data().recipeId === this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]) {
+
+                                                    this.recipes.push(
+                                                        {
+                                                            day: this.dayOfWeek[i],
+                                                            mealPeriod: this.mealPeriod[k],
+                                                            recipeId: doc.data().recipeId,
+                                                            recipeName: doc.data().recipeName,
+                                                            recipeDirections: doc.data().recipeDirections,
+                                                            recipeIngredients: doc.data().recipeIngredients,
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        }
+                                        //this loops though the active meal plans
+                                    }
+                                });
+                            });
+                    });
+                this.filteredRecipes = this.allRecipes;
+            },
             currentDay(day){
                 this.activeDay = day;
             },
@@ -175,7 +179,7 @@
                 this.filteredRecipes.push(value);
             },
             emitPer(per){
-                //if filtered array is 1 add filtered recipe to meal per/day
+                //if filtered array.length = 1 add filtered recipe to meal period/day
                 //tooltip to explain why they cant click add button
                 if(this.filteredRecipes.length == 1){
                     console.log("here",per);
@@ -183,8 +187,6 @@
                         .get()
                         .then((querySnapshot) =>{
                             querySnapshot.forEach((doc) =>{
-                                //this is for the default plan.  future will have to have dynamic planID num.
-                                //need option for no planId
                                 //dynamic plan needs to have params: userName passed in
                                 //Need to pass it back to meal plan view on complete
 
@@ -205,25 +207,29 @@
                             })
                         })
                         .then(() =>{
-                            this.recipes.push(
-                                {
-                                    day: per.day,
-                                    mealPeriod: per.period,
-                                    recipeId: this.filteredRecipes[0].recipeId,
-                                    recipeName: this.filteredRecipes[0].recipeName,
-                                    recipeDirections: this.filteredRecipes[0].recipeDirections,
-                                    recipeIngredients: this.filteredRecipes[0].recipeIngredients,
-                                },
-                                console.log("push: ", {
-                                    day: per.day,
-                                    mealPeriod: per.period,
-                                    recipeId: this.filteredRecipes[0].recipeId,
-                                    recipeName: this.filteredRecipes[0].recipeName,
-                                    recipeDirections: this.filteredRecipes[0].recipeDirections,
-                                    recipeIngredients: this.filteredRecipes[0].recipeIngredients,
-                                }),
-                                console.log("recipes:",this.recipes)
-                            );                        })
+                            // this.recipes.push(
+                            //     {
+                            //         day: per.day,
+                            //         mealPeriod: per.period,
+                            //         recipeId: this.filteredRecipes[0].recipeId,
+                            //         recipeName: this.filteredRecipes[0].recipeName,
+                            //         recipeDirections: this.filteredRecipes[0].recipeDirections,
+                            //         recipeIngredients: this.filteredRecipes[0].recipeIngredients,
+                            //     },
+                            //
+                            //
+                            // );
+                            // console.log("push: ", {
+                            //     day: per.day,
+                            //     mealPeriod: per.period,
+                            //     recipeId: this.filteredRecipes[0].recipeId,
+                            //     recipeName: this.filteredRecipes[0].recipeName,
+                            //     recipeDirections: this.filteredRecipes[0].recipeDirections,
+                            //     recipeIngredients: this.filteredRecipes[0].recipeIngredients,
+                            // }),
+                                console.log("recipes:",this.recipes),
+                            this.loadData()
+                        })
                 }
 
             },

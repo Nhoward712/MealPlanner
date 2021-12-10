@@ -262,7 +262,7 @@
 
 <style scoped>
     .menuBackground{
-        background-color: #ddd;
+        background-color: #EAE7DC;
         height: 500px;
     }
 label{
