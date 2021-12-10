@@ -8,11 +8,11 @@
                             <div class="">
                                 <h5 class="menuBase">{{per}}:
 
-                                        <router-link class="m-0" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >
+<!--                                        <router-link class="m-0" style="font-size: .5em" :to="{name:'AddToPlan', params: { day: DayOfWeek, period: per }}" >-->
                                             <button class="btn fa-border">
-                                                <font-awesome-icon icon="plus-circle" /><span class="textSize m-1">Add Recipe</span>
+                                                <font-awesome-icon icon="plus-circle" v-on:click="emitPer(per)" /><span class="textSize m-1">Add Recipe</span>
                                             </button>
-                                        </router-link>
+<!--                                        </router-link>-->
 
                                 </h5>
                                 <hr>
@@ -21,10 +21,12 @@
 
                             <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
                                 <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
-                                    <button class="btn fa-border" style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >
+                                    <button class="btn fa-border " style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >
                                         <font-awesome-icon icon="minus-circle" />
-                                    </button><router-link class="mt-0 col-sm-5" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
+                                    </button><router-link class="mt-0 col-sm-5 day" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
                             </div>
+
+                            <hr>
                         </div>
                     </div>
                 </div>
@@ -64,6 +66,9 @@
         },
 
         methods:{
+            emitPer(event){
+                this.$emit('receivePeriod', {period:event, day:this.DayOfWeek});
+            },
             remove(recipe, per, planId){
                 console.log("Here:",recipe,per,planId);
                 db.collection("MealPlans")
@@ -108,19 +113,20 @@
 
 <style scoped>
 .menu{
-    background-color: #d1ecf1;
+    background-color: #EAE7DC;
 }
 .textSize{
     font-size: small;
 }
 .menuBase{
-    background-color: #fff3cd;
+    background-color: #8fc1e3;
     /*text-align: center;*/
 }
 .day{
-    background-color: #fc4a1a;
+    background-color: #EAE7DC;
+    color: #000;
 }
 .cardTitle{
-    background-color: #fff3cd;
+    background-color: #EAE7DC;
 }
 </style>

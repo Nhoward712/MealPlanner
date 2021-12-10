@@ -1,20 +1,21 @@
 <template>
     <div class="border bg-light m-2 row align-items-start mt-3">
-
+<!--Day of week buttons-->
         <div class="col-sm-2">
-            <div class="mt-2" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+            <div class="mt-1" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <button class="btn btn-primary col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
 <!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
-
+<!--meal plan -->
         <div class="col-sm-5 border border-primary ">
             <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
             <br>
             <div class="menuBox overflow-scroll border">
-                <MealPlanDayCard :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
+                <MealPlanDayCard v-on:receivePeriod="emitPer($event)" :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
+<!--recipe Search-->
         <div class="col-sm-4 border ms-sm-1">
             <p>Recipe search area</p>
             <label for="recipeSearch" id="recipeSearchbar" ></label>
@@ -62,7 +63,10 @@
                 activeDay: "Monday",
                 allRecipes: [],
                 filteredRecipes: [],
-                searchTerm: ""
+                searchTerm: "",
+                day: "",
+                per: "",
+                newRecipes: [],
             };
         },
         mounted(){
@@ -73,7 +77,7 @@
                 .then((querySnapshot)=>{
                     this.activeMealPlan = {};
                     querySnapshot.forEach((doc) => {
-                        if(doc.data().PlanId == this.userName){
+                        if(doc.data().PlanId === this.userName){
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
                                 FridayBreakfast: doc.data().FridayBreakfast,
@@ -137,15 +141,11 @@
                                     }
                                 }
                                 //this loops though the active meal plans
-
                             }
                         });
                     });
                 });
-
-            console.log("All recipes loaded", this.allRecipes);
             this.filteredRecipes = this.allRecipes;
-
         },
         methods: {
             currentDay(day){
@@ -154,10 +154,10 @@
             searchRecipes(searchStr){
                 //on keyup, search array for name and ingredients after 2 chars have been entered
                 //count number of chars in search,
-                console.log("searching...")
+                console.log("searching...");
 
                 if(searchStr.length > 1){
-                    console.log("searching...")
+                    console.log("searching...");
                     const regexp = new RegExp(searchStr, 'i');
                     this.filteredRecipes = this.allRecipes.filter(x => regexp.test(x.recipeName));
                     console.log(searchStr);
@@ -168,10 +168,74 @@
 
 
             },
-            onClickChild(){
+            onClickChild(value){
                 //when user clicks the recipe item, it should filter the recipes to just that item.
                 //adds that item to a temp item that will be used when user clicks add button on the meal plan
-            }
+                this.filteredRecipes = [];
+                this.filteredRecipes.push(value);
+            },
+            emitPer(per){
+                //if filtered array is 1 add filtered recipe to meal per/day
+                //tooltip to explain why they cant click add button
+                if(this.filteredRecipes.length == 1){
+                    console.log("here",per);
+                    db.collection("MealPlans")
+                        .get()
+                        .then((querySnapshot) =>{
+                            querySnapshot.forEach((doc) =>{
+                                //this is for the default plan.  future will have to have dynamic planID num.
+                                //need option for no planId
+                                //dynamic plan needs to have params: userName passed in
+                                //Need to pass it back to meal plan view on complete
+
+                                if(doc.data().PlanId === this.userName){
+                                    let docId = doc.id;
+                                    this.day = per.day;
+                                    this.period = per.period;
+                                    console.log("added",doc.data()[per.day + per.period]);
+                                    //loads the current recipes for that mealPeriod
+                                    this.newRecipes = doc.data()[per.day + per.period];
+                                    console.log("newRecipes", this.newRecipes, "recipes", this.recipes);
+                                    console.log("recipe id",this.filteredRecipes[0].recipeId);
+                                    //Adds new recipe to current mealPeriod
+                                    this.newRecipes.push(this.filteredRecipes[0].recipeId);
+                                    this.update(docId);
+                                }
+
+                            })
+                        })
+                        .then(() =>{
+                            this.recipes.push(
+                                {
+                                    day: per.day,
+                                    mealPeriod: per.period,
+                                    recipeId: this.filteredRecipes[0].recipeId,
+                                    recipeName: this.filteredRecipes[0].recipeName,
+                                    recipeDirections: this.filteredRecipes[0].recipeDirections,
+                                    recipeIngredients: this.filteredRecipes[0].recipeIngredients,
+                                },
+                                console.log("push: ", {
+                                    day: per.day,
+                                    mealPeriod: per.period,
+                                    recipeId: this.filteredRecipes[0].recipeId,
+                                    recipeName: this.filteredRecipes[0].recipeName,
+                                    recipeDirections: this.filteredRecipes[0].recipeDirections,
+                                    recipeIngredients: this.filteredRecipes[0].recipeIngredients,
+                                }),
+                                console.log("recipes:",this.recipes)
+                            );                        })
+                }
+
+            },
+            update(docId){
+                db.collection("MealPlans")
+                    .doc(docId)
+                    .update(
+                        {
+                            [this.day + this.period]: this.newRecipes
+                        }
+                    )
+            },
         }
     }
 </script>
@@ -184,9 +248,15 @@
     height: 450px;
 }
 .menuBackground{
-    background-color: #ddd;
+    background-color: #EAE7DC;
     height: 450px;
 }
+    button{
+        background-color: #D8C3A5;
+        color: #E85A4F;
+        font-weight: bold;
+        font-size: 1.2em;
+    }
 
 
 </style>

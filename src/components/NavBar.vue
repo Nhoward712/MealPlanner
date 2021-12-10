@@ -242,7 +242,7 @@
 
 <style scoped>
 nav{
-    background-color: #9fcdff;
+    background-color: #EAE7DC;
     /*position:fixed; !* fixing the position takes it out of html flow - knows*/
     /*               nothing about where to locate itself except by browser*/
     /*               coordinates *!*/

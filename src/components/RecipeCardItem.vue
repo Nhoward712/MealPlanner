@@ -37,7 +37,6 @@
         methods:{
             onClickButton (event) {
                 this.$emit('btnClicked', event);
-                console.log("emitted");
             },
             isIngredientInRecipe(recipeId,ingredientID){
                 let recipeIngredients = this.recipe.recipeIngredients;
