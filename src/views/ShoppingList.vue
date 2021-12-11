@@ -82,8 +82,6 @@
                     this.activeMealPlan = {};
 
                     querySnapshot.forEach((doc) => {
-                        console.log("docID:", doc.data().PlanId,"userName:", this.userName);
-
                         if(doc.data().PlanId == this.userName){
                             this.activeMealPlan ={
                                 PlanId: doc.data().PlanId,
@@ -125,7 +123,6 @@
 
         methods:{
             getAllRecipes(){
-                console.log(this.activeMealPlan);
                 for (let i=0; i<this.dayOfWeek.length; i++){
                     //this loops though meal periods
                     for(let k=0; k<this.mealPeriod.length; k++){

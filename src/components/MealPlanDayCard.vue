@@ -82,6 +82,8 @@
                             }
                         })
                     });
+                this.$emit('receivePeriod', {});
+
 
             },
             update(tempId, per, recipe){

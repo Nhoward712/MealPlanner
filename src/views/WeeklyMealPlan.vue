@@ -76,6 +76,7 @@
         },
         methods: {
             loadData(){
+                console.log("loadData");
                 db.collection("MealPlans")
                     .get()
                     .then((querySnapshot)=>{
@@ -179,9 +180,10 @@
                 this.filteredRecipes.push(value);
             },
             emitPer(per){
+                console.log("in emit");
                 //if filtered array.length = 1 add filtered recipe to meal period/day
                 //tooltip to explain why they cant click add button
-                if(this.filteredRecipes.length == 1){
+                if(this.filteredRecipes.length === 1){
                     console.log("here",per);
                     db.collection("MealPlans")
                         .get()
@@ -207,30 +209,14 @@
                             })
                         })
                         .then(() =>{
-                            // this.recipes.push(
-                            //     {
-                            //         day: per.day,
-                            //         mealPeriod: per.period,
-                            //         recipeId: this.filteredRecipes[0].recipeId,
-                            //         recipeName: this.filteredRecipes[0].recipeName,
-                            //         recipeDirections: this.filteredRecipes[0].recipeDirections,
-                            //         recipeIngredients: this.filteredRecipes[0].recipeIngredients,
-                            //     },
-                            //
-                            //
-                            // );
-                            // console.log("push: ", {
-                            //     day: per.day,
-                            //     mealPeriod: per.period,
-                            //     recipeId: this.filteredRecipes[0].recipeId,
-                            //     recipeName: this.filteredRecipes[0].recipeName,
-                            //     recipeDirections: this.filteredRecipes[0].recipeDirections,
-                            //     recipeIngredients: this.filteredRecipes[0].recipeIngredients,
-                            // }),
-                                console.log("recipes:",this.recipes),
                             this.loadData()
                         })
+                }else{
+                    setTimeout(() => { console.log("World!"); }, 500);
+                    this.loadData();
                 }
+                console.log("after emit");
+
 
             },
             update(docId){
