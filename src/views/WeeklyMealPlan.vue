@@ -1,14 +1,14 @@
 <template>
     <div class="border bg-light m-2 row align-items-start mt-3">
 <!--Day of week buttons-->
-        <div class="col-sm-2">
+        <div class="col-sm-2 border container-fluid ms-1 m-0">
             <div class="mt-1" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <button class="btn btn-primary col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
 <!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
 <!--meal plan -->
-        <div class="col-sm-5 border border-primary ">
+        <div class="col-sm-5 border border-primary ms-0">
             <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
             <br>
             <div class="menuBox overflow-scroll border">
@@ -180,11 +180,9 @@
                 this.filteredRecipes.push(value);
             },
             emitPer(per){
-                console.log("in emit");
                 //if filtered array.length = 1 add filtered recipe to meal period/day
                 //tooltip to explain why they cant click add button
                 if(this.filteredRecipes.length === 1){
-                    console.log("here",per);
                     db.collection("MealPlans")
                         .get()
                         .then((querySnapshot) =>{
@@ -226,7 +224,9 @@
                         {
                             [this.day + this.period]: this.newRecipes
                         }
-                    )
+                    );
+                this.filteredRecipes = [];
+
             },
         }
     }

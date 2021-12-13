@@ -21,6 +21,10 @@
         <br>
 
         <div class="row">
+            <label for="amount" class="sr-only">Amount</label>
+            <input type="number" class="form-control col-sm-1" id="amount" placeholder="Qty">
+            <label for="type" class="sr-only"></label>
+            <input type="text" id="type" class="form-control col-sm-1">
             <label for="name" class="sr-only">Ingredient Name</label>
             <input type="text" class="form-control col-sm-5" v-model="ingredient.name" id="name" placeholder="New ingredient Name">
             <input type="submit" class="mt-0 col-sm-1" value="Add" v-on:click="addToList"/>

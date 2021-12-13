@@ -1,12 +1,24 @@
 <template>
-    <div class="m-2">
-        <h3>Author: {{userName}}</h3>
+    <div class="m-2 container-fluid">
+        <div class="-header row">
+            <h3>Author: {{userName}}</h3>
+            <div v-if="true">
+                <p>stuff</p>
+                <img src="https://firebasestorage.googleapis.com/v0/b/mealplanner-60292.appspot.com/o/8EBF5C5C-D186-42B8-BB24-5CE887B63B1A_1_105_c.jpeg?alt=media&token=e380d4eb-1717-4816-812b-0a84a8799380">
+            </div>
+
+            <form @submit.prevent="addImage">
+                <label for="addImage" class="btn">Add Image</label>
+                <input type="file" v-on:change="addImage($event)" id="addImage" class="mt-3 btn btn-primary">
+            </form>
+
+        </div>
+
         <label for="recipeName"  class="sr-only">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
-        <label for="recipeDirections"  class="sr-only">Directions: </label>
-        <textarea type="text" class="form-control col col-sm-6 " v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"></textarea>
-        <br>
-
+        <h4>Add Ingredient</h4>
+        <hr class="col-sm-6">
+<!--ingredients-->
         <div class="card col-sm-6">
             <div class="row" v-for="(item, i) in ingredients" :key="item.name">
                 <p class="ml-5 mb-1 col-sm-1">{{item.amount}}</p>
@@ -15,11 +27,9 @@
                 <input type="submit" value="Remove" class="ml-1 mb-1 col-sm-2" v-on:click="removeFromList(i)">
             </div>
         </div>
-
-        <br><hr class="col-sm-6">
-
+<!--new ingredient-->
         <div class="row m-1">
-            <h4>Add Ingredient</h4>
+
             <label for="amount" class="sr-only">Amount</label>
             <input type="text" class="form-control col-sm-1 pl-1" v-model="ingredient.amount" id="amount" placeholder="qty" required>
             <select class="form-select col-sm-1" aria-label="Default select example" v-model="ingredient.type" required>
@@ -37,15 +47,26 @@
             <input type="text" class="form-control col-sm-4" v-model="ingredient.name" id="name" placeholder="New ingredient Name" required>
             <input type="submit" class="mt-0 col-sm-1" value="Add" v-on:click="addToList"/>
         </div>
+
+<!--Directions-->
+        <label for="recipeDirections"  class="sr-only">Directions: </label>
+        <textarea type="text" class="form-control col col-sm-6 " v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"></textarea>
+        <br>
+<!--Submit/cancel-->
         <div>
             <input type="submit" class="mt-3" value="submit" v-on:click="AddToDB"/>
             <input type="submit" class="mt-3" value="cancel" v-on:click="cancelSubmit"/>
         </div>
+
+        <br>
+
     </div>
 </template>
 
 <script>
     import { db } from "../main";
+    import firebase from "firebase";
+
     export default {
         name: "AddNewRecipe",
         props:{
@@ -60,6 +81,8 @@
                 databaseIngredients: [],
                 recipes: [],
                 ingredientList: {},
+                image: {},
+
             };
         },
         created() {
@@ -203,6 +226,29 @@
             },
             removeFromList(i){
                 this.ingredients.splice(i,1);
+            },
+            addImage(evt){
+                evt.preventDefault();
+                //add image to storage
+                const file = evt.target.files[0];
+                const storageRef = firebase.storage().ref();
+                const imgRef = storageRef.child(file.name);
+                // Upload the file to storage
+                const task = imgRef.put(file);
+                task
+                    .then(() => {
+                        imgRef.getDownloadURL()
+                        //update image.imageURL
+                        .then((url) => {
+                            this.image.imageURL = url;
+                            this.image.imageUser = this.userName;
+                            this.newRecipe.image = this.image;
+                            // console.log("added this file: ", file," at:", url);
+                            alert("image added to storage!");
+                            console.log("This Was Added to storage", this.image)
+                        })
+                    })
+                    .catch(error => alert("Image did not upload: " + error))
             },
         },
         mounted(){
