@@ -2,7 +2,7 @@
     <div class="ml-4 ">
             <div class="container-fluid mb-1">
                 <div v-on:click="onClickButton(recipe)"  class="row border border-1 border-light" >
-                    <img src="https://firebasestorage.googleapis.com/v0/b/mealplanner-60292.appspot.com/o/8EBF5C5C-D186-42B8-BB24-5CE887B63B1A_1_105_c.jpeg?alt=media&token=e380d4eb-1717-4816-812b-0a84a8799380"  class="col-sm-3">
+                    <img src="../assets/IMG_0789.jpeg"  class="col-sm-3">
                     <h3 class="pl-3 col-sm-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
                 </div>
             </div>
@@ -19,7 +19,8 @@
         },
         data(){
             return {
-                id: this.recipe
+                id: this.recipe,
+                images: [],
             }
 
         },
@@ -33,6 +34,17 @@
                 default: null
             },
 
+        },
+        created(){
+            db.collection("Images").onSnapshot((snapshotChange) => {
+                this.images=[];
+                snapshotChange.forEach((doc) => {
+                    this.images.push({
+                        imageUser: doc.data().imageUser,
+                        imageURL: doc.data().imageURL
+                    })
+                })
+            });
         },
 
         methods:{

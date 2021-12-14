@@ -40,6 +40,9 @@
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
                         <p class="m-auto">Recipe By: {{recipe.recipeOwner}}</p>
+                        <div v-if="recipe.image">
+                            <img :src=recipe.image.imageURL class="img-thumbnail">
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         <button class="btn btn-outline-secondary col-sm-12">Add</button>
@@ -130,6 +133,8 @@
                             recipeDirections: doc.data().recipeDirections,
                             recipeIngredients: doc.data().recipeIngredients,
                             recipeOwner: doc.data().recipeOwner,
+                            image: doc.data().image,
+
                         }
                     );
                     this.filteredRecipes = this.recipes;
@@ -186,7 +191,7 @@
                     )
             },
             onClickChild (value) {
-                console.log("value",value);  // someValue
+                console.log("single",value);  // someValue
                 this.recipe = value;
             },
             randomRecipe(){
