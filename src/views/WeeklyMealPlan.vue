@@ -124,6 +124,7 @@
                                             recipeDirections: doc.data().recipeDirections,
                                             recipeIngredients: doc.data().recipeIngredients,
                                             recipeOwner: doc.data().recipeOwner,
+                                            image: doc.data().image
                                         }
                                     );
                                     //this loops though the days of the week
@@ -141,6 +142,7 @@
                                                             recipeName: doc.data().recipeName,
                                                             recipeDirections: doc.data().recipeDirections,
                                                             recipeIngredients: doc.data().recipeIngredients,
+                                                            image: doc.data().image
                                                         }
                                                     );
                                                 }

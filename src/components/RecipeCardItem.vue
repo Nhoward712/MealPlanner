@@ -2,8 +2,12 @@
     <div class="ml-4 ">
             <div class="container-fluid mb-1">
                 <div v-on:click="onClickButton(recipe)"  class="row border border-1 border-light" >
-                    <img src="../assets/IMG_0789.jpeg"  class="col-sm-3">
-                    <h3 class="pl-3 col-sm-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
+
+                    <div v-if="recipe.image && !ingredient" class="col-sm-3  p-0">
+                        <img :src=recipe.image.imageURL >
+                    </div>
+<!--                    <img src="../assets/IMG_0789.jpeg"  class="col-sm-3">-->
+                    <h3 class=" col-sm-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
                 </div>
             </div>
     </div>
@@ -20,7 +24,6 @@
         data(){
             return {
                 id: this.recipe,
-                images: [],
             }
 
         },
@@ -36,15 +39,7 @@
 
         },
         created(){
-            db.collection("Images").onSnapshot((snapshotChange) => {
-                this.images=[];
-                snapshotChange.forEach((doc) => {
-                    this.images.push({
-                        imageUser: doc.data().imageUser,
-                        imageURL: doc.data().imageURL
-                    })
-                })
-            });
+            console.log("here", this.recipe)
         },
 
         methods:{
