@@ -52,8 +52,7 @@
         },
         methods: {
             emailSignUp() {
-                console.log(this.email, this.password);
-                if (this.email && this.password) {
+                if (this.email && this.password && this.validateUserName(this.userName)) {
                     firebase
                         .auth()
                         .createUserWithEmailAndPassword(this.email, this.password)
@@ -117,6 +116,20 @@
                 db.collection("MealPlans")
                     .add(this.activeMealPlan)
 
+            },
+            validateUserName(username){
+                db.collection("users")
+                    .get()
+                    .then((querySnapshot)=>{
+                        querySnapshot.forEach((doc)=>{
+                            if(username === doc.data().userName){
+
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        })
+                    })
             }
 
         },

@@ -23,9 +23,7 @@
                     <li class="nav-item" v-else>
                         <h4 class="nav-item nav-link disabled"> Weekly Planner</h4>
                     </li>
-                    <li class="nav-item" v-if="userRole ==='admin' ">
-                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
-                    </li>
+
                     <li class="nav-item">
                         <router-link class="nav-item nav-link " :to="{name:'Recipes',params:{userRole, userName}}"><h4>Recipes</h4></router-link>
                     </li>
@@ -47,7 +45,10 @@
                             <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>
                         </span>
                     </li>
-                    <li>
+                    <li class="nav-item" v-if="userRole ==='admin' ">
+                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
+                    </li>
+                    <li class="nav-item" v-if="userRole ==='admin' ">
                         <router-link class="nav-item nav-link " :to="{name:'ajaxtesting', params:{userRole, userName}}"><h4>API Testing</h4></router-link>
                     </li>
                 </ul>
