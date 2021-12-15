@@ -1,7 +1,7 @@
 <template>
     <div id="nav">
-        <nav class="navbar navbar-expand-sm sticky-top navbar-light border border-info">
-            <a class="navbar-brand ms-4 border ps-2 pe-2 border-dark" href="#">LOGO</a>
+        <nav class="navbar navbar-expand-sm navbar-light ">
+            <a class="navbar-brand" href="#">LOGO</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
-                        <router-link class="nav-item nav-link "  to="/"><h4>Home</h4></router-link>
+                        <router-link class="nav-item nav-link " to="/"><h4>Home</h4></router-link>
                     </li>
                     <li class="nav-item" v-if="currentUser">
                         <router-link class="nav-item nav-link " :to="{name:'ShoppingList', params:{userRole, userName}}"><h4>Shopping List</h4></router-link>
@@ -23,7 +23,9 @@
                     <li class="nav-item" v-else>
                         <h4 class="nav-item nav-link disabled"> Weekly Planner</h4>
                     </li>
-
+                    <li class="nav-item" v-if="userRole ==='admin' ">
+                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
+                    </li>
                     <li class="nav-item">
                         <router-link class="nav-item nav-link " :to="{name:'Recipes',params:{userRole, userName}}"><h4>Recipes</h4></router-link>
                     </li>
@@ -44,9 +46,6 @@
                         <span v-if="currentUser" class="">
                             <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>
                         </span>
-                    </li>
-                    <li class="nav-item" v-if="userRole ==='admin' ">
-                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
                     </li>
                     <li>
                         <router-link class="nav-item nav-link " :to="{name:'ajaxtesting', params:{userRole, userName}}"><h4>API Testing</h4></router-link>
