@@ -27,8 +27,14 @@
                     <li class="nav-item">
                         <router-link class="nav-item nav-link " :to="{name:'Recipes',params:{userRole, userName}}"><h4>Recipes</h4></router-link>
                     </li>
-                    <li class="nav-item text-right" v-if="currentUser" >
-                        <a href="#" class="nav-link" @click.prevent="logout">Log out</a>
+                    <li class=" " v-if="currentUser" >
+                        <div class="dropdown m-2">
+                            <a href="#" class="dropdown-toggle "  data-bs-toggle="dropdown">User: <b>{{ userName }}</b></a>
+                            <div class="dropdown-menu">
+                                <router-link to="/Profile" data-bs-dismiss="modal" class="dropdown-item">Profile</router-link>
+                                <a href="#" class="dropdown-item" @click.prevent="logout">Log out</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item text-right col-sm-2" v-else>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -40,11 +46,12 @@
                         <h5 class="col-sm-7">Not a member yet?</h5>
                         <router-link to="/register" data-bs-dismiss="modal" class="btn btn-primary col-sm-5">Registration</router-link>
                     </li>
-                    <li class="float-sm-right border">
-                        <span v-if="currentUser" class="">
-                            <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>
-                        </span>
-                    </li>
+<!--                    <li class="float-sm-right border">-->
+<!--                        <span v-if="currentUser" class="">-->
+
+<!--&lt;!&ndash;                            <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>&ndash;&gt;-->
+<!--                        </span>-->
+<!--                    </li>-->
                     <li class="nav-item" v-if="userRole ==='admin' ">
                         <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
                     </li>
