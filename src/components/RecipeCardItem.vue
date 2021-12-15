@@ -4,8 +4,14 @@
                 <div v-on:click="onClickButton(recipe)"  class="row border border-1 border-light" >
 
                     <div v-if="recipe.image && !ingredient" class="col-sm-3  p-0">
-                        <img :src=recipe.image.imageURL >
+                        <div v-if="recipe.image">
+                            <img :src=recipe.image.imageURL >
+                        </div>
                     </div>
+                    <div v-if="!recipe.image && !ingredient" class="col-sm-3  p-0">
+                        <img src="../assets/noImage.png" >
+                    </div>
+
 <!--                    <img src="../assets/IMG_0789.jpeg"  class="col-sm-3">-->
                     <h3 class=" col-sm-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
                 </div>

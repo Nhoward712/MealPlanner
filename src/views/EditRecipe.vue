@@ -5,9 +5,16 @@
             <input type="submit" value="Save Changes" @click="saveRecipe"><br>
             <input type="submit" value="Cancel Changes" @click="cancel"><br>
         </div>
+        <div v-if="newRecipe.image">
+            <p>stuff</p>
+            <img :src=newRecipe.image.imageURL>
+        </div>
         <label for="recipeName"  class="">Recipe Name: </label><br>
         <input type="text" class="form-control col-sm-6" v-model="newRecipe.recipeName" id="recipeName" placeholder="Recipe Name" required><br>
-
+        <form @submit.prevent="addImage">
+            <label for="addImage" class="btn">Add Image</label>
+            <input type="file" v-on:change="addImage($event)" id="addImage" class="mt-3 btn btn-primary">
+        </form>
         <ul class="list-group list-group-flush" v-for="(item,i) in newRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
             <div class="row">
                 <input class="col-sm-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
@@ -38,6 +45,7 @@
 
 <script>
     import { db } from "../main";
+    import firebase from "firebase";
 
     export default {
         name: "EditRecipe",
@@ -183,8 +191,32 @@
                     .update({
                         recipeName: this.newRecipe.recipeName,
                         recipeIngredients: this.newRecipe.recipeIngredients,
-                        recipeDirections: this.newRecipe.recipeDirections
+                        recipeDirections: this.newRecipe.recipeDirections,
+                        image: this.newRecipe.image,
                     });
+            },
+            addImage(evt){
+                evt.preventDefault();
+                //add image to storage
+                const file = evt.target.files[0];
+                const storageRef = firebase.storage().ref();
+                const imgRef = storageRef.child(file.name);
+                // Upload the file to storage
+                const task = imgRef.put(file);
+                task
+                    .then(() => {
+                        imgRef.getDownloadURL()
+                        //update image.imageURL
+                            .then((url) => {
+                                this.image.imageURL = url;
+                                this.image.imageUser = this.userName;
+                                this.newRecipe.image = this.image;
+                                // console.log("added this file: ", file," at:", url);
+                                alert("image added to storage!");
+                                console.log("This Was Added to storage", this.image)
+                            })
+                    })
+                    .catch(error => alert("Image did not upload: " + error))
             },
 
         }

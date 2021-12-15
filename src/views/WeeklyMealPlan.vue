@@ -8,19 +8,21 @@
             </div>
         </div>
 <!--meal plan -->
-        <div class="col-sm-5 border border-primary ms-0">
+        <div class="col-sm-5 meal-plan-box border border-primary ms-0">
             <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
             <br>
-            <div class="menuBox overflow-scroll border">
+            <div class="mealPlanCard overflow-scroll border">
                 <MealPlanDayCard v-on:receivePeriod="emitPer($event)" :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
 <!--recipe Search-->
-        <div class="col-sm-4 border ms-sm-1">
-            <p>Recipe search area</p>
-            <label for="recipeSearch" id="recipeSearchbar" ></label>
-            <input class="mb-2"  type="search" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
-            <div class="col-12 menuBackground border me-2 overflow-scroll">
+        <div class="col-sm-4 recipe-search-box border border-primary ms-sm-1">
+            <div class="m-3">
+                <label for="recipeSearch" id="recipeSearchbar" ></label>
+                <input class="mb-2"  type="search" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
+            </div>
+
+            <div class="col-12 recipeSearchResults border me-2 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :recipe="item"></recipeCard>
                 </div>
@@ -238,19 +240,28 @@
 .text-bold{
     text-emphasis: #0b2e13;
 }
-.menuBox {
-    height: 450px;
+.mealPlanCard {
+    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.menuBackground{
+.meal-plan-box{
+    height: 500px;
+}
+.recipeSearchResults{
     background-color: #EAE7DC;
-    height: 450px;
+    height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-    button{
-        background-color: #D8C3A5;
-        color: #E85A4F;
-        font-weight: bold;
-        font-size: 1.2em;
-    }
+.recipe-search-box{
+    height: 500px;
+}
+button{
+    background-color: #D8C3A5;
+    color: #E85A4F;
+    font-weight: bold;
+    font-size: 1.2em;
+    box-shadow: 4px 4px 4px 2px grey;
+}
 
 
 </style>
