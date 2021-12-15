@@ -1,6 +1,6 @@
 <template>
     <div id="nav">
-        <nav class="navbar navbar-expand-sm navbar-light ">
+        <nav class="navbar navbar-expand-sm sticky-top navbar-light ">
             <a class="navbar-brand" href="#">LOGO</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse " id="navbarSupportedContent" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item ">
-                        <router-link class="nav-item nav-link " to="/"><h4>Home</h4></router-link>
+                        <router-link class="nav-item nav-link "  to="/"><h4>Home</h4></router-link>
                     </li>
                     <li class="nav-item" v-if="currentUser">
                         <router-link class="nav-item nav-link " :to="{name:'ShoppingList', params:{userRole, userName}}"><h4>Shopping List</h4></router-link>

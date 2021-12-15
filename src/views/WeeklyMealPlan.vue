@@ -1,22 +1,23 @@
 <template>
-    <div class="border bg-light m-2 row align-items-start mt-3">
+    <div class=" bg-light m-2 row align-items-start mt-3">
 <!--Day of week buttons-->
-        <div class="col-sm-2 border container-fluid ms-1 m-0">
-            <div class="mt-1" v-for="day in dayOfWeek" :key="day.dayOfWeek">
+        <div class="col-sm-2 border border-3 meal-plan-box container-fluid ms-1 m-0">
+            <div class="mt-0" v-for="day in dayOfWeek" :key="day.dayOfWeek">
                 <button class="btn btn-primary col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
 <!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
 <!--meal plan -->
-        <div class="col-sm-5 meal-plan-box border border-primary ms-0">
-            <h3 class="">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
+        <div class="col-sm-5 meal-plan-box border border-3 ms-0">
             <br>
+            <h3 class="ms-5">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
+
             <div class="mealPlanCard overflow-scroll border">
                 <MealPlanDayCard v-on:receivePeriod="emitPer($event)" :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
 <!--recipe Search-->
-        <div class="col-sm-4 recipe-search-box border border-primary ms-sm-1">
+        <div class="col-sm-4 recipe-search-box border border-3 ms-sm-1">
             <div class="m-3">
                 <label for="recipeSearch" id="recipeSearchbar" ></label>
                 <input class="mb-2"  type="search" id="recipeSearch" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">

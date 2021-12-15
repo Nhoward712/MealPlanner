@@ -27,15 +27,15 @@
             </div>
         </div>
 
-        <div class="row m-2 border border-2 justify-content-center">
+        <div class="row m-2 border border-3 content-box justify-content-center">
 <!--Menu List-->
-            <div class="col-7 menuBackground border me-2 overflow-scroll">
+            <div class="col-7 menuBackground recipeSearchResults border me-2 mt-3 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>
             </div>
 <!--Recipe Box-->
-            <div class="col-4 border border-dark">
+            <div class="col-4 border border-dark recipe-box overflow-scroll mt-3">
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
@@ -259,8 +259,6 @@
             this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
             // this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
             this.userName = this.$store.state.userName;
-
-
         }
     }
 </script>
@@ -268,6 +266,18 @@
 <style scoped>
     .menuBackground{
         background-color: #EAE7DC;
+        height: 500px;
+    }
+    .recipeSearchResults{
+        background-color: #EAE7DC;
+        height: 450px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .recipe-box{
+        height: 450px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .content-box{
         height: 500px;
     }
 label{
