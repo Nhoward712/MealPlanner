@@ -2,12 +2,12 @@
     <div class="ml-1">
 <!--Header-->
         <div class="bg-dark row mb-2">
-            <h1 class="text-primary ml-5 col-2">Recipes</h1>
+            <h1 class="text-primary ms-3 col-2">Recipes</h1>
             <form class="col-3 mt-2 row" v-on:submit="searchRecipes(searchTerm)">
                 <input class="col-10" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
                 <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">
             </form>
-            <form class="text-right m-2  col-4 ">
+            <form class="text-right m-1  col-4 ">
                     <!--needs to be dynamic list of filter parameters-->
                     <input type="checkbox" id="veg" name="veg" value="Vegetable">
                     <label for="veg" class="p-1">Vegetable</label>
@@ -29,13 +29,13 @@
 
         <div class="row m-2 border border-3 content-box justify-content-center">
 <!--Menu List-->
-            <div class="col-7 menuBackground recipeSearchResults border me-2 mt-3 overflow-scroll">
+            <div class="col-lg-7 menuBackground recipeSearchResults border me-2 mt-3 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>
             </div>
 <!--Recipe Box-->
-            <div class="col-4 border border-dark recipe-box overflow-scroll mt-3">
+            <div class="col-lg-4 border border-dark recipe-box overflow-scroll mt-3">
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
@@ -71,11 +71,11 @@
                     <input type="button" value="Add To Meal Plan" v-on:click="saveItems(userName,recipe)">
                 </form>
                 <h3 class="text-danger ml-2 bg-light">Ingredients: </h3>
-                <ul class="border border-white mb-2" v-for="(item) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
+                <ul class="border border-white container-fluid mb-2" v-for="(item) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
                     <div class="row">
-                        <p class="col-sm-1 m-0">{{item.amount}}</p>
-                        <p class="col-sm-2 m-0">{{item.type}}</p>
-                        <p class="col-sm-7 m-0"> {{item.name}}</p>
+                        <p class="col-1 m-0">{{item.amount}}</p>
+                        <p class="col-2 m-0">{{item.type}}</p>
+                        <p class="col-6 m-0"> {{item.name}}</p>
                     </div>
                 </ul>
                 <div class="border border-primary mt-2 col-lg-12">
@@ -280,6 +280,7 @@
     .content-box{
         height: 500px;
     }
+
 label{
     color: #fcf8e3;
 }

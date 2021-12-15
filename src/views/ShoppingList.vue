@@ -1,14 +1,18 @@
 <template>
-    <div>
-        <h1>Shopping List </h1>
-            <br>
-        <div class="border border-primary overflow-scroll scrollable m-1">
+
+    <div class="container-fluid row">
+        <h1 class="ms-5 mt-3">Shopping List </h1>
+        <div class="border border-primary overflow-scroll scrollable m-1 col-sm-12 col-md-4">
             <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
                 <input class="h1 m-3 " type="checkbox" value="" :id="item.name">
                 <label class="h1 pt-3" :for="item.name"> {{item.name}}</label>
             </div>
         </div>
+        <h1 class="ms-5 mt-3">Extra Items List </h1>
+        <div class="border border-primary overflow-scroll scrollable m-1 col-sm-12 col-md-4 ">
 
+
+        </div>
     </div>
 
 </template>
@@ -187,5 +191,8 @@
     }
     .scrollable{
         height: 500px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: #EAE7DC;
+
     }
 </style>

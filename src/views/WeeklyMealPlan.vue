@@ -3,7 +3,7 @@
 <!--Day of week buttons-->
         <div class="col-sm-2 border border-3 meal-plan-box container-fluid ms-1 m-0">
             <div class="mt-0" v-for="day in dayOfWeek" :key="day.dayOfWeek">
-                <button class="btn btn-primary col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
+                <button class="btn btn-info col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
 <!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
