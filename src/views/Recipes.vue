@@ -4,17 +4,17 @@
         <div class="bg-dark row mb-2">
             <h1 class="text-primary ms-3 col-2">Recipes</h1>
             <form class="col-3 mt-2 row" v-on:submit="searchRecipes(searchTerm)">
-                <input class="col-10" type="text" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
+                <input class="col-10" type="search" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
                 <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">
             </form>
             <form class="text-right m-1  col-4 ">
                     <!--needs to be dynamic list of filter parameters-->
                     <input type="checkbox" id="veg" name="veg" value="Vegetable">
                     <label for="veg" class="p-1">Vegetable</label>
-                    <input type="checkbox" id="main" name="main" value="Main" class="ml-2">
+                    <input type="checkbox" id="main" name="main" value="Main" class="ml-2" >
                     <label for="main" class="p-1">Main Dish</label>
-                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned"  class="ml-2" checked>
-                    <label for="userOwned" class="p-1">My Recipes</label>
+                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" v-model="owned" v-on:change="filter()"  class="ml-2" >
+                    <label for="userOwned" class="p-1" >My Recipes</label>
             </form>
             <div class="col-3 row m-auto">
                 <router-link :to="{name:'AddNewRecipe',params:{userRole, userName}}">
@@ -46,7 +46,12 @@
                     </div>
                     <div class="col-sm-3">
                         <div v-if="this.userFavorites.includes(recipe.recipeId)">
-                            <button class="btn btn-outline-secondary col-sm-12 " v-on:click="removeFromFavorites(recipe)">Remove</button>
+                            <button class="btn btn-outline-secondary col-sm-12 "
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Remove recipe from your Favorites"
+                                    v-on:click="removeFromFavorites(recipe)">Remove
+                            </button>
                         </div>
                         <div v-else>
                             <button class="btn btn-outline-secondary col-sm-12" v-on:click="addToFavorites(recipe)">Add</button>
@@ -125,6 +130,7 @@
                 filteredRecipes: [],
                 searchTerm: "",
                 userFavorites: [],
+                owned: false
 
             }
         },
@@ -270,8 +276,6 @@
                 //count number of chars in search,
                 const regexp = new RegExp(searchStr, 'i');
                 this.filteredRecipes = this.recipes.filter(x => regexp.test(x.recipeName));
-                console.log(searchStr);
-                console.log(this.filteredRecipes);
 
             },
             addToFavorites(recipe){
@@ -281,35 +285,39 @@
                     .then((querySnapshot)=>{
                         querySnapshot.forEach((doc)=>{
                             let docId = doc.id;
-                            if(doc.data().recipes) {
+                            if(doc.data().recipes) {//adds all favorites to array
                                 for (let i = 0; i < doc.data().recipes.length; i++) {
                                     this.userFavorites.push(doc.data().recipes[i])
                                 }
                             }
                             let flag = true;
-                            for(let i = 0; i < this.userFavorites.length; i++){
+                            for(let i = 0; i < this.userFavorites.length; i++){// looks for duplicates
                                 if(recipe.recipeId === this.userFavorites[i]){
                                     flag = false;
                                 }
                             }
-                            if(flag){
+                            if(flag){//Adds to recipe to favorites
                                 this.userFavorites.push(recipe.recipeId);
                                 this.updateUserFavorites(docId)
+                                this.filter();
 
                             }
 
                         })
 
                     })
+
             },
             updateUserFavorites(tempId){
+
                 db.collection("users")
                     .doc(tempId)
                     .update(
                         {
                             recipes: this.userFavorites
                         }
-                    )
+                    );
+
             },
             removeFromFavorites(recipe){
                 this.userFavorites.splice(this.userFavorites.indexOf(recipe.recipeId),1);
@@ -319,11 +327,32 @@
                         querySnapshot.forEach((doc) =>{
                             let docId = doc.id;
                             this.updateUserFavorites(docId)
+                            this.filter();
+
                         })
 
                     })
 
-            }
+            },
+            filter(){
+                let tempArray = [];
+                if(this.owned) {
+                    for (let j = 0; j < this.filteredRecipes.length; j++) {
+
+                        for (let i = 0; i < this.userFavorites.length; i++) {
+
+                            if (this.userFavorites[i] === this.filteredRecipes[j].recipeId) {
+
+                                tempArray.push(this.filteredRecipes[j])
+                            }
+                        }
+                    }
+                    this.filteredRecipes = tempArray;
+                }
+                else{
+                    this.searchRecipes(this.searchTerm)
+                }
+            },
 
         },
 
