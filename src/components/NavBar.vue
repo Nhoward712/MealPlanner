@@ -33,7 +33,15 @@
                             <div class="dropdown-menu">
                                 <router-link to="/Profile" data-bs-dismiss="modal" class="dropdown-item">Profile</router-link>
                                 <a href="#" class="dropdown-item" @click.prevent="logout">Log out</a>
+                                <div class="" v-if="userRole ==='admin' ">
+                                    <router-link class="dropdown-item" :to="{name:'InventoryList',params:{userRole, userName}}">Inventory</router-link>
+                                </div>
+                                <div class="" v-if="userRole ==='admin' ">
+                                    <router-link class="dropdown-item" :to="{name:'ajaxtesting', params:{userRole, userName}}">API Testing</router-link>
+                                </div>
                             </div>
+
+
                         </div>
                     </li>
                     <li class="nav-item text-right col-sm-2" v-else>
@@ -52,12 +60,7 @@
 <!--&lt;!&ndash;                            <p class="ps-2 pe-2 mt-2">Logged in as: <b>{{ userName }}</b></p>&ndash;&gt;-->
 <!--                        </span>-->
 <!--                    </li>-->
-                    <li class="nav-item" v-if="userRole ==='admin' ">
-                        <router-link class="nav-item nav-link " :to="{name:'InventoryList',params:{userRole, userName}}"><h4>Inventory</h4></router-link>
-                    </li>
-                    <li class="nav-item" v-if="userRole ==='admin' ">
-                        <router-link class="nav-item nav-link " :to="{name:'ajaxtesting', params:{userRole, userName}}"><h4>API Testing</h4></router-link>
-                    </li>
+
                 </ul>
                 <!-- Button trigger modal -->
 <!--                <div class="d-grid gap-2 d-md-flex justify-content-md-center">-->

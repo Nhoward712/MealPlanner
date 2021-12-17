@@ -45,7 +45,10 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <button class="btn btn-outline-secondary col-sm-12">Add</button>
+                        <div v-if="isFavorite()">
+                            <p>placeholder</p>
+                        </div>
+                        <button class="btn btn-outline-secondary col-sm-12" v-on:click="addToFavorites(recipe)">Add</button>
                         <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
                         </router-link>
@@ -119,6 +122,8 @@
                 newRecipes: [],
                 filteredRecipes: [],
                 searchTerm: "",
+                userFavorites: [],
+
             }
         },
         created() {
@@ -174,14 +179,14 @@
                                 console.log("recipeHere",this.day + this.period);
                                 this.newRecipes = doc.data()[this.day + this.period];
                                 this.newRecipes.push(recipe.recipeId);
-                                this.update(docId);
+                                this.updateMealPlan(docId);
                             }
                         })
                     })
 
 
             },
-            update(tempId){
+            updateMealPlan(tempId){
                 db.collection("MealPlans")
                     .doc(tempId)
                     .update(
@@ -190,6 +195,7 @@
                         }
                     )
             },
+
             onClickChild (value) {
                 console.log("single",value);  // someValue
                 this.recipe = value;
@@ -246,12 +252,45 @@
                 console.log(this.filteredRecipes);
 
             },
-            isMobile() {
-                if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    return true
-                } else {
-                    return false
-                }
+            addToFavorites(recipe){
+                this.userFavorites = [];
+                db.collection("users").where("userName", "==", this.userName)
+                    .get()
+                    .then((querySnapshot)=>{
+                        querySnapshot.forEach((doc)=>{
+                            let docId = doc.id;
+                            if(doc.data().recipes) {
+                                for (let i = 0; i < doc.data().recipes.length; i++) {
+                                    this.userFavorites.push(doc.data().recipes[i])
+                                }
+                            }
+                            console.log("User:", doc.data().userName);
+                            let flag = true;
+                            for(let i = 0; i < this.userFavorites.length; i++){
+                                if(recipe.recipeId === this.userFavorites[i]){
+                                    flag = false;
+                                }
+                            }
+                            if(flag){
+                                console.log("adds recipe id #", recipe.recipeId);
+                                this.userFavorites.push(recipe.recipeId);
+                                console.log("All Recipes: ", this.userFavorites + docId);
+                                this.updateUserFavorites(docId)
+
+                            }
+
+                        })
+
+                    })
+            },
+            updateUserFavorites(tempId){
+                db.collection("users")
+                    .doc(tempId)
+                    .update(
+                        {
+                            recipes: this.userFavorites
+                        }
+                    )
             },
         },
 

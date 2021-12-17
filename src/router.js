@@ -18,6 +18,7 @@ Vue.use(VueRouter);
 
 const routes = [
     { path: "/home", component: Home, name: "home" },
+    { path: "/", component: Home, name: "home" },
     { path: "/inventory", component: InventoryList, name: "InventoryList"},
     { path: "/recipes", component: Recipes, name: "Recipes"},
     { path: "/additem", component: AddNewIngredient, name: "AddNewIngredient"},

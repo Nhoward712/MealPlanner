@@ -45,7 +45,6 @@
 
         },
         created(){
-            console.log("here", this.recipe)
         },
 
         methods:{

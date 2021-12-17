@@ -50,6 +50,7 @@
 
 <script>
     import { db } from "../main";
+
     export default {
         name: "Home",
         data() {
@@ -62,6 +63,7 @@
             }
         },
         created(){
+
             db.collection("messages")
                 .get()
                 .then((querySnapshot) => {
@@ -80,10 +82,6 @@
                     return (a.date.seconds < b.date.seconds) ? 1 : ((b.date.seconds < a.date.seconds) ? -1 : 0);
                 });
             });
-
-
-
-            console.log("list of Messages",this.listOfMessages)
 
         },
         methods:{
