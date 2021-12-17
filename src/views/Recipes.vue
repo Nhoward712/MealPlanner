@@ -45,14 +45,16 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div v-if="isFavorite()">
-                            <p>placeholder</p>
+                        <div v-if="this.userFavorites.includes(recipe.recipeId)">
+                            <button class="btn btn-outline-secondary col-sm-12 " v-on:click="removeFromFavorites(recipe)">Remove</button>
                         </div>
-                        <button class="btn btn-outline-secondary col-sm-12" v-on:click="addToFavorites(recipe)">Add</button>
+                        <div v-else>
+                            <button class="btn btn-outline-secondary col-sm-12" v-on:click="addToFavorites(recipe)">Add</button>
+                        </div>
                         <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
                         </router-link>
-                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" v-if="recipe.recipeOwner == userName" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>
+<!--                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" v-if="userRole == 'admin'" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>-->
                     </div>
 
                 </div>
@@ -126,49 +128,71 @@
 
             }
         },
+
         created() {
+            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
+            this.userName = this.$store.state.userName; // this one uses vuex... better
+            this.getAllRecipes();
+            this.getIngredients();
+            this.getUserFavorites();
 
-            db.collection("recipes").onSnapshot((snapshotChange) => {
-                this.recipes = [];
-                snapshotChange.forEach((doc) => {
-                    this.recipes.push(
-                        {
-                            recipeId: doc.data().recipeId,
-                            recipeName: doc.data().recipeName,
-                            recipeDirections: doc.data().recipeDirections,
-                            recipeIngredients: doc.data().recipeIngredients,
-                            recipeOwner: doc.data().recipeOwner,
-                            image: doc.data().image,
 
-                        }
-                    );
-                    this.filteredRecipes = this.recipes;
-                    this.recipe.recipeId = doc.data().recipeId;
-                    this.recipe.recipeName = doc.data().recipeName;
-                    this.recipe.recipeDirections = doc.data().recipeDirections;
-                    this.recipe.recipeIngredients = doc.data().recipeIngredients;
-                })
-            });
-
-            db.collection("ingredientList").onSnapshot((snapshotChange) => {
-                this.ingredients = [];
-                snapshotChange.forEach((doc) => {
-                    this.ingredients.push({
-                            ingredientId: doc.data().ingredientId,
-                            name: doc.data().name,
-                            onHand: doc.data().onHand,
-                            purchased: doc.data().purchased,
-                            cost: doc.data().cost,
-                        }
-                    );
-                })
-            });
-            setTimeout(this.randomRecipe(),5000);
         },
         methods:{
-            //potentially have the PlanId be the user credentials
+            getAllRecipes(){
+                db.collection("recipes").onSnapshot((snapshotChange) => {
+                    this.recipes = [];
+                    snapshotChange.forEach((doc) => {
+                        this.recipes.push(
+                            {
+                                recipeId: doc.data().recipeId,
+                                recipeName: doc.data().recipeName,
+                                recipeDirections: doc.data().recipeDirections,
+                                recipeIngredients: doc.data().recipeIngredients,
+                                recipeOwner: doc.data().recipeOwner,
+                                image: doc.data().image,
+
+                            }
+                        );
+                        this.filteredRecipes = this.recipes;
+                        this.recipe.recipeId = doc.data().recipeId;
+                        this.recipe.recipeName = doc.data().recipeName;
+                        this.recipe.recipeDirections = doc.data().recipeDirections;
+                        this.recipe.recipeIngredients = doc.data().recipeIngredients;
+                    })
+                });
+            },
+            getIngredients(){
+                db.collection("ingredientList").onSnapshot((snapshotChange) => {
+                    this.ingredients = [];
+                    snapshotChange.forEach((doc) => {
+                        this.ingredients.push({
+                                ingredientId: doc.data().ingredientId,
+                                name: doc.data().name,
+                                onHand: doc.data().onHand,
+                                purchased: doc.data().purchased,
+                                cost: doc.data().cost,
+                            }
+                        );
+                    })
+                });
+            },
+            getUserFavorites(){
+                db.collection("users").where("userName", "==", this.userName)
+                    .get()
+                    .then((querySnapshot) => {
+                        this.userFavorites = [];
+                        querySnapshot.forEach((doc) => {
+                            if(doc.data().recipes) {
+                                for (let i = 0; i < doc.data().recipes.length; i++) {
+                                    this.userFavorites.push(doc.data().recipes[i])
+                                }
+                            }
+                        })
+                    })
+            },
             saveItems(planId, recipe){
-                console.log(this.day,this.period, recipe.recipeId);
+                // console.log(this.day,this.period, recipe.recipeId);
                 db.collection("MealPlans")
                     .get()
                     .then((querySnapshot) =>{
@@ -197,12 +221,10 @@
             },
 
             onClickChild (value) {
-                console.log("single",value);  // someValue
+                // console.log("single",this.userFavorites);  // someValue
                 this.recipe = value;
             },
-            randomRecipe(){
-                // setTimeout(this.onClickChild(this.recipes[2]), 10000);
-            },
+
 
             isIngredientInRecipe(recipeId,ingredientID){
                 let recipeIngredients = this.recipes[recipeId-1].recipeIngredients;
@@ -264,7 +286,6 @@
                                     this.userFavorites.push(doc.data().recipes[i])
                                 }
                             }
-                            console.log("User:", doc.data().userName);
                             let flag = true;
                             for(let i = 0; i < this.userFavorites.length; i++){
                                 if(recipe.recipeId === this.userFavorites[i]){
@@ -272,9 +293,7 @@
                                 }
                             }
                             if(flag){
-                                console.log("adds recipe id #", recipe.recipeId);
                                 this.userFavorites.push(recipe.recipeId);
-                                console.log("All Recipes: ", this.userFavorites + docId);
                                 this.updateUserFavorites(docId)
 
                             }
@@ -292,12 +311,24 @@
                         }
                     )
             },
+            removeFromFavorites(recipe){
+                this.userFavorites.splice(this.userFavorites.indexOf(recipe.recipeId),1);
+                db.collection("users")
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) =>{
+                            let docId = doc.id;
+                            this.updateUserFavorites(docId)
+                        })
+
+                    })
+
+            }
+
         },
 
         mounted() {
-            this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
-            // this.userName = this.$route.params.userName; //this pulls the param that was sent by the router
-            this.userName = this.$store.state.userName;
+
         }
     }
 </script>
