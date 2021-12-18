@@ -154,6 +154,7 @@
                     })
                     .catch();
             },
+
             addToList(){
                 //input from dropdown of all ingredients
                 //take name and match it to a ingredient Id

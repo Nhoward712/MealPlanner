@@ -9,12 +9,12 @@
             </form>
             <form class="text-right m-1  col-4 ">
                     <!--needs to be dynamic list of filter parameters-->
-                    <input type="checkbox" id="veg" name="veg" value="Vegetable">
-                    <label for="veg" class="p-1">Vegetable</label>
-                    <input type="checkbox" id="main" name="main" value="Main" class="ml-2" >
-                    <label for="main" class="p-1">Main Dish</label>
-                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" v-model="owned" v-on:change="filter()"  class="ml-2" >
-                    <label for="userOwned" class="p-1" >My Recipes</label>
+<!--                    <input type="checkbox" id="veg" name="veg" value="Vegetable">-->
+<!--                    <label for="veg" class="p-1">Vegetable</label>-->
+<!--                    <input type="checkbox" id="main" name="main" value="Main" class="ml-2" >-->
+<!--                    <label for="main" class="p-1">Main Dish</label>-->
+                    <input type="checkbox" id="userOwned" name="userOwned" value="userOwned" v-model="owned" v-on:change="filter()"  class="ms-5" >
+                    <label for="userOwned" class="p-1" >My Favorites</label>
             </form>
             <div class="col-3 row m-auto">
                 <router-link :to="{name:'AddNewRecipe',params:{userRole, userName}}">
@@ -54,7 +54,12 @@
                             </button>
                         </div>
                         <div v-else>
-                            <button class="btn btn-outline-secondary col-sm-12" v-on:click="addToFavorites(recipe)">Add</button>
+                            <button class="btn btn-outline-secondary col-sm-12"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Add Recipes to your Favorites"
+                                    v-on:click="addToFavorites(recipe)">Add
+                            </button>
                         </div>
                         <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
@@ -213,8 +218,6 @@
                             }
                         })
                     })
-
-
             },
             updateMealPlan(tempId){
                 db.collection("MealPlans")
@@ -225,13 +228,10 @@
                         }
                     )
             },
-
             onClickChild (value) {
                 // console.log("single",this.userFavorites);  // someValue
                 this.recipe = value;
             },
-
-
             isIngredientInRecipe(recipeId,ingredientID){
                 let recipeIngredients = this.recipes[recipeId-1].recipeIngredients;
                 let isTrue = false;
@@ -259,7 +259,6 @@
                             const id = doc.data();
                             if(tempId === id.recipeId){
                                 fullId = doc.id;
-
                             }
                         })
                     })
@@ -269,7 +268,6 @@
                             .delete()
                             .catch(error => console.log(error))
                     })
-
             },
             searchRecipes(searchStr){
                 //on keyup, search array for name and ingredients
@@ -297,7 +295,7 @@
                                 }
                             }
                             if(flag){//Adds to recipe to favorites
-                                this.filteredRecipes.push(recipe)
+                                this.filteredRecipes.push(recipe);
                                 this.userFavorites.push(recipe.recipeId);
                                 this.updateUserFavorites(docId);
                                 this.filter();
@@ -309,7 +307,6 @@
                 db.collection("users")
                     .doc(tempId)
                     .update({recipes: this.userFavorites});
-
             },
             removeFromFavorites(recipe){
                 this.userFavorites.splice(this.userFavorites.indexOf(recipe.recipeId),1);
@@ -325,7 +322,6 @@
             },
             filter(){
                 let tempArray = [];
-
                 if(this.owned) {
                     for (let j = 0; j < this.filteredRecipes.length; j++) {
                         for (let i = 0; i < this.userFavorites.length; i++) {
@@ -335,11 +331,8 @@
                         }
                     }
                     this.filteredRecipes = tempArray;
-                    console.log("add owned", this.filteredRecipes)
-
                 }
                 else if(!this.owned){
-                    console.log("Owned",this.owned);
                     this.searchRecipes(this.searchTerm)
                 }
             },
