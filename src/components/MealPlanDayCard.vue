@@ -1,6 +1,6 @@
 <template>
     <div >
-        <div class=" border-primary ">
+        <div class="">
             <div class="row">
                 <div class=" col-sm-12" :id="DayOfWeek">
                     <div class="card card-body">
@@ -20,10 +20,14 @@
                             </div>
 
                             <div v-for="(recipe) in Recipes" :key="recipe.Recipes">
-                                <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu">
+                                <p v-if="DayOfWeek === recipe.day && recipe.mealPeriod === per" class="menu ms-2">
                                     <button class="btn fa-border " style="font-size: .8em" v-on:click="remove(recipe,per,userName)" >
                                         <font-awesome-icon icon="minus-circle" />
-                                    </button><router-link class="mt-0 col-sm-5 day" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link></p>
+                                    </button>
+                                    <button class="day btn ">
+                                        <router-link class="mt-0 col-sm-5 day" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link>
+                                    </button>
+                                </p>
                             </div>
 
                             <hr>
@@ -115,7 +119,8 @@
 
 <style scoped>
 .menu{
-    background-color: #EAE7DC;
+    background-color: #D8C3A5;
+    border-radius: 20px;
 }
 .textSize{
     font-size: small;
@@ -125,7 +130,7 @@
     /*text-align: center;*/
 }
 .day{
-    background-color: #EAE7DC;
+    background-color: #D8C3A5;
     color: #000;
 }
 .cardTitle{

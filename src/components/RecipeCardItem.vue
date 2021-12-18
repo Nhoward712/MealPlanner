@@ -1,19 +1,17 @@
 <template>
     <div class="ml-4 ">
             <div class="container-fluid mb-1">
-                <div v-on:click="onClickButton(recipe)"  class="row border border-1 border-light" >
+                <div v-on:click="onClickButton(recipe)"  class="row border border-1 rounded-3 border-light" >
 
-                    <div v-if="recipe.image && !ingredient" class="col-sm-3  p-0">
+                    <div v-if="recipe.image && !ingredient" class="col-sm-3">
                         <div v-if="recipe.image">
                             <img :src=recipe.image.imageURL >
                         </div>
                     </div>
-                    <div v-if="!recipe.image && !ingredient" class="col-sm-3  p-0">
+                    <div v-if="!recipe.image && !ingredient" class="col-sm-3">
                         <img src="../assets/noImage.png" >
                     </div>
-
-<!--                    <img src="../assets/IMG_0789.jpeg"  class="col-sm-3">-->
-                    <h3 class=" col-sm-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
+                    <h3 class=" col-sm-6 col-md-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
                 </div>
             </div>
     </div>
@@ -96,7 +94,7 @@
 
 <style scoped>
     h3 {
-        background-color: #fff;
+        background-color: #EAE7DC;
         color: #1b1e21;
         font-size: 1.5rem;
     }

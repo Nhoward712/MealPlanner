@@ -12,7 +12,7 @@
             <br>
             <h3 class="ms-5">Meal Plan for: <b class="text-bold">{{userName}}</b> - {{activeDay}}</h3>
 
-            <div class="mealPlanCard overflow-scroll border">
+            <div class="mealPlanCard overflow-scroll border border-warning rounded-3">
                 <MealPlanDayCard v-on:receivePeriod="emitPer($event)" :DayOfWeek="activeDay" :Recipes="recipes"></MealPlanDayCard>
             </div>
         </div>
@@ -85,6 +85,7 @@
                     .then((querySnapshot)=>{
                         this.activeMealPlan = {};
                         this.recipes = [];
+
                         querySnapshot.forEach((doc) => {
                             if(doc.data().PlanId === this.userName){
                                 this.activeMealPlan ={
@@ -157,6 +158,8 @@
                             });
                     });
                 this.filteredRecipes = this.allRecipes;
+                console.log("filtered",this.filteredRecipes);
+
             },
             currentDay(day){
                 this.activeDay = day;
@@ -194,6 +197,7 @@
                             querySnapshot.forEach((doc) =>{
                                 //dynamic plan needs to have params: userName passed in
                                 //Need to pass it back to meal plan view on complete
+                                console.log("filtered",this.filteredRecipes);
 
                                 if(doc.data().PlanId === this.userName){
                                     let docId = doc.id;
@@ -212,10 +216,11 @@
                             })
                         })
                         .then(() =>{
+                            this.allRecipes = [];
                             this.loadData()
                         })
                 }else{
-                    setTimeout(() => { console.log("World!"); }, 500);
+                    this.allRecipes = [];
                     this.loadData();
                 }
                 console.log("after emit");

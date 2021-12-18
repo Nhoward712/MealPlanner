@@ -29,20 +29,18 @@
 
         <div class="row m-2 border border-3 content-box justify-content-center">
 <!--Menu List-->
-            <div class="col-lg-7 menuBackground recipeSearchResults border me-2 mt-3 overflow-scroll">
+            <div class="col-lg-7 menuBackground recipeSearchResults border rounded-3 me-2 mt-3 overflow-scroll">
                 <div v-for="item in filteredRecipes" :key="item.filteredRecipes">
                     <recipeCard  v-on:btnClicked="onClickChild($event)" :ingredient="ingredients" :recipe="item">d</recipeCard>
                 </div>
             </div>
 <!--Recipe Box-->
-            <div class="col-lg-4 border border-dark recipe-box overflow-scroll mt-3">
+            <div class="col-lg-4 border border-dark rounded-3 recipe-box overflow-scroll mt-3">
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
                         <h2 class="ml-4">{{recipe.recipeName}}</h2>
                         <p class="m-auto">Recipe By: {{recipe.recipeOwner}}</p>
-                        <div v-if="recipe.image">
-                            <img :src=recipe.image.imageURL class="img-thumbnail">
-                        </div>
+
                     </div>
                     <div class="col-sm-3">
                         <div v-if="this.userFavorites.includes(recipe.recipeId)">
@@ -64,10 +62,10 @@
                         <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
                         </router-link>
-<!--                        <input class="btn btn-outline-secondary col-sm-12 bg-warning p-0 mb-2" v-if="userRole == 'admin'" type="submit"  value="Remove" v-on:click="removeFromList(recipe.recipeId)"/>-->
                     </div>
 
                 </div>
+    <!-- Add to meal Plan-->
                 <form class="text-center border-bottom pb-2">
                     <select name="day" id="day" v-model="day">
                         <option selected value="Monday">Monday</option>
@@ -85,6 +83,10 @@
                     </select>
                     <input type="button" value="Add To Meal Plan" v-on:click="saveItems(userName,recipe)">
                 </form>
+                <div v-if="recipe.image">
+                    <img :src=recipe.image.imageURL class="img-thumbnail">
+                </div>
+    <!--recipe details-->
                 <h3 class="text-danger ml-2 bg-light">Ingredients: </h3>
                 <ul class="border border-white container-fluid mb-2" v-for="(item) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
                     <div class="row">
