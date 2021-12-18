@@ -297,26 +297,18 @@
                                 }
                             }
                             if(flag){//Adds to recipe to favorites
+                                this.filteredRecipes.push(recipe)
                                 this.userFavorites.push(recipe.recipeId);
-                                this.updateUserFavorites(docId)
+                                this.updateUserFavorites(docId);
                                 this.filter();
-
                             }
-
                         })
-
                     })
-
             },
             updateUserFavorites(tempId){
-
                 db.collection("users")
                     .doc(tempId)
-                    .update(
-                        {
-                            recipes: this.userFavorites
-                        }
-                    );
+                    .update({recipes: this.userFavorites});
 
             },
             removeFromFavorites(recipe){
@@ -326,34 +318,31 @@
                     .then((querySnapshot) => {
                         querySnapshot.forEach((doc) =>{
                             let docId = doc.id;
-                            this.updateUserFavorites(docId)
-                            this.filter();
-
-                        })
-
+                            this.updateUserFavorites(docId);
+                        });
+                        this.filter();
                     })
-
             },
             filter(){
                 let tempArray = [];
+
                 if(this.owned) {
                     for (let j = 0; j < this.filteredRecipes.length; j++) {
-
                         for (let i = 0; i < this.userFavorites.length; i++) {
-
                             if (this.userFavorites[i] === this.filteredRecipes[j].recipeId) {
-
-                                tempArray.push(this.filteredRecipes[j])
+                                tempArray.push(this.filteredRecipes[j]);
                             }
                         }
                     }
                     this.filteredRecipes = tempArray;
+                    console.log("add owned", this.filteredRecipes)
+
                 }
-                else{
+                else if(!this.owned){
+                    console.log("Owned",this.owned);
                     this.searchRecipes(this.searchTerm)
                 }
             },
-
         },
 
         mounted() {
