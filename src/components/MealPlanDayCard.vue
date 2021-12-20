@@ -119,7 +119,7 @@
 
 <style scoped>
 .menu{
-    background-color: #D8C3A5;
+    background-color: #ffffff;
     border-radius: 20px;
 }
 .textSize{
@@ -130,7 +130,7 @@
     /*text-align: center;*/
 }
 .day{
-    background-color: #D8C3A5;
+    background-color: #ffffff;
     color: #000;
 }
 .cardTitle{
