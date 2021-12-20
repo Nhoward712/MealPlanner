@@ -1,7 +1,7 @@
 <template>
     <div class="ml-4 ">
             <div class="container-fluid mb-1">
-                <div v-on:click="onClickButton(recipe)"  class="row border border-1 rounded-3 border-light" >
+                <div v-on:click="onClickButton(recipe)"  class="hov row border border-1 rounded-3 border-light" >
 
                     <div v-if="recipe.image && !ingredient" class="col-sm-3">
                         <div v-if="recipe.image">
@@ -11,7 +11,7 @@
                     <div v-if="!recipe.image && !ingredient" class="col-sm-3">
                         <img src="../assets/noImage.png" >
                     </div>
-                    <h3 class=" col-sm-6 col-md-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
+                    <h3 class="col-sm-6 col-md-9 text-left"> {{recipe.recipeName}}<span v-if="recipe.recipeOwner"> -by: {{recipe.recipeOwner}}</span> </h3>
                 </div>
             </div>
     </div>
@@ -102,6 +102,10 @@
         background-color: #fcf8e3;
         cursor: pointer;
     }
+    /*.hov:hover{*/
+    /*    background-color: inherit;*/
+    /*    cursor: pointer;*/
+    /*}*/
     img{
         height: 70px;
         width: 90px;

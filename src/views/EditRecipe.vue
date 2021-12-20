@@ -65,6 +65,8 @@
                 databaseRecipes: [],
                 ingredient: {},
                 thisRecipesIngredients: [],
+                image: {},
+                userName: "",
             }
         },
         created() {
@@ -72,6 +74,7 @@
                 this.newRecipe = this.recipe;
 
             }
+            this.userName = this.$store.state.userName;
             // pull in ingredient list to display current recipe ingredients then loads recipe ingredients into separate array
             db.collection("ingredientList")
                 .onSnapshot((snapshotChange) => {
@@ -186,6 +189,7 @@
                 }
             },
             update(tempId){
+                console.log("Here",this.newRecipe.image);
                 db.collection("recipes")
                     .doc(tempId)
                     .update({
@@ -208,6 +212,7 @@
                         imgRef.getDownloadURL()
                         //update image.imageURL
                             .then((url) => {
+                                console.log("imageURL", url);
                                 this.image.imageURL = url;
                                 this.image.imageUser = this.userName;
                                 this.newRecipe.image = this.image;

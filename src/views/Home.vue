@@ -26,9 +26,9 @@
 
                 </div>
 
-                <div class="col-sm-12" v-for="message in listOfMessages" :key="message.listOfMessages">
+                <div class="col-sm-12 container-fluid" v-for="message in listOfMessages" :key="message.listOfMessages">
                     <div>
-                    <div class="border border-dark col-sm-6 text-left row">
+                    <div class="border border-dark col-sm-6 col-md-9 row">
                         <div class="col-sm-4">
                             <b class="justify-content-sm-start">{{message.user}}</b> said:
                         </div>
