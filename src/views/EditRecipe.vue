@@ -72,7 +72,6 @@
         created() {
             if (this.recipe) {
                 this.newRecipe = this.recipe;
-
             }
             this.userName = this.$store.state.userName;
             // pull in ingredient list to display current recipe ingredients then loads recipe ingredients into separate array
@@ -91,13 +90,8 @@
                 });
                     this.getIngredientObjectById();
             });
-
-
         },
         mounted(){
-
-
-
         },
         methods:{
             cancel(){
@@ -124,9 +118,9 @@
                     if(this.databaseIngredients[i].name === name){
                         this.thisRecipesIngredients[Id].ingredientId = this.databaseIngredients[i].ingredientId;
                         this.thisRecipesIngredients[Id].name =this.databaseIngredients[i].name;
-                            this.thisRecipesIngredients[Id].onHand =this.databaseIngredients[i].onHand;
-                            this.thisRecipesIngredients[Id].purchased =this.databaseIngredients[i].purchased;
-                            this.thisRecipesIngredients[Id].cost = this.databaseIngredients[i].cost;
+                        this.thisRecipesIngredients[Id].onHand =this.databaseIngredients[i].onHand;
+                        this.thisRecipesIngredients[Id].purchased =this.databaseIngredients[i].purchased;
+                        this.thisRecipesIngredients[Id].cost = this.databaseIngredients[i].cost;
                     }
                 }
             },
@@ -189,7 +183,8 @@
                 }
             },
             update(tempId){
-                console.log("Here",this.newRecipe.image);
+                console.log("Ingredients",this.newRecipe.recipeName);
+
                 db.collection("recipes")
                     .doc(tempId)
                     .update({
