@@ -1,10 +1,10 @@
 <template>
-    <div class="container-fluid mb-5">
+    <div class="container-fluid ms-3 mb-5 ">
 
         <div class="row recipe-box ml-4">
             <div class="col-sm-12 row">
                 <h1 class="text-danger font-weight-bolder mt-3">{{currentRecipe.recipeName}}</h1>
-                <div class="border border-primary col-md-3">
+                <div class="border border-2 rounded-3 col-md-3">
                     <h3 class="text-danger ml-2 bg-light ">Ingredients: </h3>
                     <div class="recipe-box overflow-scroll">
                         <ul class="border border-white m-2 " v-for="(item) in currentRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
@@ -17,13 +17,17 @@
                     </div>
 
                 </div>
-                <div class="border border-primary mt-0 col-md-5 ">
+                <div class="border border-2 rounded-3 mt-0 col-md-5 ">
                     <h3 class="text-danger ml-2 bg-light">Directions: </h3>
                     <p >{{currentRecipe.recipeDirections}}</p>
                 </div>
-                <div v-if="currentRecipe.image" class="col-sm-12 col-md-4 ">
-                    <img :src=recipe.image.imageURL class="img-thumbnail">
+                <div v-if="currentRecipe.image" class="col-sm-12 col-md-4 rounded-3 border border-2">
+                    <img :src=recipe.image.imageURL class="img-thumbnail border-5 border-secondary shadow-sm">
+                    <div class="notes-box border mb-1 mt-1">
+                        <h4>Notes:</h4>
+                    </div>
                 </div>
+
             </div>
 
         </div>
@@ -56,13 +60,19 @@
 
 <style scoped>
 img{
-    height: auto;
-    width: 500px;
+    height: 350px;
+    width: auto;
 }
     p{
         font-size: 1.5em;
     }
     .recipe-box{
         height: 450px;
+    }
+    .image-box{
+        height: 225px;
+    }
+    .notes-box{
+        height: 144px;
     }
 </style>

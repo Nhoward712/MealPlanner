@@ -38,7 +38,11 @@
             <div class="col-lg-4 border border-dark rounded-3 recipe-box overflow-scroll mt-3">
                 <div class="row mb-2 mt-2 border-bottom">
                     <div class="col-sm-8">
-                        <h2 class="ml-4">{{recipe.recipeName}}</h2>
+                        <h2 class="ml-4">
+                            <button class=" btn ">
+                                <router-link class="mt-0 col-sm-5 h2 text-primary" :to="{name:'ViewRecipe', params: {recipe:recipe}}" > {{recipe.recipeName}}</router-link>
+                            </button>
+                        </h2>
                         <p class="m-auto">Recipe By: {{recipe.recipeOwner}}</p>
 
                     </div>
