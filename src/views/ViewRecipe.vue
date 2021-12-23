@@ -16,9 +16,9 @@
                     <div class="recipe-box overflow-scroll">
                         <ul class="border border-white m-2 " v-for="(item) in currentRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
                             <div class="row ">
-                                <p class="col-sm-1 m-0">{{item.amount}}</p>
-                                <p class="col-sm-3 m-0">{{item.type}}</p>
-                                <p class="col-sm-6 m-0 text-right"> {{item.name}}</p>
+                                <p class="col-1 col-md-1 m-0">{{item.amount}}</p>
+                                <p class="col-3 col-md-3 m-0">{{item.type}}</p>
+                                <p class="col-8 col-md-7 m-0 text-right"> {{item.name}}</p>
                             </div>
                         </ul>
                     </div>
@@ -45,7 +45,7 @@
 
         </div>
 
-        <!-- Edit Ingredient Modal -->
+<!-- Edit Ingredient Modal -->
         <div class="modal fade" id="ingredientModal" tabindex="-1" aria-labelledby="ingredientModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -56,10 +56,10 @@
                     <div class="modal-body">
                         <ul class="list-group list-group-flush" v-for="(item,i) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
                             <div class="row">
-                                <input class="col-sm-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="col-sm-2" v-model="item.type" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="col-sm-7" v-model="item.name" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="mt-0 col-sm-2" type="submit"  value="Remove" v-on:click="removeFromList(i)"/>
+                                <input class="col-2 col-md-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
+                                <input class="col-2" v-model="item.type" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
+                                <input class="col-5 col-md-7" v-model="item.name" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
+                                <input class="mt-0 col-3 col-md-2" type="submit"  value="Remove" v-on:click="removeFromList(i)"/>
                             </div>
 
                         </ul>
@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+<!-- Edit Direcctions Modal -->
         <div class="modal fade" id="directionsModal" tabindex="-1" aria-labelledby="directionsModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
