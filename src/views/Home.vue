@@ -1,21 +1,29 @@
 <template>
-        <div class="bg text-center">
+        <div class="bg-light ms-auto me-auto text-center container-fluid row">
 <!--main header-->
-            <div class="text-center  pt-5" style="height: 90%">
-                <div class="m-auto border border-dark rounded text-center" style="width: 60%; height:60%; opacity: 100%; background-color: #FFFFFF">
-                    <h1 class="text-sm-center">Meal Planner 3000</h1>
-                    <h2 class="text-sm-center">Welcome {{userName}}</h2>
+            <div class="bg col-sm-12 col-md-4 pt-5 mb-5">
+                <div class="text-center" >
+                    <div class="m-auto border border-dark rounded text-center" style="width: 60%; height:60%; opacity: 100%; background-color: #FFFFFF">
+                        <h1 class="text-sm-center">Meal Planner 3000</h1>
+                        <h2 class="text-sm-center">Welcome {{userName}}</h2>
+                    </div>
                 </div>
+
             </div>
-            <div class="mt-5">
+
+            <div class="mt-5 col-sm-12 col-md-4 ">
                 <p>Meal Planner 3000 is a tool to help organize your recipes, plan your weekly meals, and create a shopping list based off of those meals</p>
                 <p>This is a developer version.  All recipes and plans are for display purposes only and may not be accurate</p>
             </div>
-<!--messages-->
-            <div class="border border-dark col-sm-8 mb-2 p-3">
+            <div class="bg col-sm-12 col-md-4 pt-5 mb-5">
+                <p class="">Need to put a Carousel here.  Randomize recipes with pictures.  Rotate through 5. resets to new recipes each load</p>
+            </div>
 
+<!--message box-->
+            <div class="border border-dark col-sm-12 col-md-6 mb-5 p-3">
+<!-- Post Message-->
                 <div class="mb-4">
-                    <label for="message">Leave a Message or Suggestion:</label><br>
+                    <label v-if="userName" for="message">{{userName}}'s Feed</label><br>
                     <div v-if="userName">
                         <input type="text" id="message" size="70" v-model="message" placeholder="Leave a Message or Suggestion">
                         <input type="submit" value="Submit" v-on:click="newMessage(userName, message)">
@@ -25,19 +33,15 @@
                     </div>
 
                 </div>
-
-                <div class="col-sm-12 container-fluid" v-for="message in listOfMessages" :key="message.listOfMessages">
-                    <div>
-                    <div class="border border-dark col-sm-6 col-md-9 row">
-                        <div class="col-sm-4">
-                            <b class="justify-content-sm-start">{{message.user}}</b> said:
+<!-- messages -->
+                <div class="overflow-scroll">
+                    <div class="col-12 container-fluid" v-for="message in listOfMessages" :key="message.listOfMessages">
+                        <div>
+                            <Message :message=message></Message>
                         </div>
-                        <div class="border col-sm-8">
-                            <p>"{{message.message}}"</p>
-                        </div>
-                    </div>
                     </div>
                 </div>
+
 
             </div>
 
@@ -50,9 +54,11 @@
 
 <script>
     import { db } from "../main";
+    import Message from "@/components/Message";
 
     export default {
         name: "Home",
+        components: {Message},
         data() {
             return {
                 userName: "",

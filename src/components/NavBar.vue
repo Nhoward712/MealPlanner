@@ -1,7 +1,7 @@
 <template>
     <div id="nav">
         <nav class="navbar navbar-expand-sm navbar-light ">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" href="#"><img src="../assets/LogoIcon.png" class="img-fluid" style="height: 60px"> </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -15,13 +15,13 @@
                         <router-link class="nav-item nav-link " :to="{name:'ShoppingList', params:{userRole, userName}}"><h4>Shopping List</h4></router-link>
                     </li>
                     <li class="nav-item" v-else>
-                        <h4 class="nav-item nav-link disabled">Shopping List</h4>
+                        <h4 type="button" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Shopping List</h4>
                     </li>
                     <li class="nav-item" v-if="currentUser">
                         <router-link class="nav-item nav-link " :to="{name:'WeeklyMealPlan', params:{userRole, userName}}"><h4>Weekly Planner</h4></router-link>
                     </li>
                     <li class="nav-item" v-else>
-                        <h4 class="nav-item nav-link disabled"> Weekly Planner</h4>
+                        <h4 type="button" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Weekly Planner</h4>
                     </li>
 
                     <li class="nav-item">
@@ -52,7 +52,7 @@
                     </li>
                     <li class="nav-item text-center col-sm-4 row" v-if="!currentUser">
                         <h5 class="col-sm-7">Not a member yet?</h5>
-                        <router-link to="/register" data-bs-dismiss="modal" class="btn btn-primary col-sm-5">Registration</router-link>
+                        <router-link to="/register" style="height: 40px" data-bs-dismiss="modal" class="btn btn-primary col-sm-5">Registration</router-link>
                     </li>
 <!--                    <li class="float-sm-right border">-->
 <!--                        <span v-if="currentUser" class="">-->

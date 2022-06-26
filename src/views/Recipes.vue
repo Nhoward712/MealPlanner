@@ -63,7 +63,8 @@
                                     v-on:click="addToFavorites(recipe)">Add
                             </button>
                         </div>
-                        <router-link v-if="recipe.recipeOwner == userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
+                        <router-link v-if="recipe.recipeOwner == userName && userName" class="text-center" :to="{name:'EditRecipe', params: {recipe:recipe}}" ><!--sends a whole object-->
+                            <p>Owner:{{recipe.recipeOwner}}</p>
                             <button class="btn btn-outline-secondary m-0 col-sm-12">Edit</button>
                         </router-link>
                     </div>
@@ -172,10 +173,12 @@
                             }
                         );
                         this.filteredRecipes = this.recipes;
-                        this.recipe.recipeId = doc.data().recipeId;
-                        this.recipe.recipeName = doc.data().recipeName;
-                        this.recipe.recipeDirections = doc.data().recipeDirections;
-                        this.recipe.recipeIngredients = doc.data().recipeIngredients;
+                        let rand = Math.floor(Math.random() * this.filteredRecipes.length);
+                        this.recipe.recipeId = this.filteredRecipes[rand].recipeId;
+                        this.recipe.recipeName = this.filteredRecipes[rand].recipeName;
+                        this.recipe.recipeDirections = this.filteredRecipes[rand].recipeDirections;
+                        this.recipe.recipeIngredients = this.filteredRecipes[rand].recipeIngredients;
+                        this.recipe.image = this.filteredRecipes.image;
                     })
                 });
             },

@@ -47,29 +47,7 @@
 
 <!-- Edit Ingredient Modal -->
         <div class="modal fade" id="ingredientModal" tabindex="-1" aria-labelledby="ingredientModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ingredientModalLabel">Edit Ingredients</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="list-group list-group-flush" v-for="(item,i) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
-                            <div class="row">
-                                <input class="col-2 col-md-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="col-2" v-model="item.type" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="col-5 col-md-7" v-model="item.name" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
-                                <input class="mt-0 col-3 col-md-2" type="submit"  value="Remove" v-on:click="removeFromList(i)"/>
-                            </div>
-
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
+            <AddEditIngredientModal :recipe="recipe"></AddEditIngredientModal>
         </div>
 <!-- Edit Direcctions Modal -->
         <div class="modal fade" id="directionsModal" tabindex="-1" aria-labelledby="directionsModalLabel" aria-hidden="true">
@@ -94,8 +72,11 @@
 </template>
 
 <script>
+    import AddEditIngredientModal from "@/components/AddEditIngredientModal";
     export default {
         name: "viewRecipe",
+        components: {AddEditIngredientModal},
+
         props: {
             recipe: {
                 type: Object,
@@ -113,7 +94,15 @@
                 this.currentRecipe = this.recipe;
                 console.log(this.currentRecipe)
             }
+        },
+        mounted() {
+        },
+        methods:{
+            SaveChanges(){
+
+            }
         }
+
     }
 </script>
 

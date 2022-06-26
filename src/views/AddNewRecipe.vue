@@ -3,7 +3,12 @@
         <div class="-header row">
             <h3>Author: {{userName}}</h3>
             <div v-if="true">
-                <p>stuff</p>
+                <!--Submit/cancel-->
+                <div>
+                    <input type="submit" class="m-1" value="submit" v-on:click="AddToDB"/>
+                    <input type="submit" class="m-1" value="cancel" v-on:click="cancelSubmit"/>
+                </div>
+                <!--@here, add logic if(!pictureExists){Image is addPicture Btn - else Shows picture}-->
                 <img src="https://firebasestorage.googleapis.com/v0/b/mealplanner-60292.appspot.com/o/8EBF5C5C-D186-42B8-BB24-5CE887B63B1A_1_105_c.jpeg?alt=media&token=e380d4eb-1717-4816-812b-0a84a8799380">
             </div>
 
@@ -29,7 +34,6 @@
         </div>
 <!--new ingredient-->
         <div class="row m-1">
-
             <label for="amount" class="sr-only">Amount</label>
             <input type="text" class="form-control col-sm-1 pl-1" v-model="ingredient.amount" id="amount" placeholder="qty" required>
             <select class="form-select col-sm-1" aria-label="Default select example" v-model="ingredient.type" required>
@@ -52,11 +56,7 @@
         <label for="recipeDirections"  class="sr-only">Directions: </label>
         <textarea type="text" class="form-control col col-sm-6 " v-model="newRecipe.recipeDirections" id="recipeDirections" placeholder="Directions"></textarea>
         <br>
-<!--Submit/cancel-->
-        <div>
-            <input type="submit" class="mt-3" value="submit" v-on:click="AddToDB"/>
-            <input type="submit" class="mt-3" value="cancel" v-on:click="cancelSubmit"/>
-        </div>
+
 
         <br>
 

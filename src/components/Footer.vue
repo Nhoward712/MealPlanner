@@ -1,7 +1,7 @@
 <template>
     <div class="footer col-sm-12 row">
         <p class="col-sm-6">About</p>
-        <p class="col-sm-6">Copyright 2021</p>
+        <p class="col-sm-6">Copyright 2022</p>
     </div>
 </template>
 
@@ -13,7 +13,7 @@
 
 <style scoped>
 .footer{
-    height: 70px;
+    height: 30px;
     position: fixed;
     bottom:0%;
     width:100%;

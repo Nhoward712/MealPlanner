@@ -2,8 +2,14 @@
     <div class=" bg-light m-2 row align-items-start mt-3">
 <!--Day of week buttons-->
         <div class="col-sm-2 border border-3 meal-plan-box container-fluid ms-1 m-0">
+
+
             <div class="mt-0" v-for="day in dayOfWeek" :key="day.dayOfWeek">
-                <button class="btn btn-info col-sm-10 mt-4" type="button" v-on:click="currentDay(day)" >{{day}}</button>
+                <div class="row">
+                    <button class="btn btn-info col-sm-10 mt-4 text-start" type="button" v-on:click="currentDay(day)" >{{day}}</button>
+                    <button class="btn btn-info clear col-sm-2 mt-4 text-start" v-on:click="clearDay(day)">Clear</button>
+
+                </div>
 <!--                <MealPlanDayCard :DayOfWeek="day" :Recipes="recipes"></MealPlanDayCard>-->
             </div>
         </div>
@@ -53,13 +59,13 @@
             MealPlanDayCard,
             recipeCard
         },
-        props:{
+        props: {
             userName: {},
             UserRole: {},
         },
-        data(){
+        data() {
             return {
-                dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
                 mealPeriod: ["Breakfast", "Lunch", "Dinner"],
                 activeMealPlan: {},
                 recipes: [],
@@ -70,25 +76,26 @@
                 day: "",
                 per: "",
                 newRecipes: [],
+                document: "",
             };
         },
-        mounted(){
+        mounted() {
             this.userRole = this.$route.params.userRole; //this pulls the param that was sent by the router
             this.userName = this.$store.state.userName;
             this.loadData();
         },
         methods: {
-            loadData(){
-                console.log("loadData");
+            loadData() {
+                this.activeMealPlan = {};
                 db.collection("MealPlans")
                     .get()
-                    .then((querySnapshot)=>{
+                    .then((querySnapshot) => {
                         this.activeMealPlan = {};
                         this.recipes = [];
 
                         querySnapshot.forEach((doc) => {
-                            if(doc.data().PlanId === this.userName){
-                                this.activeMealPlan ={
+                            if (doc.data().PlanId === this.userName) {
+                                this.activeMealPlan = {
                                     PlanId: doc.data().PlanId,
                                     FridayBreakfast: doc.data().FridayBreakfast,
                                     FridayDinner: doc.data().FridayDinner,
@@ -132,10 +139,10 @@
                                         }
                                     );
                                     //this loops though the days of the week
-                                    for (let i=0; i<this.dayOfWeek.length; i++){
+                                    for (let i = 0; i < this.dayOfWeek.length; i++) {
                                         //this loops though meal periods
-                                        for(let k=0; k<this.mealPeriod.length; k++){
-                                            for(let j=0; j<this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
+                                        for (let k = 0; k < this.mealPeriod.length; k++) {
+                                            for (let j = 0; j < this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]].length; j++) {
                                                 if (doc.data().recipeId === this.activeMealPlan[this.dayOfWeek[i] + this.mealPeriod[k]][j]) {
 
                                                     this.recipes.push(
@@ -158,56 +165,51 @@
                             });
                     });
                 this.filteredRecipes = this.allRecipes;
-                console.log("filtered",this.filteredRecipes);
+                console.log("filtered", this.filteredRecipes);
 
             },
-            currentDay(day){
+            currentDay(day) {
                 this.activeDay = day;
             },
-            searchRecipes(searchStr){
+            searchRecipes(searchStr) {
                 //on keyup, search array for name and ingredients after 2 chars have been entered
                 //count number of chars in search,
                 console.log("searching...");
 
-                if(searchStr.length > 1){
+                if (searchStr.length > 1) {
                     console.log("searching...");
                     const regexp = new RegExp(searchStr, 'i');
                     this.filteredRecipes = this.allRecipes.filter(x => regexp.test(x.recipeName));
                     console.log(searchStr);
                     console.log(this.filteredRecipes);
-                }else{
+                } else {
                     this.filteredRecipes = this.allRecipes;
                 }
 
 
             },
-            onClickChild(value){
+            onClickChild(value) {
                 //when user clicks the recipe item, it should filter the recipes to just that item.
                 //adds that item to a temp item that will be used when user clicks add button on the meal plan
                 this.filteredRecipes = [];
                 this.filteredRecipes.push(value);
             },
-            emitPer(per){
+            emitPer(per) {
                 //if filtered array.length = 1 add filtered recipe to meal period/day
                 //tooltip to explain why they cant click add button
-                if(this.filteredRecipes.length === 1){
+                if (this.filteredRecipes.length === 1) {
                     db.collection("MealPlans")
                         .get()
-                        .then((querySnapshot) =>{
-                            querySnapshot.forEach((doc) =>{
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
                                 //dynamic plan needs to have params: userName passed in
                                 //Need to pass it back to meal plan view on complete
-                                console.log("filtered",this.filteredRecipes);
-
-                                if(doc.data().PlanId === this.userName){
+                                if (doc.data().PlanId === this.userName) {
                                     let docId = doc.id;
                                     this.day = per.day;
                                     this.period = per.period;
-                                    console.log("added",doc.data()[per.day + per.period]);
                                     //loads the current recipes for that mealPeriod
                                     this.newRecipes = doc.data()[per.day + per.period];
-                                    console.log("newRecipes", this.newRecipes, "recipes", this.recipes);
-                                    console.log("recipe id",this.filteredRecipes[0].recipeId);
                                     //Adds new recipe to current mealPeriod
                                     this.newRecipes.push(this.filteredRecipes[0].recipeId);
                                     this.update(docId);
@@ -215,19 +217,17 @@
 
                             })
                         })
-                        .then(() =>{
+                        .then(() => {
                             this.allRecipes = [];
                             this.loadData()
                         })
-                }else{
+                } else {
                     this.allRecipes = [];
                     this.loadData();
                 }
-                console.log("after emit");
-
 
             },
-            update(docId){
+            update(docId) {
                 db.collection("MealPlans")
                     .doc(docId)
                     .update(
@@ -236,6 +236,37 @@
                         }
                     );
                 this.filteredRecipes = [];
+
+            },
+            clearDay(day) {
+                console.log("getting here");
+                db.collection("MealPlans")
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            if (doc.data().PlanId === this.userName) {
+                                console.log("Document" + doc.id);
+                                this.document = doc.id;
+
+                                this.day = day;
+                            }
+                        })
+                    })
+                    .then(()=>{
+                        console.log("doc id:" + this.document);
+                        db.collection("MealPlans")
+                            .doc(this.document)
+                            .update(
+                                {
+                                    [day + "Breakfast"]: [],
+                                    [day + "Lunch"]: [],
+                                    [day + "Dinner"]: [],
+                                }
+                            )
+                    })
+                    .then(()=>{
+                        this.loadData();
+                    });
 
             },
         }
@@ -267,6 +298,12 @@ button{
     font-weight: bold;
     font-size: 1.2em;
     box-shadow: 4px 4px 4px 2px grey;
+}
+.clear{
+    background-color: #D8C3A5;
+    box-shadow: 4px 4px 4px 2px grey;
+    padding-left: 5px;
+    font-size: .6em;
 }
 
 
