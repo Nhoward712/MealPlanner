@@ -6,7 +6,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <ul class="list-group list-group-flush" v-for="(item,i) in recipe.recipeIngredients" :key="item.thisRecipesIngredients">
+                    <ul class="list-group list-group-flush" v-for="(item,i) in newRecipe.recipeIngredients" :key="item.thisRecipesIngredients">
                         <div class="row">
                             <input class="col-2 col-md-1" v-model="item.amount" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
                             <input class="col-2" v-model="item.type" @keyup.enter="rebuildRecipeIngredients(item.name,i)"/>
@@ -14,7 +14,7 @@
                             <input class="mt-0 col-3 col-md-1" type="submit" style="font-size: .75em; background-color: lightsalmon" value="Remove" v-on:click="removeFromList(i)"/>
                         </div>
                     </ul>
-       <div class="row m-1">
+       <div class="row m-2">
             <label for="amount" class="sr-only">Amount</label>
             <input type="text" class="form-control col-sm-1 pl-1" v-model="ingredient.amount" id="amount" placeholder="qty" required>
             <select class="form-select col-sm-1" aria-label="Default select example" v-model="ingredient.type" required>
@@ -29,7 +29,7 @@
                 <option value="Lb">Lb</option>
             </select>
             <label for="name" class="sr-only">Ingredient Name</label>
-            <input type="text" class="form-control col-sm-4" v-model="ingredient.name" id="name" placeholder="New ingredient Name" required>
+            <input type="text" class="form-control col-sm-6" v-model="ingredient.name" id="name" placeholder="New ingredient Name" required>
             <input type="submit" class="mt-0 col-sm-1" value="Add" v-on:click="addToList"/>
         </div>
                 </div>
@@ -66,6 +66,7 @@
             //if this recipe exists, then use this recipe. Else start new recipe
             if (this.recipe) {
                 this.newRecipe = this.recipe;
+                console.log("newrecipe",this.newRecipe);
             }
             this.userName = this.$store.state.userName;
             this.GetIngredientList();
@@ -118,7 +119,7 @@
                 }
             },
             removeFromList(i){
-                this.thisRecipesIngredients.splice(i,1);
+                this.newRecipe.recipeIngredients.splice(i,1);
             },
             addToList(){
                 //input from dropdown of all ingredients
@@ -136,10 +137,53 @@
                     }
                 }
                 if(!isTrue){
-                    alert("Ingredient does not exist. Please add it to the database")
+                    // alert("Ingredient does not exist. Please add it to the database");
+                    this.ingredientList.name = this.ingredient.name.toUpperCase();
+                    console.log("adding ingredient", this.ingredientList);
+                    let highestId = 0;
+                    db
+                        .collection("ingredientList")
+                        .get()
+                        //gets new ID Number
+                        .then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+                                const thisIngredient = doc.data();
+                                if (thisIngredient.ingredientId >= highestId){
+                                    highestId = thisIngredient.ingredientId + 1;
+                                }
+                            });
+                        })
+                        .then(()=>{
+                            //adding items to object not included in model
+                            this.ingredientList.ingredientId = highestId;
+                            this.ingredientList.onHand = 5;
+                            this.ingredientList.purchased = 5;
+                            this.ingredientList.cost = 0;
+
+                            db.collection("ingredientList")
+                                .add(this.ingredientList)
+                                .then(() => {
+                                    let isTrue = false;
+                                    for(let i=0; i<this.databaseIngredients.length; i++){
+                                        if(this.ingredient.name.toUpperCase() === this.databaseIngredients[i].name.toUpperCase()){
+                                            //create ingredient object
+                                            isTrue = true;
+                                            this.ingredient.ingredientId = this.databaseIngredients[i].ingredientId;
+                                            this.ingredient.name = this.databaseIngredients[i].name;
+                                        }
+                                        if(isTrue){
+                                            break;
+                                        }
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.log("got this error",error);
+                                });
+                        });
+                    this.newRecipe.recipeIngredients.push(this.ingredient);
                 }else{
                     //push entire object to ingredients
-                    this.thisRecipesIngredients.push(this.ingredient);
+                    this.newRecipe.recipeIngredients.push(this.ingredient);
                 }
                 //empty ingredient object
                 this.ingredient = {};
