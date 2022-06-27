@@ -57,6 +57,7 @@
                 databaseIngredients: [],
                 databaseRecipes: [],
                 ingredient: {},
+                ingredientList: {},
                 thisRecipesIngredients: [],
                 image: {},
                 userName: "",
@@ -138,6 +139,8 @@
                 }
                 if(!isTrue){
                     // alert("Ingredient does not exist. Please add it to the database");
+                    console.log("name", this.ingredient.name);
+                    console.log("ingListName", this.ingredientList.name);
                     this.ingredientList.name = this.ingredient.name.toUpperCase();
                     console.log("adding ingredient", this.ingredientList);
                     let highestId = 0;

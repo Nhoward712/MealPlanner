@@ -4,19 +4,22 @@
         <div class="row recipe-box ml-4">
             <div class="row">
                 <h1 class="text-danger font-weight-bolder mt-3 col-11">{{currentRecipe.recipeName}}</h1>
-                    <router-link class="col-1 mt-3" :to="{name:'Recipes', params:{userRole, userName}}">
-                        <h4 style="font-size: 2em; text-decoration: none; color: inherit;">X</h4></router-link>
-
+                <router-link class="col-1 mt-3" :to="{name:'Recipes', params:{userRole, userName}}">
+                    <h4 style="font-size: 2em; text-decoration: none; color: inherit;"
+                        title="Close"
+                        >X</h4>
+                </router-link>
             </div>
 
             <div class="col-sm-12 row">
-
+<!--Ingredient Box-->
                 <div class="border border-2 rounded-3 col-md-3">
                     <h3 class="text-danger ml-2 bg-light ">
                         Ingredients:
                         <button type="button" class="btn btn-light border-secondary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#ingredientModal">
+                                data-bs-target="#ingredientModal"
+                                title="Edit">
                             Edit
                         </button>
                     </h3>
@@ -31,6 +34,7 @@
                     </div>
 
                 </div>
+<!-- Directions box               -->
                 <div class="border border-2 rounded-3 mt-0 col-md-5 ">
                     <h3 class="text-danger ml-2 bg-light">Directions:
                         <button type="button" class="btn btn-light border-secondary shadow-sm"
@@ -41,12 +45,20 @@
                     </h3>
                     <p >{{currentRecipe.recipeDirections}}</p>
                 </div>
+<!--Image box                 -->
                 <div v-if="currentRecipe.image" class="col-sm-12 col-md-4 rounded-3 border border-2">
                     <img :src=recipe.image.imageURL class="img-thumbnail border-5 border-secondary shadow-sm">
                     <div class="notes-box border mb-1 mt-1">
                         <h4>Notes:</h4>
                     </div>
                 </div>
+                <div v-else class="col-sm-12 col-md-4 rounded-3 border border-2">
+                    <img src="../assets/noImage.png" class="img-thumbnail border-5 border-secondary shadow-sm">
+                    <div class="notes-box border mb-1 mt-1">
+                        <h4>Notes:</h4>
+                    </div>
+                </div>
+
 
             </div>
 

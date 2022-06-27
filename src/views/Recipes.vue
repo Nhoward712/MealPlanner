@@ -3,9 +3,10 @@
 <!--Header-->
         <div class="bg-dark row mb-2">
             <h1 class="text-primary ms-3 col-2">Recipes</h1>
-            <form class="col-3 mt-2 row" v-on:submit="searchRecipes(searchTerm)">
+<!--Search bar          -->
+            <form class="col-3 mt-2 row" v-on:submit.prevent="searchRecipes(searchTerm)">
                 <input class="col-10" type="search" id="search" v-model="searchTerm" style="height: 1.5em" v-on:keyup="searchRecipes(searchTerm)" placeholder="Search Recipes">
-                <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">
+<!--                <input class="col-2 p-0" type="submit" value="X" style="height: 1.5em">-->
             </form>
             <form class="text-right m-1  col-4 ">
                     <!--needs to be dynamic list of filter parameters-->

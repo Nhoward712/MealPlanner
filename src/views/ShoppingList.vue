@@ -6,9 +6,9 @@
         </div>
         <div class="container row">
             <div class="border border-primary overflow-scroll scrollable m-1 col-sm-12 col-md-5">
-                <div class="ml-auto" v-for="(item) in activeIngredients" :key="item.activeIngredients">
-                    <input class="h1 m-3 " type="checkbox" value="" :id="item.name">
-                    <label class="h1 pt-3" :for="item.name"> {{item.name}}</label>
+                <div class="ml-auto row" v-for="(item) in activeIngredients" :key="item.activeIngredients">
+                    <input class="h1 m-3 col-1" type="checkbox" value="" :id="item.name">
+                    <label class="h1 pt-3 col-9" :for="item.name"> {{item.name}}</label>
                 </div>
             </div>
             <div class="col-sm-12 col-md-5">
